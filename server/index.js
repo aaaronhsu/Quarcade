@@ -4,14 +4,12 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-//import routes below
-
 //for connection string
 require("dotenv").config();
 
 app.use(express.json()); //lets server accept json stuff
 
-//connect to the routes
+//connect to the routes--> if you go to localhost:5000/roomCodes you can get all the data that's been posted
 const roomCodesRouter = require("./routes/roomCodes");
 app.use("/roomCodes", roomCodesRouter);
 

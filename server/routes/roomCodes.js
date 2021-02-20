@@ -7,7 +7,7 @@ const RoomCode = require("../models/roomCode");
 router.post("/", async (req, res) => {
   //create the information
   const roomCode = new RoomCode({
-    RoomCode: req.body.RoomCode
+    roomCode: req.body.roomCode
   });
   //add the information
   try {
