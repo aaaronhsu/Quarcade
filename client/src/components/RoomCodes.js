@@ -57,6 +57,14 @@ class RoomCodes extends Component {
             <button type="submit">Create</button>
           </form>
         </div>
+        <div>
+          <h3>For Testing Purposes Room Codes added are below</h3>
+          {this.state.rooms.map(room => (
+            <li>
+              {room.RoomCode} is {room.active}
+            </li>
+          ))}
+        </div>
       </>
     );
   }
