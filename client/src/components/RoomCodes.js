@@ -27,26 +27,26 @@ class RoomCodes extends Component {
     
     //to add the new room to state
     let roomsCopy = [...this.state.rooms];
+    
     //updates new room with all info
     let newRoom = {
       roomCode: roomCode,
       active: true
     };
+
     if (roomsCopy.length > 0) {
       newRoom["id"] = roomsCopy[roomsCopy.length - 1].id + 1;
     } else {
       newRoom["id"] = 1;
     }
+
     //adds room to state copy
     roomsCopy.push(newRoom);
-    //to clear the input field line
-    let roomHolderClone = { ...roomCode };
-    roomHolderClone = "";
 
     //update state
     this.setState({
       rooms: roomsCopy,
-      roomCodeHolder: roomHolderClone
+      roomCodeHolder: ""
     });
 
     //for when i do the backend: Axios.push(newRoom);
