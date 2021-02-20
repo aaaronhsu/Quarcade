@@ -5,11 +5,12 @@ class RoomCodes extends Component {
     super(props);
 
     this.state = {
-      rooms: [],
-      RoomCodeHolder: ""
+      rooms: [], //the rooms, contains an id, a room code and whether it is active or not
+      RoomCodeHolder: "" //holder see function right below
     };
   }
 
+  //this sets the RoomCodeHolder to the value in the form line
   handleCodeInput = e => {
     let roomHolderClone = { ...this.state.RoomCodeHolder };
     roomHolderClone = e.target.value;
@@ -18,10 +19,12 @@ class RoomCodes extends Component {
     });
   };
 
+  //when the form is submitted, the new room code is added as an active room
   handleCreateRoom = e => {
     e.preventDefault();
     //to add the new room to state
     let roomsCopy = [...this.state.rooms];
+    //updates new room with all info
     let newRoom = {
       RoomCode: this.state.RoomCodeHolder,
       active: true
@@ -31,6 +34,7 @@ class RoomCodes extends Component {
     } else {
       newRoom["id"] = 1;
     }
+    //adds room to state copy
     roomsCopy.push(newRoom);
     //to clear the input field line
     let roomHolderClone = { ...this.state.RoomCodeHolder };
@@ -42,9 +46,10 @@ class RoomCodes extends Component {
       RoomCodeHolder: roomHolderClone
     });
 
-    //Axios.push(newRoom);
+    //for when i do the backend: Axios.push(newRoom);
   };
 
+  //this function is just a helper method to change the boolean in state into words
   printActivity = active => {
     if (active) return "active";
     else return "inactive";
