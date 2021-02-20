@@ -45,6 +45,11 @@ class RoomCodes extends Component {
     //Axios.push(newRoom);
   };
 
+  printActivity = active => {
+    if (active) return "active";
+    else return "inactive";
+  };
+
   render() {
     return (
       <>
@@ -61,7 +66,7 @@ class RoomCodes extends Component {
           <h3>For Testing Purposes Room Codes added are below</h3>
           {this.state.rooms.map(room => (
             <li>
-              {room.RoomCode} is {room.active}
+              {room.RoomCode} is {this.printActivity(room.active)}
             </li>
           ))}
         </div>
