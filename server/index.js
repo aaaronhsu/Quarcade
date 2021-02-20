@@ -12,6 +12,8 @@ require("dotenv").config();
 app.use(express.json()); //lets server accept json stuff
 
 //connect to the routes
+const roomCodesRouter = require("./routes/roomCodes");
+app.use("/roomCodes", roomCodesRouter);
 
 //connect to my database
 const PORT = process.env.PORT;

@@ -18,4 +18,14 @@ router.post("/", async (req, res) => {
   }
 });
 
+//get all the info just for testing
+router.get("/", async (req, res) => {
+  try {
+    const roomCodes = await RoomCode.find();
+    res.json(roomCodes);
+  } catch (error) {
+    res.status(500).json({ message: error.message }); //500 error, something with our server is wrong
+  }
+});
+
 module.exports = router;
