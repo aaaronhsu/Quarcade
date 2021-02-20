@@ -6,44 +6,48 @@ class RoomCodes extends Component {
 
     this.state = {
       rooms: [], //the rooms, contains an id, a room code and whether it is active or not
-      RoomCodeHolder: "" //holder see function right below
+      roomCodeHolder: "" //holder see function right below
     };
   }
 
-  //this sets the RoomCodeHolder to the value in the form line
+  //this sets the roomCodeHolder to the value in the form line
   handleCodeInput = e => {
-    let roomHolderClone = { ...this.state.RoomCodeHolder };
+    let roomHolderClone = { ...this.state.roomCodeHolder };
     roomHolderClone = e.target.value;
     this.setState({
-      RoomCodeHolder: roomHolderClone
+      roomCodeHolder: roomHolderClone
     });
   };
 
   //when the form is submitted, the new room code is added as an active room
   handleCreateRoom = e => {
     e.preventDefault();
+
+    const roomCode = this.state.roomCodeHolder;
+    if (roomCode === "") return;
+    
     //to add the new room to state
     let roomsCopy = [...this.state.rooms];
+
     //updates new room with all info
     let newRoom = {
-      RoomCode: this.state.RoomCodeHolder,
+      roomCode: roomCode,
       active: true
     };
+
     if (roomsCopy.length > 0) {
       newRoom["id"] = roomsCopy[roomsCopy.length - 1].id + 1;
     } else {
       newRoom["id"] = 1;
     }
+
     //adds room to state copy
     roomsCopy.push(newRoom);
-    //to clear the input field line
-    let roomHolderClone = { ...this.state.RoomCodeHolder };
-    roomHolderClone = "";
 
     //update state
     this.setState({
       rooms: roomsCopy,
-      RoomCodeHolder: roomHolderClone
+      roomCodeHolder: ""
     });
 
     //for when i do the backend: Axios.push(newRoom);
@@ -63,7 +67,7 @@ class RoomCodes extends Component {
             <label>
               <small>Create Room </small>
             </label>
-            <input value={this.state.RoomCodeHolder} onChange={this.handleCodeInput} name="Create Room" />
+            <input value={this.state.roomCodeHolder} onChange={this.handleCodeInput} name="Create Room" />
             <button type="submit">Create</button>
           </form>
         </div>
@@ -71,7 +75,7 @@ class RoomCodes extends Component {
           <h3>For Testing Purposes Room Codes added are below</h3>
           {this.state.rooms.map(room => (
             <li>
-              {room.RoomCode} is {this.printActivity(room.active)}
+              {room.roomCode} is {this.printActivity(room.active)}
             </li>
           ))}
         </div>
