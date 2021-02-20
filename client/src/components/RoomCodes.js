@@ -24,10 +24,11 @@ class RoomCodes extends Component {
     e.preventDefault();
 
     const roomCode = this.state.roomCodeHolder;
+    if (roomCode === "") return;
     
     //to add the new room to state
     let roomsCopy = [...this.state.rooms];
-    
+
     //updates new room with all info
     let newRoom = {
       roomCode: roomCode,
