@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, UseState } from "react";
 
 class RoomCodes extends Component {
   constructor(props) {
@@ -11,13 +11,16 @@ class RoomCodes extends Component {
   }
 
   handleCodeInput = e => {
-    let stateClone = { ...this.state };
-    stateClone.RoomCodeHolder = e.target.value;
-    this.setState(stateClone);
+    let roomHolderClone = { ...this.state.RoomCodeHolder };
+    roomHolderClone = e.target.value;
+    this.setState({
+      RoomCodeHolder: roomHolderClone
+    });
   };
 
   handleCreateRoom = e => {
     e.preventDefault();
+    //to add the new room to state
     let roomsCopy = [...this.state.rooms];
     let newRoom = {
       RoomCode: this.state.RoomCodeHolder,
@@ -29,9 +32,16 @@ class RoomCodes extends Component {
       newRoom["id"] = 1;
     }
     roomsCopy.push(newRoom);
+    //to clear the input field line
+    let roomHolderClone = { ...this.state.RoomCodeHolder };
+    roomHolderClone = "";
+
+    //update state
     this.setState({
-      rooms: roomsCopy
+      rooms: roomsCopy,
+      RoomCodeHolder: roomHolderClone
     });
+
     //Axios.push(newRoom);
   };
 
@@ -43,7 +53,7 @@ class RoomCodes extends Component {
             <label>
               <small>Create Room </small>
             </label>
-            <input onChange={this.handleCodeInput} name="Create Room" />
+            <input value={this.state.RoomCodeHolder} onChange={this.handleCodeInput} name="Create Room" />
             <button type="submit">Create</button>
           </form>
         </div>
