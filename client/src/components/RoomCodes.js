@@ -1,4 +1,5 @@
 import React, { Component, UseState } from "react";
+import Axios from "axios"; //used to push stuff to the backend
 
 class RoomCodes extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class RoomCodes extends Component {
 
     const roomCode = this.state.roomCodeHolder;
     if (roomCode === "") return;
-    
+
     //to add the new room to state
     let roomsCopy = [...this.state.rooms];
 
@@ -44,14 +45,25 @@ class RoomCodes extends Component {
     //adds room to state copy
     roomsCopy.push(newRoom);
 
+    //push new room code to the backend (DOESN'T WORK)
+    this.pushCodeToBackend(roomCode);
+
     //update state
     this.setState({
       rooms: roomsCopy,
       roomCodeHolder: ""
     });
-
-    //for when i do the backend: Axios.push(newRoom);
   };
+
+  //below is the attempt to get axios to push the code but it isn't working
+  async pushCodeToBackend(roomCode) {
+    try {
+      await Axios.post("http://localhost:5000/roomCodes", { roomCode: this.roomCode });
+      console.log("Room was succesffully created");
+    } catch (error) {
+      console.log("There was an error.");
+    }
+  }
 
   //this function is just a helper method to change the boolean in state into words
   printActivity = active => {
