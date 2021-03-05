@@ -7,12 +7,13 @@ class RoomCodes extends Component {
 
     this.state = {
       rooms: [], //the rooms, contains an id, a room code and whether it is active or not
-      roomCodeHolder: "" //holder see function right below
+      roomCodeHolder: "", //holder see function right below
+      joinRoomCodeHolder: "" //holder for joining rooms
     };
   }
 
   //this sets the roomCodeHolder to the value in the form line
-  handleCodeInput = e => {
+  handleCreateInput = e => {
     let roomHolderClone = { ...this.state.roomCodeHolder };
     roomHolderClone = e.target.value;
     this.setState({
@@ -65,6 +66,33 @@ class RoomCodes extends Component {
     }
   }
 
+  //this sets the joinRoomCodeHolder to the value in the join form line
+  handleJoinInput = e => {
+    let joinRoomHolderClone = { ...this.state.joinRoomCodeHolder };
+    joinRoomHolderClone = e.target.value;
+    this.setState({
+      joinRoomCodeHolder: joinRoomHolderClone
+    });
+  };
+
+  //this function handles the submit button of join room
+  handleJoinRoom = e => {
+    //if the room is active
+    //pop up notification that says "nice you got there"
+    //this.findRoomBackend(roomCode);
+    //later, when we link to other pages, this will lead to the room page
+  };
+
+  async findRoomBackend(roomCode) {
+    try {
+      //doesn't work yet because I haven't coded that route
+      await Axios.get("http://localhost:5000/roomCodes", { roomCode: roomCode });
+      console.log("Room was found and retrieved");
+    } catch (error) {
+      console.log("There was an error. Oopsies");
+    }
+  }
+
   //this function is just a helper method to change the boolean in state into words
   printActivity = active => {
     if (active) return "active";
@@ -79,8 +107,17 @@ class RoomCodes extends Component {
             <label>
               <small>Create Room </small>
             </label>
-            <input value={this.state.roomCodeHolder} onChange={this.handleCodeInput} name="Create Room" />
+            <input value={this.state.roomCodeHolder} onChange={this.handleCreateInput} name="Create Room" />
             <button type="submit">Create</button>
+          </form>
+        </div>
+        <div>
+          <form onSubmit={this.handleCreateRoom}>
+            <label>
+              <small>Join Room </small>
+            </label>
+            <input value={this.state.joinRoomCodeHolder} onChange={this.handleJoinInput} name="Create Room" />
+            <button type="submit">Join</button>
           </form>
         </div>
         <div>
