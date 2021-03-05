@@ -23,6 +23,13 @@ io.on('connection', (client) => {
       client.emit('timer', val);
     }, interval);
   });
+
+  client.on('resetVal', () => {
+    console.log('value reset');
+
+    val = 0;
+    client.emit('reset', val);
+  });
 });
 
 const port = 8000;

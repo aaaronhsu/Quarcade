@@ -7,4 +7,14 @@ function subscribeToTimer(cb) {
   socket.emit('subscribeToTimer', 100);
 }
 
-export { subscribeToTimer };
+function reset(cb) {
+  console.log("number has been reset");
+
+  let ret = 0;
+  socket.emit('resetVal');
+  socket.on('reset', val => {ret = val});
+
+  return ret;
+}
+
+export { subscribeToTimer, reset };
