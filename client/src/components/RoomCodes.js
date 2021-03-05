@@ -45,7 +45,7 @@ class RoomCodes extends Component {
     //adds room to state copy
     roomsCopy.push(newRoom);
 
-    //push new room code to the backend (DOESN'T WORK)
+    //push new room code to the backend
     this.pushCodeToBackend(roomCode);
 
     //update state
@@ -58,7 +58,7 @@ class RoomCodes extends Component {
   //below is the attempt to get axios to push the code but it isn't working
   async pushCodeToBackend(roomCode) {
     try {
-      await Axios.post("http://localhost:5000/roomCodes", { roomCode: this.roomCode });
+      await Axios.post("http://localhost:5000/roomCodes", { roomCode: roomCode });
       console.log("Room was succesffully created");
     } catch (error) {
       console.log("There was an error.");

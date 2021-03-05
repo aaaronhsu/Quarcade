@@ -8,6 +8,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 app.use(express.json()); //lets server accept json stuff
+app.use(cors()); //some trust able thingy that I don't get
 
 //connect to the routes--> if you go to localhost:5000/roomCodes you can get all the data that's been posted
 const roomCodesRouter = require("./routes/roomCodes");
