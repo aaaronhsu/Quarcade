@@ -1,0 +1,40 @@
+{
+  ID: "2039AH4",
+  roomCode: "nameOfRoom",
+  active: "true",
+  users: {
+    {
+      name: "user",
+      socket: "335ARST"
+
+      wordsOwned: {
+        {
+          word: "bob",
+          points: 7
+        },
+        {
+          word: "joe",
+          points: 10
+        }
+      }
+    },
+    {
+      name: "user2",
+      socket: "33BARST"
+
+      wordsOwned: {
+        {
+          word: "a",
+          points: 1
+        },
+        {
+          word: "aursiltdarusl",
+          points: 293846238945
+        }
+      }
+    }
+  },
+
+  tilesLeft: 82,
+  
+}
