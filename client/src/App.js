@@ -5,17 +5,17 @@ import {
   Route,
   Link
 } from "react-router-dom";
-// import Home from './components/Home';
-// import Lobby from './components/Lobby';
+
 import ChooseGame from './components/Lobby/ChooseGame.js';
 import RoomCode from './components/Home/RoomCode.js';
+import NavBar from './components/Nav/NavBar.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       date: new Date(),
-      isToggleOn: true
+      isToggleOn: true,
     };
   }
 
@@ -50,13 +50,17 @@ class App extends React.Component {
         <button onClick={() => this.handleClick()}>
           Log {this.state.isToggleOn ? 'On' : 'Out'}
         </button>
-        {<RoomCode />}
-        {<ChooseGame />}
         <br />
-        <Switch>
-          <Route path="/" component={Home}/>
-          <Route path="/lobby" component={Lobby}/>
-        </Switch>
+        <Router>
+          <Switch>
+            <NavBar/>
+          </Switch>
+          <Switch>
+            <Route path="/" exact component={RoomCode}/>
+            <Route path="/lobby" component={ChooseGame}/>
+            <Route path="/about" component={About}/>
+          </Switch>
+        </Router>
       </div>
     );
   }
