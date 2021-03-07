@@ -6,9 +6,10 @@ import {
   Link
 } from "react-router-dom";
 
-import ChooseGame from './components/Lobby/ChooseGame.js';
-import RoomCode from './components/Home/RoomCode.js';
+import Lobby from './components/Lobby/Lobby.js';
+import Home from './components/Home/Home.js';
 import NavBar from './components/Nav/NavBar.js';
+import About from './components/About/About.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -56,8 +57,8 @@ class App extends React.Component {
             <NavBar/>
           </Switch>
           <Switch>
-            <Route path="/" exact component={RoomCode}/>
-            <Route path="/lobby" component={ChooseGame}/>
+            <Route path="/" exact component={Home}/>
+            <Route path="/lobby" component={Lobby}/>
             <Route path="/about" component={About}/>
           </Switch>
         </Router>
