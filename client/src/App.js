@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import RoomCode from './RoomCode.js'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+// import Home from './components/Home';
+// import Lobby from './components/Lobby';
+import ChooseGame from './components/Lobby/ChooseGame.js';
+import RoomCode from './components/Home/RoomCode.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -42,6 +51,12 @@ class App extends React.Component {
           Log {this.state.isToggleOn ? 'On' : 'Out'}
         </button>
         {<RoomCode />}
+        {<ChooseGame />}
+        <br />
+        <Switch>
+          <Route path="/" component={Home}/>
+          <Route path="/lobby" component={Lobby}/>
+        </Switch>
       </div>
     );
   }
