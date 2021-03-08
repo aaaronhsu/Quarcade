@@ -33,3 +33,7 @@ const HomeLobbySchema = new Schema({
     }
   ]
 });
+
+//this saves the HomeLobby model in a homelobbys collection in mongo
+const HomeLobby = mongoose.model("homelobby", HomeLobbySchema);
+module.exports = HomeLobby;

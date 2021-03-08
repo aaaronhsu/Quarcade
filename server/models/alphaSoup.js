@@ -45,3 +45,7 @@ const AlphaSoupSchema = new Schema({
     }
   ]
 });
+
+//this saves the AlphaSoup model in a alphasoups collection in mongo
+const AlphaSoup = mongoose.model("alphasoup", AlphaSoupSchema);
+module.exports = AlphaSoup;

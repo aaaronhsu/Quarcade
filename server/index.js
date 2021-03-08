@@ -3,12 +3,14 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-//testing
 
 //for connection string
 require("dotenv").config();
 
-app.use(express.json()); //lets server accept json stuff
+//converts frontend data to readable json
+app.use(bodyParser.json());
+
+//app.use(express.json()); //lets server accept json stuff
 app.use(cors()); //some trust able thingy that I don't get
 
 //connect to the routes--> if you go to localhost:5000/roomCodes you can get all the data that's been posted
