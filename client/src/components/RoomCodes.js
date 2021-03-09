@@ -46,8 +46,13 @@ class RoomCodes extends Component {
     //adds room to state copy
     roomsCopy.push(newRoom);
 
+    //generates random name until the lobby screen
+    let randomNum = Math.round(1000 + Math.random() * 9000);
+    //console.log(randomNum);
+    let tempName = "Player " + randomNum;
+
     //push new room code to the backend
-    this.pushCodeToBackend(roomCode);
+    this.pushCodeToBackend(roomCode, tempName);
 
     //update state
     this.setState({
@@ -57,9 +62,9 @@ class RoomCodes extends Component {
   };
 
   //below is the attempt to get axios to push the code but it isn't working
-  async pushCodeToBackend(roomCode) {
+  async pushCodeToBackend(roomCode, tempName) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: "bob", socket: "I HAVE NO IDEA WHAT THIS IS LOL" } });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: "I HAVE NO IDEA WHAT THIS IS LOL" } });
       console.log("Room was succesffully created");
     } catch (error) {
       console.log("There was an error.");
