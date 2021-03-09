@@ -59,7 +59,7 @@ class RoomCodes extends Component {
   //below is the attempt to get axios to push the code but it isn't working
   async pushCodeToBackend(roomCode) {
     try {
-      await Axios.post("http://localhost:5000/roomCodes", { roomCode: roomCode });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode });
       console.log("Room was succesffully created");
     } catch (error) {
       console.log("There was an error.");
@@ -86,7 +86,7 @@ class RoomCodes extends Component {
   async findRoomBackend(roomCode) {
     try {
       //doesn't work yet because I haven't coded that route
-      await Axios.get("http://localhost:5000/roomCodes", { roomCode: roomCode });
+      await Axios.get("http://localhost:5000/homeLobby", { roomCode: roomCode });
       console.log("Room was found and retrieved");
     } catch (error) {
       console.log("There was an error. Oopsies");

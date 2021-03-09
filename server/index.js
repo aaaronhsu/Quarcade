@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 app.use(cors()); //some trust able thingy that I don't get
 
 //connect to the routes--> if you go to localhost:5000/roomCodes you can get all the data that's been posted
-const roomCodesRouter = require("./routes/roomCodes");
-app.use("/roomCodes", roomCodesRouter);
+const homeLobbyRouter = require("./routes/homeLobby");
+app.use("/homeLobby", homeLobbyRouter);
 
 //connect to my database
 const PORT = process.env.PORT;
