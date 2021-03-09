@@ -18,24 +18,23 @@ const HomeLobbySchema = new Schema({
     type: Date,
     required: true,
     default: Date.now
-  }
-  /*
+  },
+
   users: [
-    //don't know if I have to define that this is an array?
     {
       name: {
         type: String,
-        required: false
+        required: true,
         //still trying to set this default string
-        //default: "player1"
+        default: "player1"
       },
       socket: {
         type: String,
-        required: false
+        required: false,
+        default: "aaron will input"
       }
     }
   ]
-  */
 });
 
 //this saves the HomeLobby model in a homelobbys collection in mongo

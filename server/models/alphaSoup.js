@@ -20,7 +20,6 @@ const AlphaSoupSchema = new Schema({
     default: Date.now
   },
   users: [
-    //don't know if I have to define that this is an array?
     {
       name: {
         type: String,

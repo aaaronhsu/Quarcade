@@ -59,7 +59,7 @@ class RoomCodes extends Component {
   //below is the attempt to get axios to push the code but it isn't working
   async pushCodeToBackend(roomCode) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: "bob", socket: "I HAVE NO IDEA WHAT THIS IS LOL" } });
       console.log("Room was succesffully created");
     } catch (error) {
       console.log("There was an error.");
