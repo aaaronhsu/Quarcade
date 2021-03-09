@@ -1,7 +1,7 @@
 import React, { Component, UseState } from "react";
 import Axios from "axios"; //used to push stuff to the backend
 
-class RoomCodes extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -138,4 +138,4 @@ class RoomCodes extends Component {
   }
 }
 
-export default RoomCodes;
+export default Home;
