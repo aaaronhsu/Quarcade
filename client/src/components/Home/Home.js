@@ -5,8 +5,10 @@ import CreateRoom from './CreateRoom.js'
 class Home extends React.Component {
   render() {
     return (
-      <RoomCode />,
-      <CreateRoom />
+      <div>
+        <RoomCode />
+        <CreateRoom />
+      </div>
     )}
 }
 
