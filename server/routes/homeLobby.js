@@ -3,20 +3,7 @@ const router = express.Router();
 //imports schema from models
 const HomeLobby = require("../models/homeLobby");
 
-/*
-//pushing a room code to mongo
-router.post("/", async (req, res) => {
-  //create the information
-  const homeLobby = new HomeLobby(req.body); //req.body accesses the json converted information from the request (ALL OF IT)
-  //add the information
-  try {
-    const newHomeLobby = await homeLobby.save();
-    res.status(201).json(newHomeLobby); //201 is a successfully created code
-  } catch (error) {
-    res.status(400).json({ message: error }); //400 errors are when user gives bad data
-  }
-});
-*/
+//POSTS
 
 //another method of posting, curious about how it works
 router.post("/", function (req, res, next) {
@@ -26,6 +13,8 @@ router.post("/", function (req, res, next) {
     })
     .catch(next);
 });
+
+//GETS
 
 //get all the info- this is to loop through to see if a room exists if that's what we do
 router.get("/", async (req, res) => {
@@ -37,22 +26,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-/*
-//put requests, allow you to update desired information on a term
-router.put('/:id', asyn (req, res, next) => {
-
-})
-*/
-
-//delete requests- deletes an item and returns this deleted item
-router.delete("/:id", function (req, res, next) {
-  HomeLobby.findByIdAndRemove({ _id: req.params.id })
-    .then(function (homelobby) {
-      res.send(homelobby);
-    })
-    .catch(next);
-});
-
 //get requests for one thing, if it doesn't get it, returns nothing (empty array)
 router.get("/:query", function (req, res, next) {
   var query = req.params.query;
@@ -62,6 +35,34 @@ router.get("/:query", function (req, res, next) {
       res.send(result);
     }
   }).catch(next);
+});
+
+//PUTS
+
+//put requests, allow you to update desired information on a term
+//router.put("/:id", function (req, res, next) {});
+
+//DELETES
+
+/* COMMENTED OUT BECAUSE FOR SOME REASON I CAN'T HAVE MULTIPLY DELETE REQS W same path
+//delete requests BY ID- deletes an item and returns this deleted item
+router.delete("/:id", function (req, res, next) {
+  HomeLobby.findByIdAndRemove({ _id: req.params.id })
+    .then(function (homelobby) {
+      res.send(homelobby);
+    })
+    .catch(next);
+});
+*/
+
+//delete requests BY ROOMCODE- deletes an item and returns this deleted item
+router.delete("/:query", function (req, res, next) {
+  var query = req.params.query;
+  HomeLobby.findOneAndDelete({ roomCode: query })
+    .then(function (homelobby) {
+      res.send(homelobby);
+    })
+    .catch(next);
 });
 
 module.exports = router;
