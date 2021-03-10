@@ -46,12 +46,22 @@ router.put('/:id', asyn (req, res, next) => {
 
 //delete requests- deletes an item and returns this deleted item
 router.delete("/:id", function (req, res, next) {
-  //console.log(req.params.id);
   HomeLobby.findByIdAndRemove({ _id: req.params.id })
     .then(function (homelobby) {
       res.send(homelobby);
     })
     .catch(next);
+});
+
+//get requests for one thing, if it doesn't get it, returns nothing (empty array)
+router.get("/:query", function (req, res, next) {
+  var query = req.params.query;
+  HomeLobby.find({ roomCode: query }, function (err, result) {
+    if (err) throw err;
+    if (result) {
+      res.send(result);
+    }
+  }).catch(next);
 });
 
 module.exports = router;
