@@ -29,18 +29,29 @@ router.get("/", async (req, res) => {
 //get requests for one thing, if it doesn't get it, returns nothing (empty array)
 router.get("/:query", function (req, res, next) {
   var query = req.params.query;
-  HomeLobby.find({ roomCode: query }, function (err, result) {
-    if (err) throw err;
-    if (result) {
-      res.send(result);
-    }
-  }).catch(next);
+  HomeLobby.find({ roomCode: query })
+    .then(function (homelobby) {
+      res.send(homelobby);
+    })
+    .catch(next);
 });
 
 //PUTS
 
 //put requests, allow you to update desired information on a term
-//router.put("/:id", function (req, res, next) {});
+//this specifc one allows you to add a user!
+
+//THIS DOES NOT WORK YET
+router.put("/:id", function (req, res, next) {
+  var query = req.params.query;
+  HomeLobby.findOneAndUpdate({ roomCode: query }, req.body)
+    .then(function () {
+      HomeLobby.find({ roomCode: query }).then(function (homelobby) {
+        res.send(homelobby);
+      });
+    })
+    .catch(next);
+});
 
 //DELETES
 
