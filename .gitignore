@@ -44,6 +44,9 @@ jspm_packages/
 # TypeScript v1 declaration files
 typings/
 
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
+
 # TypeScript cache
 *.tsbuildinfo
 
@@ -77,6 +80,11 @@ typings/
 
 # Next.js build output
 .next
+.parcel-cache
+
+# Next.js build output
+.next
+out
 
 # Nuxt.js build / generate output
 .nuxt
@@ -84,7 +92,6 @@ dist
 
 # Gatsby files
 .cache/
-# Comment in the public line in if your project uses Gatsby and *not* Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 
@@ -102,3 +109,13 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
