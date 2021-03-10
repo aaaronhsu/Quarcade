@@ -3,6 +3,7 @@ const router = express.Router();
 //imports schema from models
 const HomeLobby = require("../models/homeLobby");
 
+/*
 //pushing a room code to mongo
 router.post("/", async (req, res) => {
   //create the information
@@ -15,8 +16,18 @@ router.post("/", async (req, res) => {
     res.status(400).json({ message: error }); //400 errors are when user gives bad data
   }
 });
+*/
 
-//get all the info just for testing
+//another method of posting, curious about how it works
+router.post("/", function (req, res, next) {
+  HomeLobby.create(req.body)
+    .then(function (homelobby) {
+      res.send(homelobby);
+    })
+    .catch(next);
+});
+
+//get all the info- this is to loop through to see if a room exists if that's what we do
 router.get("/", async (req, res) => {
   try {
     const homeLobby = await HomeLobby.find();
@@ -25,5 +36,14 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: error.message }); //500 error, something with our server is wrong
   }
 });
+
+/*
+//put requests, allow you to update desired information on a term
+router.put('/:id', asyn (req, res, next) => {
+
+})
+*/
+
+//delete requests- deletes an item and returns this deleted item have
 
 module.exports = router;

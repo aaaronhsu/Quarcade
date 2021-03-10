@@ -17,6 +17,12 @@ app.use(cors()); //some trust able thingy that I don't get
 const homeLobbyRouter = require("./routes/homeLobby");
 app.use("/homeLobby", homeLobbyRouter);
 
+//error handling middleware
+app.use(function (err, req, res, next) {
+  //console.log(err);
+  res.status(400).send({ error: err.message });
+});
+
 //connect to my database
 const PORT = process.env.PORT;
 mongoose
