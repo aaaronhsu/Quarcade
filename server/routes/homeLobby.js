@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
 router.post("/", function (req, res, next) {
   HomeLobby.create(req.body)
     .then(function (homelobby) {
-      res.send(homelobby);
+      res.send(homelobby); //sends the message back to the client with the added data
     })
     .catch(next);
 });
@@ -44,6 +44,14 @@ router.put('/:id', asyn (req, res, next) => {
 })
 */
 
-//delete requests- deletes an item and returns this deleted item have
+//delete requests- deletes an item and returns this deleted item
+router.delete("/:id", function (req, res, next) {
+  //console.log(req.params.id);
+  HomeLobby.findByIdAndRemove({ _id: req.params.id })
+    .then(function (homelobby) {
+      res.send(homelobby);
+    })
+    .catch(next);
+});
 
 module.exports = router;
