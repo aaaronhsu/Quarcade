@@ -1,33 +1,23 @@
-const express = require("express");
+const express = require('express');
+const socketio = require('socket.io');
+const http = require('http');
+
+const socket = require("./serverSockets.js");
+
 const app = express();
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const server = http.createServer(app);
 
-//for connection string
-require("dotenv").config();
+var val = 0;
 
-//converts frontend data to readable json
-app.use(bodyParser.json());
-
-//app.use(express.json()); //lets server accept json stuff
-app.use(cors()); //some trust able thingy that I don't get
-
-//connect to the routes--> if you go to localhost:5000/roomCodes you can get all the data that's been posted
-const homeLobbyRouter = require("./routes/homeLobby");
-app.use("/homeLobby", homeLobbyRouter);
-
-//error handling middleware
-app.use(function (err, req, res, next) {
-  //console.log(err);
-  res.status(400).send({ error: err.message });
+const io = socketio(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  },
 });
 
-//connect to my database
-const PORT = process.env.PORT;
-mongoose
-  .connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-  .catch(error => console.log(error.message));
+socket.init(server);
 
-mongoose.set("useFindAndModify", false); //avoids some deprecation stuff?
+const port = 8000;
+io.listen(port);
+console.log('listening on port', port);
