@@ -35,7 +35,7 @@ class CreateRoom extends React.Component {
 
     // need to connect with backend database and implement verification
     let tempName = "holderNameForUser";
-    this.pushCodeToBackend(this.state.code, tempName);
+    this.pushCodeToBackend(this.state.code, this.state.name);
 
     //clears the fields, this is just to make it look better
     let blank = "";
