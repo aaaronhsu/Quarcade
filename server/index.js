@@ -2,6 +2,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
 
+// this imports the socket stuff from other files, but it's not working so it's commented out
 // const socket = require("./serverSockets.js");
 
 const app = express();
