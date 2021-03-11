@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
 
 class JoinRoom extends React.Component {
   constructor(props) {
@@ -26,6 +27,17 @@ class JoinRoom extends React.Component {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
+    let tempName = "holderNameForUser";
+    this.pushCodeToBackend(this.state.code, tempName);
+  }
+
+  async pushCodeToBackend(roomCode, tempName) {
+    try {
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: "I HAVE NO IDEA WHAT THIS IS LOL" } });
+      console.log("Room was succesfully created");
+    } catch (error) {
+      console.log("There was an error.");
+    }
   }
 
   render() {
