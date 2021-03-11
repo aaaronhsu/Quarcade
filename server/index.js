@@ -7,12 +7,21 @@ const cors = require("cors");
 //for connection string
 require("dotenv").config();
 
-app.use(express.json()); //lets server accept json stuff
+//converts frontend data to readable json
+app.use(bodyParser.json());
+
+//app.use(express.json()); //lets server accept json stuff
 app.use(cors()); //some trust able thingy that I don't get
 
 //connect to the routes--> if you go to localhost:5000/roomCodes you can get all the data that's been posted
-const roomCodesRouter = require("./routes/roomCodes");
-app.use("/roomCodes", roomCodesRouter);
+const homeLobbyRouter = require("./routes/homeLobby");
+app.use("/homeLobby", homeLobbyRouter);
+
+//error handling middleware
+app.use(function (err, req, res, next) {
+  //console.log(err);
+  res.status(400).send({ error: err.message });
+});
 
 //connect to my database
 const PORT = process.env.PORT;

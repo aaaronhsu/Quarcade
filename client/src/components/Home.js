@@ -1,7 +1,7 @@
 import React, { Component, UseState } from "react";
 import Axios from "axios"; //used to push stuff to the backend
 
-class RoomCodes extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -46,8 +46,13 @@ class RoomCodes extends Component {
     //adds room to state copy
     roomsCopy.push(newRoom);
 
+    //generates random name until the lobby screen
+    let randomNum = Math.round(1000 + Math.random() * 9000);
+    //console.log(randomNum);
+    let tempName = "Player " + randomNum;
+
     //push new room code to the backend
-    this.pushCodeToBackend(roomCode);
+    this.pushCodeToBackend(roomCode, tempName);
 
     //update state
     this.setState({
@@ -57,9 +62,9 @@ class RoomCodes extends Component {
   };
 
   //below is the attempt to get axios to push the code but it isn't working
-  async pushCodeToBackend(roomCode) {
+  async pushCodeToBackend(roomCode, tempName) {
     try {
-      await Axios.post("http://localhost:5000/roomCodes", { roomCode: roomCode });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: "I HAVE NO IDEA WHAT THIS IS LOL" } });
       console.log("Room was succesffully created");
     } catch (error) {
       console.log("There was an error.");
@@ -86,7 +91,7 @@ class RoomCodes extends Component {
   async findRoomBackend(roomCode) {
     try {
       //doesn't work yet because I haven't coded that route
-      await Axios.get("http://localhost:5000/roomCodes", { roomCode: roomCode });
+      await Axios.get("http://localhost:5000/homeLobby", { roomCode: roomCode });
       console.log("Room was found and retrieved");
     } catch (error) {
       console.log("There was an error. Oopsies");
@@ -133,4 +138,4 @@ class RoomCodes extends Component {
   }
 }
 
-export default RoomCodes;
+export default Home;

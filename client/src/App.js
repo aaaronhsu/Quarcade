@@ -43,7 +43,6 @@ class App extends React.Component {
     }));
   }
 
-
   render() {
     return (
       <div>
@@ -63,7 +62,6 @@ class App extends React.Component {
             <Route path="/about" component={About}/>
           </Switch>
         </Router>
-
       </div>
     );
   }
