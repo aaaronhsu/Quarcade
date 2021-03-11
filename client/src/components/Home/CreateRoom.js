@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
+import React, { Component } from "react";
+import Axios from "axios";
 
 class CreateRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       createRoom: false,
-      code: ''
+      code: ""
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -15,16 +15,14 @@ class CreateRoom extends React.Component {
   }
 
   handleClick(event) {
-    alert('Click happened!')
-    this.setState(
-      {createRoom: !this.state.createRoom}
-    )
+    alert("Click happened!");
+    this.setState({ createRoom: !this.state.createRoom });
     event.preventDefault();
   }
 
   handleChange(event) {
-    const change = event.target.value
-    const name = event.target.name
+    const change = event.target.value;
+    const name = event.target.name;
 
     this.setState({
       [name]: change
@@ -32,12 +30,16 @@ class CreateRoom extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('Hi ' + this.state.name + ' you submitted Room Code: ' + this.state.code);
+    alert("Hi " + this.state.name + " you submitted Room Code: " + this.state.code);
     event.preventDefault();
 
     // need to connect with backend database and implement verification
     let tempName = "holderNameForUser";
     this.pushCodeToBackend(this.state.code, tempName);
+
+    //clears the fields, this is just to make it look better
+    let blank = "";
+    this.setState({ code: blank });
   }
 
   async pushCodeToBackend(roomCode, tempName) {
@@ -52,24 +54,19 @@ class CreateRoom extends React.Component {
   render() {
     return (
       <div>
-        <h2 onClick={this.handleClick}>
-          or, create a room
-        </h2>
-        {this.state.createRoom
-          ? <form onSubmit={this.handleSubmit}>
+        <h2 onClick={this.handleClick}>or, create a room</h2>
+        {this.state.createRoom ? (
+          <form onSubmit={this.handleSubmit}>
             <label>
               Room Code:
-              <input
-                name="code"
-                type="text"
-                value={this.state.code}
-                onChange={this.handleChange} />
+              <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
             </label>
             <input type="submit" value="Submit" />
           </form>
-        : null}
+        ) : null}
       </div>
-    )}
+    );
   }
+}
 
 export default CreateRoom;

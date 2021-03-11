@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
+import React, { Component } from "react";
+import Axios from "axios";
 
 class JoinRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      code: '',
-  };
+      name: "",
+      code: ""
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    const change = event.target.value
-    const name = event.target.name
+    const change = event.target.value;
+    const name = event.target.name;
 
     this.setState({
       [name]: change
@@ -23,12 +23,16 @@ class JoinRoom extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('Hi ' + this.state.name + ' you submitted Room Code: ' + this.state.code);
+    alert("Hi " + this.state.name + " you submitted Room Code: " + this.state.code);
     event.preventDefault();
 
     // need to connect with backend database and implement verification
     let tempName = "holderNameForUser";
     this.pushCodeToBackend(this.state.code, tempName);
+
+    //clears the fields, this is just to make it look better
+    let blank = "";
+    this.setState({ name: blank, code: blank });
   }
 
   async pushCodeToBackend(roomCode, tempName) {
@@ -45,20 +49,12 @@ class JoinRoom extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Name:
-          <input
-            name="name"
-            type="text"
-            value={this.state.name}
-            onChange={this.handleChange} />
+          <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
         </label>
         <br />
         <label>
           Room Code:
-          <input
-            name="code"
-            type="text"
-            value={this.state.code}
-            onChange={this.handleChange} />
+          <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
