@@ -29,12 +29,18 @@ const socketList = [];
 io.on("connection", (client) => {
   console.log(`A user has connected with id ${client.id}`);
 
-  socketList.concat(client.id);
+  socketList.push(client.id);
+
+  client.on("printConnectedSockets", () => {
+    console.log("List of all connected sockets:", socketList);
+  });
 
   // when a user disconnects from the server, this detects the socket disconnection and removes the socket id from the list
-  io.on("disconnect", () => {
-    delete socketList(client.id);
-  })
+  client.on("disconnect", () => {
+    socketList.splice(socketList.indexOf(client.id), 1);
+  });
+
+  
 });
 
 

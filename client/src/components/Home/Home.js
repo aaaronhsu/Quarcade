@@ -8,13 +8,32 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    let io = socketio('http://localhost:8000');
+    this.state = {
+      io: socketio('http://localhost:8000'),
+    }
   }
+
+  requestSocketInfo = () => {
+    this.state.io.emit("printConnectedSockets");
+  }
+
+  renderConnectedSocketsButton = () => {
+    return (
+      <div>
+        <button onClick = {() => this.requestSocketInfo()}>
+          Print Sockets! (to server terminal)
+        </button>
+      </div>
+    );
+  };
+
   render() {
     return (
       <div>
         <JoinRoom />
         <CreateRoom />
+
+        {this.renderConnectedSocketsButton()}
       </div>
     )}
 }
