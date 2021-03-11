@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import RoomCode from './RoomCode.js'
+import JoinRoom from './JoinRoom.js'
 import CreateRoom from './CreateRoom.js'
 
 class Home extends React.Component {
   render() {
     return (
       <div>
-        <RoomCode />
+        <JoinRoom />
         <CreateRoom />
       </div>
     )}
