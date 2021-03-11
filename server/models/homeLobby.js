@@ -27,11 +27,6 @@ const HomeLobbySchema = new Schema({
         required: true,
         //still trying to set this default string
         default: "player1"
-      },
-      socket: {
-        type: String,
-        required: false,
-        default: "aaron will input"
       }
     }
   ]
