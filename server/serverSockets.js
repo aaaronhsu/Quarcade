@@ -1,10 +1,11 @@
 let io;
 
-const socketList = {};
+const socketList = [];
 
 module.exports = {
   init: (http) => {
     io = require("socket.io")(http);
+    console.log("called serverSockets.js");
 
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", (client) => {
