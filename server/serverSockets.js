@@ -17,8 +17,6 @@ module.exports = {
       },
     });
 
-    console.log("called serverSockets.js");
-
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", (client) => {
       console.log(`A user has connected with id ${client.id}`);
