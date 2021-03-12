@@ -5,8 +5,7 @@
   users: {
     {
       name: "user",
-      socket: "335ARST"
-
+      
       wordsOwned: {
         {
           word: "bob",
@@ -20,7 +19,6 @@
     },
     {
       name: "user2",
-      socket: "33BARST"
 
       wordsOwned: {
         {
