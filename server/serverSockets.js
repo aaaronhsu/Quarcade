@@ -25,6 +25,8 @@ module.exports = {
     
       // when a user disconnects from the server, this detects the socket disconnection and removes the socket id from the list
       client.on("disconnect", () => {
+        console.log(`A user has disconnected with id ${client.id}`);
+        
         socketList.splice(socketList.indexOf(client.id), 1);
       })
     });
