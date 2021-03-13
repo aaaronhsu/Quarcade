@@ -45,7 +45,9 @@ router.get("/:query", function (req, res, next) {
 //this should allow the user to be added
 router.put("/:query", function (req, res, next) {
   var query = req.params.query;
-  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: req.body.name } } })
+  var name = req.body.users.name;
+  console.log(name);
+  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name } } })
     .then(function () {
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);
