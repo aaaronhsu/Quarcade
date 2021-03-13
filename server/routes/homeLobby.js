@@ -5,7 +5,7 @@ const HomeLobby = require("../models/homeLobby");
 
 //POSTS
 
-//another method of posting, curious about how it works
+//post to the database (like add a room)
 router.post("/", function (req, res, next) {
   HomeLobby.create(req.body)
     .then(function (homelobby) {
@@ -39,10 +39,9 @@ router.get("/:query", function (req, res, next) {
 //PUTS
 
 //put requests, allow you to update desired information on a term
-//this specifc one allows you to add a user!
 
-//THIS DOES NOT WORK YET=
-//this should allow the user to be added
+//you input a user, and it adds it to the right room (homeLobby/<room> for axios)
+//returns the updated user
 router.put("/:query", function (req, res, next) {
   var query = req.params.query;
   var name = req.body.users.name;
@@ -57,17 +56,6 @@ router.put("/:query", function (req, res, next) {
 });
 
 //DELETES
-
-/* COMMENTED OUT BECAUSE FOR SOME REASON I CAN'T HAVE MULTIPLY DELETE REQS W same path
-//delete requests BY ID- deletes an item and returns this deleted item
-router.delete("/:id", function (req, res, next) {
-  HomeLobby.findByIdAndRemove({ _id: req.params.id })
-    .then(function (homelobby) {
-      res.send(homelobby);
-    })
-    .catch(next);
-});
-*/
 
 //delete requests BY ROOMCODE- deletes an item and returns this deleted item
 router.delete("/:query", function (req, res, next) {
