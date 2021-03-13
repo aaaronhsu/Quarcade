@@ -41,10 +41,11 @@ router.get("/:query", function (req, res, next) {
 //put requests, allow you to update desired information on a term
 //this specifc one allows you to add a user!
 
-//THIS DOES NOT WORK YET
-router.put("/:id", function (req, res, next) {
+//THIS DOES NOT WORK YET=
+//this should allow the user to be added
+router.put("/:query", function (req, res, next) {
   var query = req.params.query;
-  HomeLobby.findOneAndUpdate({ roomCode: query }, req.body)
+  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: req.body.name } } })
     .then(function () {
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);
