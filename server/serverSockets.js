@@ -46,5 +46,6 @@ module.exports = {
         delete socketLocation[client.id];
       })
     });
-  }
+  },
+
 };
