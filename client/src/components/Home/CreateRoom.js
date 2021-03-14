@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useRef } from "react";
 import Axios from "axios";
-import clientSocket from '../../ClientSocket.js';
+import clientSocket from "../../ClientSocket.js";
 
 class CreateRoom extends React.Component {
   constructor(props) {
@@ -10,25 +10,24 @@ class CreateRoom extends React.Component {
       code: ""
     };
   }
-  
 
   // determines whether or not "create room" is shown
   handleClick = event => {
     this.setState({ createRoom: !this.state.createRoom });
     event.preventDefault();
-  }
+  };
 
   // handles changes to text field for room code
   handleChange = event => {
     this.setState({
       code: event.target.value
     });
-  }
-  
+  };
+
   // submits room code to database
   handleSubmit = event => {
     event.preventDefault();
-    
+
     alert("You submitted Room Code to Create: " + this.state.code);
 
     // need to connect with backend database and implement verification
@@ -37,7 +36,7 @@ class CreateRoom extends React.Component {
 
     //clears the fields, this is just to make it look better
     this.setState({ code: "" });
-  }
+  };
 
   // uses axios to post client socket id and creates room
   async pushCodeToBackend(roomCode, tempName) {
