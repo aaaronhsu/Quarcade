@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useRef } from "react";
 import Axios from "axios";
+import clientSocket from '../../ClientSocket.js';
 
 class CreateRoom extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class CreateRoom extends React.Component {
 
   async pushCodeToBackend(roomCode, tempName) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName } });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: clientSocket.id} });
       console.log("Room was succesfully created");
     } catch (error) {
       console.log("There was an error.");
