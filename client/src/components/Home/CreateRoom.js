@@ -9,41 +9,37 @@ class CreateRoom extends React.Component {
       createRoom: false,
       code: ""
     };
-
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
 
-  handleClick(event) {
+  // determines whether or not "create room" is shown
+  handleClick = event => {
     this.setState({ createRoom: !this.state.createRoom });
     event.preventDefault();
   }
 
-  handleChange(event) {
-    const change = event.target.value;
-    const name = event.target.name;
-
+  // handles changes to text field for room code
+  handleChange = event => {
     this.setState({
-      [name]: change
+      code: event.target.value
     });
   }
   
-  handleSubmit(event) {
-    alert("Hi " + this.state.name + " you submitted Room Code: " + this.state.code);
-    //document.getGetElementById("form1").submit();
+  // submits room code to database
+  handleSubmit = event => {
     event.preventDefault();
+    
+    alert("You submitted Room Code to Create: " + this.state.code);
 
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
     this.pushCodeToBackend(this.state.code, tempName);
 
     //clears the fields, this is just to make it look better
-    let blank = "";
-    this.setState({ code: blank });
+    this.setState({ code: "" });
   }
 
+  // uses axios to post client socket id and creates room
   async pushCodeToBackend(roomCode, tempName) {
     try {
       await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: clientSocket.id } });

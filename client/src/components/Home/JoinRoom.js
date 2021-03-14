@@ -9,12 +9,10 @@ class JoinRoom extends React.Component {
       name: "",
       code: ""
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  // handles changes to text field for room code
+  handleChange = event => {
     const change = event.target.value;
     const name = event.target.name;
 
@@ -23,17 +21,18 @@ class JoinRoom extends React.Component {
     });
   }
 
-  handleSubmit(event) {
-    alert("Hi " + this.state.name + " you submitted Room Code: " + this.state.code);
+  // submits room code to database
+  handleSubmit = event => {
     event.preventDefault();
+
+    alert("You submitted Room Code to Join: " + this.state.code);
 
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
     this.pushCodeToBackend(this.state.code, tempName);
 
     //clears the fields, this is just to make it look better
-    let blank = "";
-    this.setState({ name: blank, code: blank });
+    this.setState({ code: "" });
   }
 
   async pushCodeToBackend(roomCode, tempName) {
