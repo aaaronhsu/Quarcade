@@ -49,11 +49,6 @@ class JoinRoom extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Name:
-          <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
-        </label>
-        <br />
-        <label>
           Room Code:
           <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
         </label>
