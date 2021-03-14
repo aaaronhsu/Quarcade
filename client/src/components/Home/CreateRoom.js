@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useRef } from "react";
 import Axios from "axios";
 
 class CreateRoom extends React.Component {
@@ -13,6 +13,7 @@ class CreateRoom extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  
 
   handleClick(event) {
     alert("Click happened!");
@@ -28,9 +29,10 @@ class CreateRoom extends React.Component {
       [name]: change
     });
   }
-
+  
   handleSubmit(event) {
     alert("Hi " + this.state.name + " you submitted Room Code: " + this.state.code);
+    //document.getGetElementById("form1").submit();
     event.preventDefault();
 
     // need to connect with backend database and implement verification
@@ -61,7 +63,6 @@ class CreateRoom extends React.Component {
               Room Code:
               <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
             </label>
-            <input type="submit" value="Submit" />
           </form>
         ) : null}
       </div>
