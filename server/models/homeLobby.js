@@ -24,9 +24,23 @@ const HomeLobbySchema = new Schema({
     {
       name: {
         type: String,
-        required: true,
-        //still trying to set this default string
-        default: "player1"
+        required: true
+      },
+      socket: {
+        type: String,
+        required: true
+      }
+    }
+  ],
+  chatMessages: [
+    {
+      message: {
+        type: String,
+        required: true
+      },
+      sender: {
+        type: String,
+        required: true
       }
     }
   ]
