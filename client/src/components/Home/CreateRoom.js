@@ -37,8 +37,8 @@ class CreateRoom extends React.Component {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
-    let tempName = "holderNameForUser";
-    this.pushCodeToBackend(this.state.code, this.state.name);
+    let tempName = "temporary name that will be updated in lobby";
+    this.pushCodeToBackend(this.state.code, tempName);
 
     //clears the fields, this is just to make it look better
     let blank = "";
@@ -47,7 +47,7 @@ class CreateRoom extends React.Component {
 
   async pushCodeToBackend(roomCode, tempName) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: clientSocket.id} });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: clientSocket.id } });
       console.log("Room was succesfully created");
     } catch (error) {
       console.log("There was an error.");

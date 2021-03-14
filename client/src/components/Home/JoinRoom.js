@@ -28,8 +28,8 @@ class JoinRoom extends React.Component {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
-    let tempName = "holderNameForUser";
-    this.pushCodeToBackend(this.state.code, this.state.name);
+    let tempName = "temporary name that will be updated in lobby";
+    this.pushCodeToBackend(this.state.code, tempName);
 
     //clears the fields, this is just to make it look better
     let blank = "";
