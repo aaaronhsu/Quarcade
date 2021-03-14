@@ -17,7 +17,6 @@ class CreateRoom extends React.Component {
   
 
   handleClick(event) {
-    alert("Click happened!");
     this.setState({ createRoom: !this.state.createRoom });
     event.preventDefault();
   }
