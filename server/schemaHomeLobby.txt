@@ -1,0 +1,14 @@
+{
+  ID: "2039AH4",
+  roomCode: "nameOfRoom",
+  active: "true",
+  users: {
+    {
+      name: "user",
+    },
+    {
+      name: "user2",
+    }
+  },
+  
+}
