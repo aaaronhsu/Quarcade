@@ -44,7 +44,7 @@ class CreateRoom extends React.Component {
 
   async pushCodeToBackend(roomCode, tempName) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: "I HAVE NO IDEA WHAT THIS IS LOL" } });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName } });
       console.log("Room was succesfully created");
     } catch (error) {
       console.log("There was an error.");
