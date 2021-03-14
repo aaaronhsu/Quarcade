@@ -6,16 +6,13 @@ class ChooseGame extends React.Component {
     this.state = {
       value: ''
     }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     // need to connect with backend database
   }
 
