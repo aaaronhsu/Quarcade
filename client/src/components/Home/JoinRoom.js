@@ -45,6 +45,7 @@ class JoinRoom extends React.Component {
             // this means if it exists you can join
             console.log("chosen a good room");
             // right here should be a put request to add the user
+            this.addUserToRoom(roomCode, tempName);
 
             // also, there should be something that moves you to the lobby screen
           } else {
@@ -57,6 +58,16 @@ class JoinRoom extends React.Component {
       );
     } catch (error) {
       console.log("There was an error with get Room");
+    }
+  }
+
+  // adds the user to the desired room (need to add the socket)
+  async addUserToRoom(roomCode, tempName) {
+    try {
+      await Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName, socket: "INSERT SOCKET INFO" } });
+      console.log("User successfully added");
+    } catch (error) {
+      console.log("There was an error with adding the user");
     }
   }
 
