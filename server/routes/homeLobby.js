@@ -3,7 +3,7 @@ const router = express.Router();
 //imports schema from models
 const HomeLobby = require("../models/homeLobby");
 
-//POSTS
+// ------------------------------------ POST Requests ------------------------------------
 
 // Adds a room to the database
 router.post("/", function (req, res, next) {
@@ -17,7 +17,8 @@ router.post("/", function (req, res, next) {
     .catch(next);
 });
 
-//GETS
+
+// ------------------------------------ GET Requests ------------------------------------
 
 // retrieves all room information
 router.get("/", async (req, res) => {
@@ -39,7 +40,8 @@ router.get("/:query", function (req, res, next) {
     .catch(next);
 });
 
-//PUTS
+
+// ------------------------------------ PUT Requests ------------------------------------
 
 //put requests, allow you to update desired information on a term
 
@@ -60,7 +62,8 @@ router.put("/:query", function (req, res, next) {
     .catch(next);
 });
 
-//DELETES
+
+// ------------------------------------ DELETE Requests ------------------------------------
 
 //delete requests BY ROOMCODE- deletes an item and returns this deleted item
 router.delete("/:query", function (req, res, next) {
