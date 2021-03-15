@@ -42,8 +42,7 @@ class JoinRoom extends React.Component {
         res => {
           const matches = res.data;
 
-          console.log(matches[0].users);
-
+          // prevents a the same user from joining a room twice
           for (var i = 0; i < matches[0].users.length; i++) {
             if (matches[0].users[i].socket === clientSocket.id) {
               console.log("This user is already in the room");
