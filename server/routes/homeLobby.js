@@ -8,7 +8,7 @@ const HomeLobby = require("../models/homeLobby");
 // Adds a room to the database
 router.post("/", function (req, res, next) {
 
-  console.log("Room", req.bod.roomCode, "has been created");
+  console.log("Room", req.body.roomCode, "has been created");
 
   HomeLobby.create(req.body)
     .then(function (homelobby) {
