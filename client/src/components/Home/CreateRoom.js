@@ -33,15 +33,15 @@ class CreateRoom extends React.Component {
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
 
-    //first check if the it exists, this calls the post if it doesn't
-    this.checkExistence(this.state.code, tempName);
+    // first check if the it exists, this calls the post if it doesn't
+    this.createRoom(this.state.code, tempName);
 
     // clears the fields, this is just to make it look better
     this.setState({ code: "" });
   };
 
   // get request to see if it exists (true if it exists)
-  async checkExistence(roomCode, tempName) {
+  async createRoom(roomCode, tempName) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
