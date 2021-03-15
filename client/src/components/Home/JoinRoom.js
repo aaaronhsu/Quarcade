@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import clientSocket from '../../ClientSocket.js';
+import clientSocket from "../../ClientSocket.js";
 
 class JoinRoom extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class JoinRoom extends React.Component {
     this.setState({
       [name]: change
     });
-  }
+  };
 
   // submits room code to database
   handleSubmit = event => {
@@ -29,18 +29,34 @@ class JoinRoom extends React.Component {
 
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
-    this.pushCodeToBackend(this.state.code, tempName);
+    this.checkExistence(this.state.code, tempName);
 
     //clears the fields, this is just to make it look better
     this.setState({ code: "" });
-  }
+  };
 
-  async pushCodeToBackend(roomCode, tempName) {
+  // get request to see if it exists, if it doesn't, call post
+  async checkExistence(roomCode, tempName) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: clientSocket.id } });
-      console.log("Room was succesfully created");
+      await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
+        res => {
+          const matches = res.data;
+          if (matches.length > 0) {
+            // this means if it exists you can join
+            console.log("chosen a good room");
+            // right here should be a put request to add the user
+
+            // also, there should be something that moves you to the lobby screen
+          } else {
+            alert("This room does not exist");
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
     } catch (error) {
-      console.log("There was an error.");
+      console.log("There was an error with get Room");
     }
   }
 

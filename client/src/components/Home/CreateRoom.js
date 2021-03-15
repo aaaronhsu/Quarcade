@@ -48,7 +48,7 @@ class CreateRoom extends React.Component {
           const matches = res.data;
           if (matches.length > 0) {
             // this means if it exists, send an alert
-            alert("This room already exists, please pick again");
+            alert("This room already exists, please choose another name");
           } else {
             this.pushCodeToBackend(roomCode, tempName);
           }
