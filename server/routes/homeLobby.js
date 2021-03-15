@@ -54,11 +54,9 @@ router.put("/:query", function (req, res, next) {
   var query = req.params.query;
   var name = req.body.users.name;
   var socket = req.body.users.socket;
-  console.log("User with socket", socket, "has been added to room", query);
 
   HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
     .then(function () {
-      console.log(query);
 
       // adds user to socket list
       socketio.addUser(req.body.users.socket, query);
