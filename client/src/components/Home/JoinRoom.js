@@ -41,6 +41,16 @@ class JoinRoom extends React.Component {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
           const matches = res.data;
+
+          console.log(matches[0].users);
+
+          for (var i = 0; i < matches[0].users.length; i++) {
+            if (matches[0].users[i].socket === clientSocket.id) {
+              console.log("This user is already in the room");
+              return;
+            }
+          }
+
           if (matches.length > 0) {
             // this means if it exists you can join
             console.log("chosen a good room");
@@ -50,7 +60,7 @@ class JoinRoom extends React.Component {
 
             // also, there should be something that moves you to the lobby screen
 
-            
+
           } else {
             alert("This room does not exist");
           }
