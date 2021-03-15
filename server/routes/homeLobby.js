@@ -5,18 +5,21 @@ const HomeLobby = require("../models/homeLobby");
 
 //POSTS
 
-//post to the database (like add a room)
+// Adds a room to the database
 router.post("/", function (req, res, next) {
+
+  console.log("Room", req.bod.roomCode, "has been created");
+
   HomeLobby.create(req.body)
     .then(function (homelobby) {
-      res.send(homelobby); //sends the message back to the client with the added data
+      res.send(homelobby); // sends the message back to the client with the added data
     })
     .catch(next);
 });
 
 //GETS
 
-//get all the info- this is to loop through to see if a room exists if that's what we do
+// retrieves all room information
 router.get("/", async (req, res) => {
   try {
     const homeLobby = await HomeLobby.find();
