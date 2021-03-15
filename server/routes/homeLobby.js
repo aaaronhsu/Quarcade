@@ -3,20 +3,27 @@ const router = express.Router();
 //imports schema from models
 const HomeLobby = require("../models/homeLobby");
 
-//POSTS
+const socketio = require("../serverSockets.js");
 
-//post to the database (like add a room)
+// ------------------------------------ POST Requests ------------------------------------
+
+// Adds a room to the database
 router.post("/", function (req, res, next) {
+
+  console.log("Room", req.body.roomCode, "has been created");
+
   HomeLobby.create(req.body)
     .then(function (homelobby) {
-      res.send(homelobby); //sends the message back to the client with the added data
+      socketio.addUser(req.body.users.socket, req.body.roomCode);
+      res.send(homelobby); // sends the message back to the client with the added data
     })
     .catch(next);
 });
 
-//GETS
 
-//get all the info- this is to loop through to see if a room exists if that's what we do
+// ------------------------------------ GET Requests ------------------------------------
+
+// retrieves all room information
 router.get("/", async (req, res) => {
   try {
     const homeLobby = await HomeLobby.find();
@@ -36,7 +43,8 @@ router.get("/:query", function (req, res, next) {
     .catch(next);
 });
 
-//PUTS
+
+// ------------------------------------ PUT Requests ------------------------------------
 
 //put requests, allow you to update desired information on a term
 
@@ -46,17 +54,23 @@ router.put("/:query", function (req, res, next) {
   var query = req.params.query;
   var name = req.body.users.name;
   var socket = req.body.users.socket;
-  console.log(name);
+
   HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
     .then(function () {
+
+      // adds user to socket list
+      socketio.addUser(req.body.users.socket, query);
+
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);
       });
+
     })
     .catch(next);
 });
 
-//DELETES
+
+// ------------------------------------ DELETE Requests ------------------------------------
 
 //delete requests BY ROOMCODE- deletes an item and returns this deleted item
 router.delete("/:query", function (req, res, next) {

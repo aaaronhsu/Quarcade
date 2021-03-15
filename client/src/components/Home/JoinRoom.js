@@ -25,29 +25,37 @@ class JoinRoom extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    alert("You submitted Room Code to Join: " + this.state.code);
-
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
-    this.checkExistence(this.state.code, tempName);
+    this.checkExistenceAndJoin(this.state.code, tempName);
 
     //clears the fields, this is just to make it look better
     this.setState({ code: "" });
   };
 
   // get request to see if it exists, if it doesn't, call post
-  async checkExistence(roomCode, tempName) {
+  async checkExistenceAndJoin(roomCode, tempName) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
           const matches = res.data;
-          if (matches.length > 0) {
-            // this means if it exists you can join
-            console.log("chosen a good room");
-            // right here should be a put request to add the user
-            this.addUserToRoom(roomCode, tempName);
 
-            // also, there should be something that moves you to the lobby screen
+          // this means if it exists you can join
+          if (matches.length > 0) {
+            // prevents a the same user from joining a room twice
+            for (var i = 0; i < matches[0].users.length; i++) {
+              if (matches[0].users[i].socket === clientSocket.id) {
+                alert("You are already added to this room");
+                return;
+              }
+            }
+
+            console.log("User has been added to room", roomCode);
+
+            // adds user to the room in the database
+            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName, socket: clientSocket.id } });
+
+            // TODO allow clientside to reflect the joining of the room
           } else {
             alert("This room does not exist");
           }
@@ -58,16 +66,6 @@ class JoinRoom extends React.Component {
       );
     } catch (error) {
       console.log("There was an error with get Room");
-    }
-  }
-
-  // adds the user to the desired room (need to add the socket)
-  async addUserToRoom(roomCode, tempName) {
-    try {
-      await Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName, socket: "INSERT SOCKET INFO" } });
-      console.log("User successfully added");
-    } catch (error) {
-      console.log("There was an error with adding the user");
     }
   }
 

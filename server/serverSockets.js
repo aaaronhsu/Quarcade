@@ -8,6 +8,24 @@ const socketLocation = {
 
 };
 
+// removes user from their current room and adds them to a new room
+const addUser = (socketid, room) => {
+  // fetch where the user currently is located (usually in the unassigned list)
+  let userLocation = socketLocation[socketid];
+
+  // remove the user from the unassigned list
+  socketList[userLocation].splice(socketList[userLocation].indexOf(socketid), 1);
+
+  // if the room that the user is being moved to doesn't exist, create it
+  if (!socketList.hasOwnProperty(room)) socketList[room] = [];
+
+  // add the user to the room
+  socketList[room].push(socketid);
+
+  // update where the user is located
+  socketLocation[socketid] = room;
+};
+
 module.exports = {
   init: (http) => {
     io = socketio(http, {
@@ -19,7 +37,6 @@ module.exports = {
 
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", (client) => {
-      console.log(`A user has connected with id ${client.id}`);
 
       // adds user to the roomless socket list
       socketList.unassigned.push(client.id);
@@ -32,15 +49,15 @@ module.exports = {
     
       // when a user disconnects from the server, this detects the socket disconnection and removes the socket id from the list
       client.on("disconnect", () => {
-        console.log(`A user has disconnected with id ${client.id}`);
+
         // fetches where the user is (which room)
-        let socketLoc = socketLocation[client.id];
+        let userLocation = socketLocation[client.id];
 
         // deletes user from the specific room
-        socketList[socketLoc].splice(socketList[socketLoc].indexOf(client.id), 1);
+        socketList[userLocation].splice(socketList[userLocation].indexOf(client.id), 1);
 
         // if there are no more users in the room, delete the room
-        if (socketLoc !== "unassigned" && socketList[socketLoc].length == 0) delete socketList[socketLoc];
+        if (userLocation !== "unassigned" && socketList[userLocation].length == 0) delete socketList[userLocation];
 
         // remove the address to the user
         delete socketLocation[client.id];
@@ -48,4 +65,5 @@ module.exports = {
     });
   },
 
+  addUser: addUser,
 };
