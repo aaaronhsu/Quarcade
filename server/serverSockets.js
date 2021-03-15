@@ -8,8 +8,8 @@ const socketLocation = {
 
 };
 
+// removes user from their current room and adds them to a new room
 const addUser = (socketid, room) => {
-
   // fetch where the user currently is located (usually in the unassigned list)
   let userLocation = socketLocation[socketid];
 
