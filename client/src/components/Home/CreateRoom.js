@@ -40,19 +40,16 @@ class CreateRoom extends React.Component {
     this.setState({ code: "" });
   };
 
-  // get request to see if it exists (true if it exists)
+  // get request to see if it exists, if it doesn't, call post
   async checkExistence(roomCode, tempName) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
           const matches = res.data;
-          console.log(matches);
           if (matches.length > 0) {
-            // this means if it exists, return true
-            console.log("this room already exists");
-            // for some reason, it's returning true after
+            // this means if it exists, send an alert
+            alert("This room already exists, please pick again");
           } else {
-            console.log("this room code does not exist");
             this.pushCodeToBackend(roomCode, tempName);
           }
         },
