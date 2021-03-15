@@ -50,12 +50,8 @@ class CreateRoom extends React.Component {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
           const matches = res.data;
-          if (matches.length > 0) {
-            //this means if it exists, return true
-            return true;
-          } else {
-            return false;
-          }
+          //this means if it exists, return true
+          return matches.length > 0;
         },
         error => {
           console.log(error);
