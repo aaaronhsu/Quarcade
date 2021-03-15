@@ -8,6 +8,11 @@ const socketLocation = {
 
 };
 
+const retrieveUser = (socketid) => {
+  if (!socketLocation.hasOwnProperty(room)) return null;
+  return socketLocation[socketid];
+}
+
 // removes user from their current room and adds them to a new room
 const addUser = (socketid, room) => {
   // fetch where the user currently is located (usually in the unassigned list)
@@ -66,4 +71,5 @@ module.exports = {
   },
 
   addUser: addUser,
+  retrieveUser: retrieveUser,
 };
