@@ -44,9 +44,13 @@ class JoinRoom extends React.Component {
           if (matches.length > 0) {
             // this means if it exists you can join
             console.log("chosen a good room");
-            // right here should be a put request to add the user
+
+            // adds user to the room in the database
+            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {name: tempName, socket: clientSocket.id } })
 
             // also, there should be something that moves you to the lobby screen
+
+            
           } else {
             alert("This room does not exist");
           }
