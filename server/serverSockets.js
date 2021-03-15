@@ -19,8 +19,7 @@ module.exports = {
 
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", (client) => {
-      console.log(`A user has connected with id ${client.id}`);
-
+      
       // adds user to the roomless socket list
       socketList.unassigned.push(client.id);
       // adds an address so we know which room the user is in
