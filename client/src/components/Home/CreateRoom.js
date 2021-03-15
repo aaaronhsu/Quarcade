@@ -33,27 +33,27 @@ class CreateRoom extends React.Component {
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
 
-    //first check if the it exists
-    if (!this.checkExistence(this.state.code)) {
-      this.pushCodeToBackend(this.state.code, tempName);
-    }
+    //first check if the it exists, this calls the post if it doesn't
+    this.checkExistence(this.state.code, tempName);
 
-    //clears the fields, this is just to make it look better
+    // clears the fields, this is just to make it look better
     this.setState({ code: "" });
   };
 
-  //get request to see if it exists (true if it exists)
-  async checkExistence(roomCode) {
+  // get request to see if it exists (true if it exists)
+  async checkExistence(roomCode, tempName) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
           const matches = res.data;
+          console.log(matches);
           if (matches.length > 0) {
-            //this means if it exists, return true
-            console.log("returns true");
-            return true;
+            // this means if it exists, return true
+            console.log("this room already exists");
+            // for some reason, it's returning true after
           } else {
-            return false;
+            console.log("this room code does not exist");
+            this.pushCodeToBackend(roomCode, tempName);
           }
         },
         error => {
