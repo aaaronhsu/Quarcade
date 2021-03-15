@@ -3,6 +3,8 @@ const router = express.Router();
 //imports schema from models
 const HomeLobby = require("../models/homeLobby");
 
+const socketio = require("../serverSockets.js");
+
 // ------------------------------------ POST Requests ------------------------------------
 
 // Adds a room to the database
@@ -12,6 +14,7 @@ router.post("/", function (req, res, next) {
 
   HomeLobby.create(req.body)
     .then(function (homelobby) {
+      socketio.addUser(req.body.users.socket, req.body.roomCode);
       res.send(homelobby); // sends the message back to the client with the added data
     })
     .catch(next);
