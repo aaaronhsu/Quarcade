@@ -36,8 +36,6 @@ class CreateRoom extends React.Component {
     //first check if the it exists
     if (!this.checkExistence(this.state.code)) {
       this.pushCodeToBackend(this.state.code, tempName);
-    } else {
-      alert("This room already exists, pick another name");
     }
 
     //clears the fields, this is just to make it look better
@@ -52,6 +50,7 @@ class CreateRoom extends React.Component {
           const matches = res.data;
           if (matches.length > 0) {
             //this means if it exists, return true
+            console.log("returns true");
             return true;
           } else {
             return false;
