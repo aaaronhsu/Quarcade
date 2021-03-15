@@ -17,10 +17,10 @@ const addUser = (socketid, room) => {
   socketList[userLocation].splice(socketList[userLocation].indexOf(socketid), 1);
 
   // if the room that the user is being moved to doesn't exist, create it
-  if (!socketList.hasOwnProperty(room)) socketList.room = [];
+  if (!socketList.hasOwnProperty(room)) socketList[room] = [];
 
   // add the user to the room
-  socketList.room.push(socketid);
+  socketList[room].push(socketid);
 
   // update where the user is located
   socketLocation[socketid] = room;
