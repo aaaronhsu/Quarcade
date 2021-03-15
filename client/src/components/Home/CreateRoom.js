@@ -27,9 +27,7 @@ class CreateRoom extends React.Component {
   // submits room code to database
   handleSubmit = event => {
     event.preventDefault();
-
-    alert("You submitted Room Code to Create: " + this.state.code);
-
+    
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
 
