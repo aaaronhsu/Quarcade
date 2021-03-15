@@ -19,7 +19,7 @@ module.exports = {
 
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", (client) => {
-      
+
       // adds user to the roomless socket list
       socketList.unassigned.push(client.id);
       // adds an address so we know which room the user is in
@@ -31,7 +31,7 @@ module.exports = {
     
       // when a user disconnects from the server, this detects the socket disconnection and removes the socket id from the list
       client.on("disconnect", () => {
-        console.log(`A user has disconnected with id ${client.id}`);
+
         // fetches where the user is (which room)
         let socketLoc = socketLocation[client.id];
 
