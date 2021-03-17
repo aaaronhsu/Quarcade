@@ -9,7 +9,7 @@ const socketLocation = {
 };
 
 const getAllSocketsFromRoom = (room) => {
-  if (room in sockteList) return socketList[room];
+  if (room in socketList) return socketList[room];
   return [];
 }
 
