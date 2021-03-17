@@ -8,6 +8,11 @@ const socketLocation = {
 
 };
 
+const getAllSocketsFromRoom = (room) => {
+  if (room in sockteList) return socketList[room];
+  return [];
+}
+
 const retrieveUser = (socketid) => {
   if (!socketLocation.hasOwnProperty(room)) return null;
   return socketLocation[socketid];
@@ -72,4 +77,5 @@ module.exports = {
 
   addUser: addUser,
   retrieveUser: retrieveUser,
+  getAllSocketsFromRoom: getAllSocketsFromRoom,
 };

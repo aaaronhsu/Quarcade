@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import ChooseGame from './ChooseGame.js'
+import Players from './Players.js';
 
 class Lobby extends React.Component {
   render() {
     return (
-      <ChooseGame />
+      <div>
+        <ChooseGame />
+        <Players />
+      </div>
     )}
 }
 

@@ -1,0 +1,277 @@
+[33mcommit f8c6fd89da9f8a422fdcdaca3a729c32c62be29f[m[33m ([m[1;36mHEAD -> [m[1;32msocket-schema[m[33m, [m[1;31morigin/socket-schema[m[33m)[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Wed Mar 17 11:41:23 2021 -0400
+
+    added a set of routes for once you're in the game
+
+[33mcommit 212d570368d9c92aa394e243098ebcfb7a58e215[m
+Merge: 0ba655a da2e7b0
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Mon Mar 15 14:25:34 2021 -0400
+
+    merge conflicts fixed
+
+[33mcommit 0ba655ade2ed05ddd3ea0d803dc49d13c236f631[m
+Merge: 890c856 38ce789
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Mon Mar 15 14:25:16 2021 -0400
+
+    fixed the merge conflict stuff
+
+[33mcommit da2e7b0664b6a047c10b7295afd9199f66244662[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Mon Mar 15 14:22:38 2021 -0400
+
+    retrieveUser
+
+[33mcommit 38ce7890901196eb57250e5a0aca0fe1b0e3634b[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 23:34:49 2021 -0400
+
+    removed unnecessary console logs
+
+[33mcommit 9b706839a83687a12f722da9f41410aa28feefaa[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 23:32:39 2021 -0400
+
+    commented code
+
+[33mcommit c68fe591b4752fed39d266f5b728fcc85d839922[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 23:30:18 2021 -0400
+
+    socketlist update on user join
+
+[33mcommit 1b6c65a39d128b831e42cf8bdcb346df0cc59494[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 23:19:55 2021 -0400
+
+    server updates which room users exist in sockets
+
+[33mcommit dc2438dda3d1d919c749e8bb4e88650c559ea7f1[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 22:50:51 2021 -0400
+
+    removed unnecessary console log
+
+[33mcommit acd55b9cb57938fd205499fda095964f03241852[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 22:50:23 2021 -0400
+
+    removed user disconnect socket console log
+
+[33mcommit 3625858257526f4546573c50151c3f98f6144f21[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 22:49:59 2021 -0400
+
+    removed unnecessary alert
+
+[33mcommit 7fc9ac1cd028fb8da97b7ec649ece7c47f2a3a61[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 22:49:19 2021 -0400
+
+    fixed typo in variable access
+
+[33mcommit 5c8ee490844ddca56957455c0d89d571fb3d0ed3[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 22:47:51 2021 -0400
+
+    duplicate user check only if rooms exist
+
+[33mcommit f7f29e269d261b3aa08ce41de3dbd703241653e0[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 21:56:20 2021 -0400
+
+    reorganized comments in routes
+
+[33mcommit fac384de8a0b644e22c8ee8a07a261e8e7a7a9fb[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 21:53:41 2021 -0400
+
+    removed socket print on user connection
+
+[33mcommit 8999ea1d198d4dd56bc8ecd921c56138a61f5db8[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 21:53:09 2021 -0400
+
+    modified descriptions of routes
+
+[33mcommit 2ff179212eeb3bde83729ca9023024b2b580d429[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 21:45:48 2021 -0400
+
+    commented user joining code
+
+[33mcommit 40df72fd510693baaaf1d50ebb23ea7247da1a94[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 21:45:20 2021 -0400
+
+    user can't join rooms they are already in
+
+[33mcommit 25790e4d2d29aa3225d73424180d13c5b8a78311[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 21:38:37 2021 -0400
+
+    users can now join rooms
+
+[33mcommit bd401433af71cb1840708091e4cf745d10232f7a[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 21:02:20 2021 -0400
+
+    merge conflict
+
+[33mcommit 26d622812c84c5521392f28984cf48db1973054b[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 20:55:27 2021 -0400
+
+    merge conflict
+
+[33mcommit 890c8563ba6548d468f57e3179e9efd51a05ca58[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sun Mar 14 20:34:02 2021 -0400
+
+    now the join room works as desired except it doesn't join a different screen
+
+[33mcommit 76da88cd699649a65958fcc8fca27b0beb07a3ca[m
+Merge: 61d8e08 eb222e6
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 20:29:12 2021 -0400
+
+    resolved merge conflicit
+
+[33mcommit 61d8e080cfb3cb4390fcdb2ed38eeeec063e339a[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 20:28:17 2021 -0400
+
+    renamed pushing code to backend function to be more accurate
+
+[33mcommit eb222e6e152935273a986848464e512a9d979a89[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sun Mar 14 20:27:43 2021 -0400
+
+    now the join room is almost done
+
+[33mcommit 4923786e9d327c701205138ef765c74f4ace8bc0[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sun Mar 14 20:24:38 2021 -0400
+
+    deleted tester code:
+
+[33mcommit 929e8041f7d6d07c9674df50f36376f04b0e0851[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sun Mar 14 20:23:15 2021 -0400
+
+    NOW the create room works
+
+[33mcommit 809081b888e90251f89cc335742b55910a9b249c[m
+Merge: 94cc11d 6788489
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sun Mar 14 20:10:49 2021 -0400
+
+    merge conflict stuff
+
+[33mcommit 94cc11dbb87d456019a9db3f74933402a449ec5c[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sun Mar 14 20:09:38 2021 -0400
+
+    it doesn't work actually
+
+[33mcommit 67884896dad3fb6e0b4dd9f35ec377a519c74088[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sun Mar 14 20:05:49 2021 -0400
+
+    simplified return statement
+
+[33mcommit e781f15795055d0ad0c6aa59d66b6bd067e95a52[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sun Mar 14 20:02:13 2021 -0400
+
+    figured out how to access get request data
+
+[33mcommit 0372f901ecf0879b6fbbea437556817032539a1f[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sat Mar 13 23:44:49 2021 -0500
+
+    updated put
+
+[33mcommit f576fa9334d18b1157121827fa6bd69e94171bd5[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 23:20:18 2021 -0500
+
+    converted functions to arrow functions
+
+[33mcommit 727fd51d6b64f8f46db3c34c7ae07198e2583bc1[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 23:19:17 2021 -0500
+
+    cleaned files and commented
+
+[33mcommit 7bdc2748ca58937c2132e837af35426717c9b5ee[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 23:08:55 2021 -0500
+
+    removed click alert
+
+[33mcommit f2bef34fc4a31548f3e38d9b9d7dd0a3e4f94d87[m
+Author: ellakrechmer <ekrechmer20@stuy.ed>
+Date:   Sat Mar 13 23:04:47 2021 -0500
+
+    you can now join a room without a submit button
+
+[33mcommit 6fd5f8c4b1434c7328b35367cceae21d1b854805[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 23:02:39 2021 -0500
+
+    you can now join the room without the name
+
+[33mcommit 1ce6d0a25382ac82844f75060ca8eb6a9ce1a178[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 22:50:10 2021 -0500
+
+    added socket info to post request
+
+[33mcommit f82801813fd60071a0eae4f6da7ded489c394f8b[m
+Merge: ed9ce62 e5504e7
+Author: ellakrechmer <ekrechmer20@stuy.ed>
+Date:   Sat Mar 13 22:45:30 2021 -0500
+
+    Merge branch 'socket-schema' of https://github.com/chicknmilk/Quarcade into socket-schema
+
+[33mcommit ed9ce624c1011689b6f49d5c4aae5d68c0255b40[m
+Author: ellakrechmer <ekrechmer20@stuy.ed>
+Date:   Sat Mar 13 22:45:23 2021 -0500
+
+    we can now create a room without a submit button
+
+[33mcommit e5504e7e9442ef13e75a4d50d1299545741e3048[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 22:40:39 2021 -0500
+
+    socket client
+
+[33mcommit 7e2cf002ba76448e1124b45d814ac4f0e113260a[m
+Merge: 491c965 ee7395d
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 22:14:29 2021 -0500
+
+    Merge branch 'socket-schema' of https://github.com/chicknmilk/Quarcade into socket-schema
+
+[33mcommit 491c9650c1181bbde73f0c482a3d30b138acd156[m
+Author: Aaron Hsu <pufflewizzy@gmail.com>
+Date:   Sat Mar 13 22:14:22 2021 -0500
+
+    refactored socket to global client
+
+[33mcommit ee7395d5ffbc048be1ab7dcca445e607a598ea0b[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sat Mar 13 22:10:23 2021 -0500
+
+    schema update
+
+[33mcommit d5266dcc1b4fb699e2b6eefdcd94fbe99442a8f9[m
+Author: ElizaKnapp <eknapp20@stuy.edu>
+Date:   Sat Mar 13 21:55:46 2021 -0500
+
+    removed socket stuff
+
+[33mcommit 01
