@@ -14,7 +14,6 @@ router.post("/", function (req, res, next) {
 
   HomeLobby.create(req.body)
     .then(function (homelobby) {
-      socketio.addUser(req.body.users.socket, req.body.roomCode);
       res.send(homelobby); // sends the message back to the client with the added data
     })
     .catch(next);
@@ -57,9 +56,6 @@ router.put("/:query", function (req, res, next) {
 
   HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
     .then(function () {
-
-      // adds user to socket list
-      socketio.addUser(req.body.users.socket, query);
 
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);

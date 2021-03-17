@@ -10,7 +10,7 @@ class Home extends React.Component {
   }
 
   requestSocketInfo = () => {
-    socket.emit("printConnectedSockets");
+    socket.emit("socketInformation");
   }
 
   renderConnectedSocketsButton = () => {

@@ -26,10 +26,6 @@ const HomeLobbySchema = new Schema({
         type: String,
         required: true
       },
-      socket: {
-        type: String,
-        required: true
-      }
     }
   ],
   chatMessages: [
