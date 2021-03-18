@@ -52,10 +52,17 @@ module.exports = {
           return;
         }
 
-        // retrieves a list of clients that are connected to the same room
+        // retrieves a list of clients ids that are connected to the same room
         const clients = Array.from(io.sockets.adapter.rooms.get(roomList[roomList.length - 1]));
 
-        client.emit("recPlayersInRoom", clients);
+        const ret = [];
+
+        // converts the client ids to socket objects
+        clients.forEach(client => {
+          ret.push(io.sockets.sockets.get(client).id);
+        });
+
+        client.emit("recPlayersInRoom", ret);
       });
     });
   },
