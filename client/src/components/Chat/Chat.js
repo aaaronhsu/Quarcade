@@ -11,8 +11,16 @@ class Chat extends React.Component {
           words: ""
         }
       ],
-      message: ""
+      message: "",
+      myRoom: "",
+      myName: ""
     };
+  }
+
+  componentDidMount() {
+    socket.on("getSocketRoom", room => {
+      this.setState({ myRoom: room });
+    });
   }
 
   handleChange = event => {
@@ -26,6 +34,12 @@ class Chat extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
+    // requests the room, this adds the room to the state
+    socket.emit("requestSocketRoom");
+
+    //get the username by the room that it's in and its socket
+    this.findUserName(this.state.myRoom);
+
     // name should be axios.get(roomCode/user/name) but not yet!
     let tempName = "bob1" + ": ";
 
@@ -33,6 +47,20 @@ class Chat extends React.Component {
 
     this.setState({ message: "" });
   };
+
+  async findUserName(roomCode) {
+    try {
+      await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`)
+        .then
+        //loop through the user data by the socket.id to find the name
+        //res.data.users()
+
+        //lastly, update the user with the user info
+        ();
+    } catch (error) {
+      console.log("Could not find that room: " + roomCode);
+    }
+  }
 
   render() {
     return (
