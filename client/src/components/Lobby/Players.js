@@ -35,7 +35,7 @@ class Players extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello</h1>
+        <h1>List of Players in this room:</h1>
 
         {
           this.state.players.map(player => (
