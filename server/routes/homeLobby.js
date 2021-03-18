@@ -11,7 +11,8 @@ const socketio = require("../serverSockets.js");
 router.post("/", function (req, res, next) {
   console.log("Room", req.body.roomCode, "has been created");
 
-  socketio.addUser(req.body.users.socket, req.body.roomCode);
+  // this line makes the post request stop working
+  // socketio.addUser(req.body.users.socket, req.body.roomCode);
 
   HomeLobby.create(req.body)
     .then(function (homelobby) {
@@ -53,7 +54,7 @@ router.put("/:query", function (req, res, next) {
   var name = req.body.users.name;
   var socket = req.body.users.socket;
 
-  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name } } })
+  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
     .then(function () {
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);

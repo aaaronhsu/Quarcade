@@ -25,6 +25,10 @@ const AlphaSoupSchema = new Schema({
         type: String,
         required: true
       },
+      socket: {
+        type: String,
+        required: true
+      },
       wordsOwned: [
         {
           word: {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
+import socket from "../../ClientSocket.js";
 
 class JoinRoom extends React.Component {
   constructor(props) {
@@ -42,14 +43,13 @@ class JoinRoom extends React.Component {
 
           // this means if it exists you can join
           if (matches.length > 0) {
-
             console.log("User has been added to room", roomCode);
 
             // adds user to the room in the database
-            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName } });
+            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName, socket: socket.id } });
 
             // adds user to socket room
-            clientSocket.emit("moveRoom", (roomCode));
+            clientSocket.emit("moveRoom", roomCode);
 
             // TODO allow clientside to reflect the joining of the room
           } else {

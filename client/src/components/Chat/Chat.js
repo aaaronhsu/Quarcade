@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Axios from "axios";
+import clientSocket from "../../ClientSocket.js";
 import socket from "../../ClientSocket.js";
 
 class Chat extends React.Component {
@@ -20,6 +22,9 @@ class Chat extends React.Component {
   componentDidMount() {
     socket.on("getSocketRoom", room => {
       this.setState({ myRoom: room });
+
+      // get the username by the room that it's in and its socket
+      this.findUserName(this.state.myRoom);
     });
   }
 
@@ -37,9 +42,6 @@ class Chat extends React.Component {
     // requests the room, this adds the room to the state
     socket.emit("requestSocketRoom");
 
-    //get the username by the room that it's in and its socket
-    this.findUserName(this.state.myRoom);
-
     // name should be axios.get(roomCode/user/name) but not yet!
     let tempName = "bob1" + ": ";
 
@@ -50,13 +52,14 @@ class Chat extends React.Component {
 
   async findUserName(roomCode) {
     try {
-      await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`)
-        .then
-        //loop through the user data by the socket.id to find the name
-        //res.data.users()
+      await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(res => {
+        const room = res.data;
+        console.log("Got room" + roomCode);
+      });
+      //loop through the user data by the socket.id to find the name
+      //res.data.users()
 
-        //lastly, update the user with the user info
-        ();
+      //lastly, update the user with the user info
     } catch (error) {
       console.log("Could not find that room: " + roomCode);
     }
