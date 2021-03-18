@@ -11,8 +11,6 @@ const socketio = require("../serverSockets.js");
 router.post("/", function (req, res, next) {
   console.log("Room", req.body.roomCode, "has been created");
 
-  socketio.addUser(req.body.users.socket, req.body.roomCode);
-
   HomeLobby.create(req.body)
     .then(function (homelobby) {
       res.send(homelobby); // sends the message back to the client with the added data
@@ -51,7 +49,6 @@ router.get("/:query", function (req, res, next) {
 router.put("/:query", function (req, res, next) {
   var query = req.params.query;
   var name = req.body.users.name;
-  var socket = req.body.users.socket;
 
   HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name } } })
     .then(function () {
