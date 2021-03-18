@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import Lobby from './components/Lobby/Lobby.js';
-import Home from './components/Home/Home.js';
-import NavBar from './components/Nav/NavBar.js';
-import About from './components/About/About.js'
+import Lobby from "./components/Lobby/Lobby.js";
+import Home from "./components/Home/Home.js";
+import NavBar from "./components/Nav/NavBar.js";
+import About from "./components/About/About.js";
+import Chat from "./components/Chat/Chat.js";
 
 import clientSocket from './ClientSocket.js';
 
@@ -18,15 +14,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       date: new Date(),
-      isToggleOn: true,
+      isToggleOn: true
     };
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
+    this.timerID = setInterval(() => this.tick(), 1000);
   }
 
   componentWillUnmount() {
@@ -50,18 +43,17 @@ class App extends React.Component {
       <div>
         <h1>Quarcade</h1>
         <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-        <button onClick={() => this.handleClick()}>
-          Log {this.state.isToggleOn ? 'On' : 'Out'}
-        </button>
+        <button onClick={() => this.handleClick()}>Log {this.state.isToggleOn ? "On" : "Out"}</button>
         <br />
         <Router>
           <Switch>
-            <NavBar/>
+            <NavBar />
           </Switch>
           <Switch>
-            <Route path="/" exact component={Home}/>
-            <Route path="/lobby" component={Lobby}/>
-            <Route path="/about" component={About}/>
+            <Route path="/" exact component={Home} />
+            <Route path="/lobby" component={Lobby} />
+            <Route path="/about" component={About} />
+            <Route path="/chat" component={Chat} />
           </Switch>
         </Router>
       </div>
