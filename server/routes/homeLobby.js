@@ -9,17 +9,16 @@ const socketio = require("../serverSockets.js");
 
 // Adds a room to the database
 router.post("/", function (req, res, next) {
-
   console.log("Room", req.body.roomCode, "has been created");
+
+  socketio.addUser(req.body.users.socket, req.body.roomCode);
 
   HomeLobby.create(req.body)
     .then(function (homelobby) {
-      socketio.addUser(req.body.users.socket, req.body.roomCode);
       res.send(homelobby); // sends the message back to the client with the added data
     })
     .catch(next);
 });
-
 
 // ------------------------------------ GET Requests ------------------------------------
 
@@ -43,7 +42,6 @@ router.get("/:query", function (req, res, next) {
     .catch(next);
 });
 
-
 // ------------------------------------ PUT Requests ------------------------------------
 
 //put requests, allow you to update desired information on a term
@@ -57,18 +55,15 @@ router.put("/:query", function (req, res, next) {
 
   HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
     .then(function () {
-
       // adds user to socket list
       socketio.addUser(req.body.users.socket, query);
 
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);
       });
-
     })
     .catch(next);
 });
-
 
 // ------------------------------------ DELETE Requests ------------------------------------
 
