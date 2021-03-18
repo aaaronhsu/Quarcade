@@ -43,7 +43,7 @@ module.exports = {
           return;
         }
 
-        // retrieves a list of clients ids that are connected to the same room
+        // retrieves a list of clients ids that are connected to the same room *IMPORTANT*
         const clients = Array.from(io.sockets.adapter.rooms.get(roomList[roomList.length - 1]));
 
         const ret = [];
@@ -72,7 +72,7 @@ module.exports = {
       client.on("changeUsername", (username) => {
         client.username = username;
       });
-      
+
     });
   },
 };
