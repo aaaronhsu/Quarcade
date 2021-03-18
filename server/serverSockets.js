@@ -26,8 +26,11 @@ module.exports = {
       // ------------------------------------ Utility Requests ------------------------------------
 
       // prints the rooms the client is connected to
-      client.on("socketInformation", () => {
-        console.log(client.rooms);
+      client.on("requestSocketRoom", () => {
+        // retrieves list of rooms the client is connected to
+        const roomList = Array.from(client.rooms);
+
+        client.emit("getSocketRoom", roomList[roomList.length - 1]);
       });
     
       // removes a user from all rooms, except for personal room & adds socket to newRoom
