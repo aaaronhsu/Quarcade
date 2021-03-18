@@ -7,6 +7,8 @@ import NavBar from "./components/Nav/NavBar.js";
 import About from "./components/About/About.js";
 import Chat from "./components/Chat/Chat.js";
 
+import clientSocket from './ClientSocket.js';
+
 class App extends React.Component {
   constructor(props) {
     super(props);

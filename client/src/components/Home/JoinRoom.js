@@ -42,18 +42,14 @@ class JoinRoom extends React.Component {
 
           // this means if it exists you can join
           if (matches.length > 0) {
-            // prevents a the same user from joining a room twice
-            for (var i = 0; i < matches[0].users.length; i++) {
-              if (matches[0].users[i].socket === clientSocket.id) {
-                alert("You are already added to this room");
-                return;
-              }
-            }
 
             console.log("User has been added to room", roomCode);
 
             // adds user to the room in the database
-            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName, socket: clientSocket.id } });
+            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName } });
+
+            // adds user to socket room
+            clientSocket.emit("moveRoom", (roomCode));
 
             // TODO allow clientside to reflect the joining of the room
           } else {
