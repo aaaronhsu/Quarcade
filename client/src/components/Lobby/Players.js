@@ -8,6 +8,7 @@ class Players extends React.Component {
     super(props);
 
     this.state = {
+      room: "unassigned",
       players: [],
     };
   }
@@ -16,10 +17,15 @@ class Players extends React.Component {
     socket.on("receivePlayersInRoom", (players) => {
       this.setState({players: players});
     });
+
+    socket.on("getSocketRoom", (room) => {
+      this.setState({room: room});
+    })
   }
 
   getPlayersInRoom = () => {
     socket.emit("requestPlayersInRoom");
+    socket.emit("requestSocketRoom");
   };
 
   updatePlayersButton = () => {
@@ -35,7 +41,7 @@ class Players extends React.Component {
   render() {
     return (
       <div>
-        <h1>List of Players in this room:</h1>
+        <h1>List of Players in {this.state.room}:</h1>
 
         {
           this.state.players.map(player => (
