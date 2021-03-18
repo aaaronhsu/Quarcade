@@ -13,9 +13,6 @@ router.post("/", function (req, res, next) {
 
   AlphaSoup.create(req.body)
     .then(function (alphaSoup) {
-      //TALK ABOUT THIS but doesn't seem needed because users will already be there
-      socketio.addUser(req.body.users.socket, req.body.roomCode);
-
       res.send(alphaSoup); // sends the message back to the client with the added data
     })
     .catch(next);

@@ -63,8 +63,12 @@ class CreateRoom extends React.Component {
   // uses axios to post client socket id and creates room
   async pushCodeToBackend(roomCode, tempName) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: clientSocket.id } });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName } });
       console.log("Room was succesfully created");
+
+      // adds user to socket room
+      clientSocket.emit("moveRoom", (roomCode));
+      
     } catch (error) {
       console.log("There was an error with post");
     }
