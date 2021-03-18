@@ -18,10 +18,6 @@ class Players extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-
-  }
-
   getPlayersInRoom = () => {
     socket.emit("requestPlayersInRoom");
   };

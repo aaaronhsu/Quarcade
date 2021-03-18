@@ -43,11 +43,13 @@ module.exports = {
       client.on("requestPlayersInRoom", () => {
         let room;
 
+        // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
         if (roomList[1] === "unassigned") {
           return;
         }
 
+        // retrieves a list of clients that are connected to the same room
         const clients = Array.from(io.sockets.adapter.rooms.get(roomList[roomList.length - 1]));
 
         client.emit("receivePlayersInRoom", clients);
