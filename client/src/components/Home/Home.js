@@ -10,14 +10,14 @@ class Home extends React.Component {
   }
 
   requestSocketInfo = () => {
-    socket.emit("socketInformation");
+    socket.emit("requestPlayersInRoom");
   }
 
   renderConnectedSocketsButton = () => {
     return (
       <div>
         <button onClick = {() => this.requestSocketInfo()}>
-          Print Sockets! (to server terminal)
+          Print rooms this socket is in (to server terminal)
         </button>
       </div>
     );
