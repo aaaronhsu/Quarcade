@@ -32,15 +32,6 @@ module.exports = {
 
         client.emit("recSocketRoom", roomList[roomList.length - 1]);
       });
-    
-      // removes a user from all rooms, except for personal room & adds socket to newRoom
-      client.on("moveRoom", (newRoom) => {
-        client.rooms.forEach(room => {
-          if (room != client.id) client.leave(room);
-        });
-    
-        client.join(newRoom);
-      });
 
       // emits a message that contains a list of the users currently in the room as the user
       client.on("reqPlayersInRoom", () => {
@@ -52,11 +43,36 @@ module.exports = {
           return;
         }
 
-        // retrieves a list of clients that are connected to the same room
+        // retrieves a list of clients ids that are connected to the same room *IMPORTANT*
         const clients = Array.from(io.sockets.adapter.rooms.get(roomList[roomList.length - 1]));
 
-        client.emit("recPlayersInRoom", clients);
+        const ret = [];
+
+        // converts the client ids to socket objects
+        clients.forEach(client => {
+          ret.push(io.sockets.sockets.get(client).id);
+        });
+
+        client.emit("recPlayersInRoom", ret);
       });
+
+
+      // ------------------------------------ Update Requests ------------------------------------
+
+      // removes a user from all rooms, except for personal room & adds socket to newRoom
+      client.on("moveRoom", (newRoom) => {
+        client.rooms.forEach(room => {
+          if (room != client.id) client.leave(room);
+        });
+    
+        client.join(newRoom);
+      });
+
+      // changes a client's username
+      client.on("changeUsername", (username) => {
+        client.username = username;
+      });
+
     });
   },
 };
