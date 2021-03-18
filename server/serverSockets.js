@@ -26,11 +26,11 @@ module.exports = {
       // ------------------------------------ Utility Requests ------------------------------------
 
       // prints the rooms the client is connected to
-      client.on("requestSocketRoom", () => {
+      client.on("reqSocketRoom", () => {
         // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
 
-        client.emit("getSocketRoom", roomList[roomList.length - 1]);
+        client.emit("recSocketRoom", roomList[roomList.length - 1]);
       });
     
       // removes a user from all rooms, except for personal room & adds socket to newRoom
@@ -43,7 +43,7 @@ module.exports = {
       });
 
       // emits a message that contains a list of the users currently in the room as the user
-      client.on("requestPlayersInRoom", () => {
+      client.on("reqPlayersInRoom", () => {
         let room;
 
         // retrieves list of rooms the client is connected to
@@ -55,7 +55,7 @@ module.exports = {
         // retrieves a list of clients that are connected to the same room
         const clients = Array.from(io.sockets.adapter.rooms.get(roomList[roomList.length - 1]));
 
-        client.emit("receivePlayersInRoom", clients);
+        client.emit("recPlayersInRoom", clients);
       });
     });
   },

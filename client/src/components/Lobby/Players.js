@@ -14,18 +14,18 @@ class Players extends React.Component {
   }
 
   componentDidMount() {
-    socket.on("receivePlayersInRoom", (players) => {
+    socket.on("recPlayersInRoom", (players) => {
       this.setState({players: players});
     });
 
-    socket.on("getSocketRoom", (room) => {
+    socket.on("recSocketRoom", (room) => {
       this.setState({room: room});
     })
   }
 
   getPlayersInRoom = () => {
-    socket.emit("requestPlayersInRoom");
-    socket.emit("requestSocketRoom");
+    socket.emit("reqPlayersInRoom");
+    socket.emit("reqSocketRoom");
   };
 
   updatePlayersButton = () => {
