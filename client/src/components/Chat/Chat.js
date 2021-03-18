@@ -5,9 +5,13 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
-      message: "",
-      sender: ""
+      messages: [
+        {
+          user: "",
+          words: ""
+        }
+      ],
+      message: ""
     };
   }
 
@@ -22,7 +26,10 @@ class Chat extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    this.state.messages.push(this.state.message);
+    // name should be axios.get(roomCode/user/name) but not yet!
+    let tempName = "bob1" + ": ";
+
+    this.state.messages.push({ user: tempName, words: this.state.message });
 
     this.setState({ message: "" });
   };
@@ -42,7 +49,8 @@ class Chat extends React.Component {
         <div>
           {this.state.messages.map(message => (
             <small>
-              {message}
+              {message.user}
+              {message.words}
               <br></br>
             </small>
           ))}
