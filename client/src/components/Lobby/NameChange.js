@@ -13,6 +13,7 @@ class NameChange extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleClick = event => {
+        this.getForm(event);
         this.setState({ changeName: !this.state.changeName });
         event.preventDefault();
     }
@@ -25,28 +26,10 @@ class NameChange extends Component{
         event.preventDefault();
         this.setState({ name: this.state.name, changeName: !this.state.changeName });
     }
-    // getForm=(e)=>{
-    //     return(
-    //         <div>
-    //             {this.state.changeName ? (
-    //            <form onSubmit={this.handleSubmit}>
-    //             <label>
-    //               <input name="name" type="text"  onChange={this.handleChange} />
-    //             </label>
-    //             <input type="submit"/>
-    //           </form>
-    //             ) :null}
-    //         </div>
-    //     )
-    // }
-
-    render() {
-        return (
-          <div>
-            {/* <h2 onClick={this.handleClick}>{this.state.name}</h2> */}
-            <h2 onClick={this.handleClick}>{this.state.name}</h2>
-            
-            {this.state.changeName ? (
+    getForm=(e)=>{
+        return(
+            <div>
+                 {this.state.changeName ? (
               <form onSubmit={this.handleSubmit}>
                 <label>
                   <input name="name" type="text"  onChange={this.handleChange} />
@@ -54,6 +37,24 @@ class NameChange extends Component{
                 <input type="submit"/>
               </form>
             ) : null}
+            </div>
+        )
+    }
+
+    render() {
+        return (
+          <div>
+            {/* <h2 onClick={this.handleClick}>{this.state.name}</h2> */}
+            <h2 onClick={this.handleClick}>{this.state.name}</h2>
+
+            {/* {this.state.changeName ? (
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  <input name="name" type="text"  onChange={this.handleChange} />
+                </label>
+                <input type="submit"/>
+              </form>
+            ) : null} */}
           </div>
         );
       }
