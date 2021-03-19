@@ -49,6 +49,7 @@ class Players extends React.Component {
   // changes visible name on submission of name form
   handleSubmit = event => {
       event.preventDefault();
+      socket.emit("recSocketUsername", (event.target.value));
       this.setState({
         name: this.state.name,
         changeName: !this.state.changeName,
@@ -65,7 +66,7 @@ class Players extends React.Component {
           this.state.players.map(player => (
             this.state.nameVisible ? 
             (
-            <h2 onClick={this.handleClick} key={player}>{player}</h2>
+            <h2 onClick={this.handleClick} key={player}>{this.state.name}</h2>
             ) : null
           ))
         }
