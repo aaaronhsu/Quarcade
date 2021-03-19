@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import clientSocket from "../../ClientSocket.js";
 import socket from "../../ClientSocket.js";
 
 class Chat extends React.Component {
@@ -54,7 +53,7 @@ class Chat extends React.Component {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(res => {
         const usersInRoom = res.data[0].users;
-        
+
         console.log("Got room" + roomCode);
       });
       //loop through the user data by the socket.id to find the name
