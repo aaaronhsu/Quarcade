@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 class ReadyButton extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class ReadyButton extends React.Component {
     this.setState({
       ready: !this.state.ready
     });
-    console.log(this.state.ready)
+    console.log(this.state.ready);
 
     // .put submission to backend to update number of users who have readied up
     // need to connect with backend database and route user to the actual game once everyone readies up
@@ -32,6 +33,7 @@ class ReadyButton extends React.Component {
             {this.state.ready ? 'Unready?' : 'Ready?'}
           </label>
         </button>
+        {this.state.ready ? (<Redirect to="/alphasoup" />) : null}
       </div>
     );
   }
