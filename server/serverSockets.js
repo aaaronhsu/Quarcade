@@ -30,12 +30,19 @@ module.exports = {
 
       // ------------------------------------ Utility Requests ------------------------------------
 
-      // prints the rooms the client is connected to
+      // emits the rooms the client is connected to
       client.on("reqSocketRoom", () => {
         // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
 
         client.emit("recSocketRoom", roomList[roomList.length - 1]);
+      });
+      
+      // emits the username associated to a client
+      client.on("reqSocketUsername", () => {
+        let username = client.username;
+
+        client.emit("recSocketUsername", username);
       });
 
       // emits a message that contains a list of the users currently in the room as the user
@@ -64,11 +71,6 @@ module.exports = {
         });
       });
 
-      client.on("reqSocketUsername", () => {
-        let username = client.username;
-        
-        client.emit("recSocketUsername", username);
-      })
 
 
       // ------------------------------------ Update Requests ------------------------------------
