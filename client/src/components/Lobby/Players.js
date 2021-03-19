@@ -59,18 +59,21 @@ class Players extends React.Component {
 
         {
           this.state.players.map(player => (
-            this.state.nameVisible ? (
+            this.state.nameVisible ? 
+            (
             <h2 onClick={this.handleClick} key={player}>{player}</h2>
-            ) : null ),
-          )
-        }
-        {this.state.changeName ? (
-              <form onSubmit={this.handleSubmit}>
-                <label>
-                  <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
-                </label>
-              </form>
             ) : null
+          ))
+        }
+        {
+          this.state.changeName ? 
+          (
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
+              </label>
+            </form>
+          ) : null
         }
       </div>
     )}
