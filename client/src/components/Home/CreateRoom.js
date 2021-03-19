@@ -1,13 +1,15 @@
 import React, { Component, useEffect, useRef } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 class CreateRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       createRoom: false,
-      code: ""
+      code: "",
+      redirectToLobby : false
     };
   }
 
@@ -69,6 +71,11 @@ class CreateRoom extends React.Component {
       // adds user to socket room
       clientSocket.emit("moveRoom", (roomCode));
 
+      // redirects user to lobby
+      this.setState({
+        redirectToLobby : true
+      });
+
     } catch (error) {
       console.log("There was an error with post");
     }
@@ -86,6 +93,7 @@ class CreateRoom extends React.Component {
             </label>
           </form>
         ) : null}
+        {this.state.redirectToLobby ? (<Redirect to="/lobby" />) : null}
       </div>
     );
   }

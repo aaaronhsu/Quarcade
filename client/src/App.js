@@ -6,6 +6,7 @@ import Home from "./components/Home/Home.js";
 import NavBar from "./components/Nav/NavBar.js";
 import About from "./components/About/About.js";
 import Chat from "./components/Chat/Chat.js";
+import AlphaSoup from "./components/AlphaSoup/AlphaSoup.js";
 
 import clientSocket from './ClientSocket.js';
 
@@ -54,6 +55,7 @@ class App extends React.Component {
             <Route path="/lobby" component={Lobby} />
             <Route path="/about" component={About} />
             <Route path="/chat" component={Chat} />
+            <Route path="/alphasoup" component={AlphaSoup} />
           </Switch>
         </Router>
       </div>

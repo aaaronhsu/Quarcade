@@ -18,6 +18,9 @@ class NavBar extends React.Component {
           <li>
             <Link to="/chat">Chat</Link>
           </li>
+          <li>
+            <Link to="/alphasoup">AlphaSoup</Link>
+          </li>
         </ul>
       </div>
     );

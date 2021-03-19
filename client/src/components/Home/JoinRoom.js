@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 class JoinRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      code: ""
+      code: "",
+      redirectToLobby: false,
     };
   }
 
@@ -51,7 +53,11 @@ class JoinRoom extends React.Component {
             // adds user to socket room
             clientSocket.emit("moveRoom", (roomCode));
 
-            // TODO allow clientside to reflect the joining of the room
+            // redirects user to lobby
+            this.setState({
+              redirectToLobby : true
+            });
+
           } else {
             alert("This room does not exist");
           }
@@ -67,13 +73,16 @@ class JoinRoom extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Room Code:
-          <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Room Code:
+            <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+        {this.state.redirectToLobby ? (<Redirect to="/lobby" />) : null}
+      </div>
     );
   }
 }
