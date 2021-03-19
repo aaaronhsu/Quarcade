@@ -9,15 +9,11 @@ class Players extends React.Component {
     this.state = {
       room: "unassigned",
       players: [],
-      changeName: false,
-      nameVisible: true,
-      name: "Player 1",
-
     };
   }
 
   componentDidMount() {
-    socket.on("recPlayersInRoom", (players) => {
+    socket.on("recUsersInRoom", (players) => {
       this.setState({players: players});
 
     });
@@ -25,39 +21,7 @@ class Players extends React.Component {
     socket.on("recSocketRoom", (room) => {
       this.setState({room: room});
     });
-
-    socket.on("recSocketUsername", (username) => {
-      this.setState({name: username});
-    });
   }
-
-  // handles swap from visible name to name form
-  handleClick = event => {
-    this.setState({
-      changeName: !this.state.changeName,
-      nameVisible: false
-    });
-    event.preventDefault();
-  }
-
-  // handles changes to text field for name form
-  handleChange = event => {
-    this.setState({
-      name: event.target.value
-    });
-  }
-
-  // changes visible name on submission of name form
-  handleSubmit = event => {
-      event.preventDefault();
-      socket.emit("recSocketUsername", (event.target.value));
-      this.setState({
-        name: this.state.name,
-        changeName: !this.state.changeName,
-        nameVisible: true
-      });
-  }
-
 
   render() {
     return (
@@ -66,21 +30,8 @@ class Players extends React.Component {
 
         {
           this.state.players.map(player => (
-            this.state.nameVisible ? 
-            (
-            <h2 onClick={this.handleClick} key={player}>{this.state.name}</h2>
-            ) : null
+            <h1>{player}</h1>
           ))
-        }
-        {
-          this.state.changeName ? 
-          (
-            <form onSubmit={this.handleSubmit}>
-              <label>
-                <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
-              </label>
-            </form>
-          ) : null
         }
 
       </div>

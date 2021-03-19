@@ -72,7 +72,7 @@ class CreateRoom extends React.Component {
       clientSocket.emit("moveRoom", (roomCode));
 
       // handles update of the players in the room
-      clientSocket.emit("reqPlayersInRoom");
+      clientSocket.emit("reqUsersInRoom");
       clientSocket.emit("reqSocketRoom");
 
 

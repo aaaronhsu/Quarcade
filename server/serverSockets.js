@@ -44,7 +44,7 @@ module.exports = {
       });
 
       // emits a message that contains a list of the users currently in the room as the user
-      client.on("reqPlayersInRoom", () => {
+      client.on("reqUsersInRoom", () => {
         let room;
 
         // retrieves list of rooms the client is connected to
@@ -65,7 +65,33 @@ module.exports = {
 
         // updates player list for all players in the room
         clients.forEach(client => {
-          io.sockets.sockets.get(client).emit("recPlayersInRoom", ret);
+          io.sockets.sockets.get(client).emit("recUsersInRoom", ret);
+        });
+      });
+
+      // emits a message that contains a list of the sockets currently in the room as the user
+      client.on("reqSocketsInRoom", () => {
+        let room;
+
+        // retrieves list of rooms the client is connected to
+        const roomList = Array.from(client.rooms);
+        if (roomList[1] === "unassigned") {
+          return;
+        }
+
+        // retrieves a list of clients ids that are connected to the same room *IMPORTANT*
+        const clients = Array.from(io.sockets.adapter.rooms.get(roomList[roomList.length - 1]));
+
+        const ret = [];
+
+        // converts the client ids to socket objects
+        clients.forEach(client => {
+          ret.push(io.sockets.sockets.get(client).id);
+        });
+
+        // updates player list for all players in the room
+        clients.forEach(client => {
+          io.sockets.sockets.get(client).emit("recSocketsInRoom", ret);
         });
       });
 
