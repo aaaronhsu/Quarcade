@@ -80,7 +80,7 @@ class JoinRoom extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Room Code:
+            Enter a room code to join a room:
             <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
           </label>
         </form>

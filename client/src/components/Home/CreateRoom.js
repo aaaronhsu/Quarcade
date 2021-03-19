@@ -92,7 +92,7 @@ class CreateRoom extends React.Component {
         {this.state.createRoom ? (
           <form onSubmit={this.handleSubmit}>
             <label>
-              Room Code:
+              Enter a roomcode to create a room:
               <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
             </label>
           </form>
