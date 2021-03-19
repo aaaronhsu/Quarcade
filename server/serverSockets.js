@@ -18,6 +18,9 @@ module.exports = {
       // adds user to the "unassigned" room
       client.join("unassigned");
 
+      // initializes client to have a username field
+      client.username = "";
+
       
       client.on("disconnect", () => {
 
@@ -52,7 +55,7 @@ module.exports = {
 
         // converts the client ids to socket objects
         clients.forEach(client => {
-          ret.push(io.sockets.sockets.get(client).id);
+          ret.push(io.sockets.sockets.get(client).username);
         });
 
         // updates player list for all players in the room
@@ -60,6 +63,12 @@ module.exports = {
           io.sockets.sockets.get(client).emit("recPlayersInRoom", ret);
         });
       });
+
+      client.on("reqSocketUsername", () => {
+        let username = client.username;
+        
+        client.emit("recSocketUsername", username);
+      })
 
 
       // ------------------------------------ Update Requests ------------------------------------

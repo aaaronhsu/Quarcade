@@ -23,7 +23,11 @@ class Players extends React.Component {
 
     socket.on("recSocketRoom", (room) => {
       this.setState({room: room});
-    })
+    });
+
+    socket.on("recSocketUsername", (username) => {
+      this.setState({name: username});
+    });
   }
 
   // handles swap from visible name to name form
