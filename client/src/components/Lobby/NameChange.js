@@ -49,7 +49,6 @@ class NameChange extends Component{
                 <label>
                   <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
                 </label>
-                {/* <input type="submit"/> */}
               </form>
             ) : null}
           </div>

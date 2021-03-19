@@ -84,7 +84,6 @@ class JoinRoom extends React.Component {
             Room Code:
             <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
           </label>
-          <input type="submit" value="Submit" />
         </form>
         {this.state.redirectToLobby ? (<Redirect to="/lobby" />) : null}
       </div>
