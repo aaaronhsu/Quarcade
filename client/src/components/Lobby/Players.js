@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import socket from '../../ClientSocket.js';
+import socket from "../../ClientSocket.js";
 
 class Players extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      players: [],
+      players: []
     };
   }
 
   componentDidMount() {
-    socket.on("receivePlayersInRoom", (players) => {
-      this.setState({players: players});
+    socket.on("receivePlayersInRoom", players => {
+      this.setState({ players: players });
     });
   }
 
@@ -25,9 +24,7 @@ class Players extends React.Component {
   updatePlayersButton = () => {
     return (
       <div>
-        <button onClick={() => this.getPlayersInRoom()}>
-          Update Players
-        </button>
+        <button onClick={() => this.getPlayersInRoom()}>Update Players</button>
       </div>
     );
   };
@@ -37,15 +34,14 @@ class Players extends React.Component {
       <div>
         <h1>Hello</h1>
 
-        {
-          this.state.players.map(player => (
-            <h2 key={player}>{player}</h2>
-          ))
-        }
+        {this.state.players.map(player => (
+          <h2 key={player}>{player}</h2>
+        ))}
 
         {this.updatePlayersButton()}
       </div>
-    )}
+    );
+  }
 }
 
 export default Players;
