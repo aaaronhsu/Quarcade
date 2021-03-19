@@ -43,7 +43,7 @@ class Chat extends React.Component {
             Send Message:
             <input name="message" type="text" value={this.state.message} onChange={this.handleChange} />
           </label>
-          <input type="submit" value="Submit" />
+          {/* <input type="submit" value="Submit" /> */}
         </form>
         <h3>See Messages Below:</h3>
         <div>
