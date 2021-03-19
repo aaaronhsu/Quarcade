@@ -26,21 +26,6 @@ class Players extends React.Component {
     })
   }
 
-  getPlayersInRoom = () => {
-    socket.emit("reqPlayersInRoom");
-    socket.emit("reqSocketRoom");
-  };
-
-  updatePlayersButton = () => {
-    return (
-      <div>
-        <button onClick={() => this.getPlayersInRoom()}>
-          Update Players
-        </button>
-      </div>
-    );
-  };
-
   // handles swap from visible name to name form
   handleClick = event => {
     this.setState({
@@ -86,8 +71,6 @@ class Players extends React.Component {
               </form>
             ) : null
           )}
-
-        {this.updatePlayersButton()}
       </div>
     )}
 }
