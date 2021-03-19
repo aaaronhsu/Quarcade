@@ -11,7 +11,7 @@ class Chat extends React.Component {
           words: ""
         }
       ],
-      message: ""
+      message: "",
     };
   }
 
@@ -27,7 +27,7 @@ class Chat extends React.Component {
     event.preventDefault();
 
     // name should be axios.get(roomCode/user/name) but not yet!
-    let tempName = "bob1" + ": ";
+    let tempName = `${socket.username}` + ": ";
 
     this.state.messages.push({ user: tempName, words: this.state.message });
 
