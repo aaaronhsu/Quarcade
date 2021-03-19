@@ -10,6 +10,9 @@ class Players extends React.Component {
     this.state = {
       room: "unassigned",
       players: [],
+      changeName: false,
+      nameVisible: true,
+      name: "Player",
     };
   }
 
@@ -38,6 +41,32 @@ class Players extends React.Component {
     );
   };
 
+  // handles swap from visible name to name form
+  handleClick = event => {
+    this.setState({
+      changeName: !this.state.changeName,
+      nameVisible: false
+    });
+    event.preventDefault();
+  }
+
+  // handles changes to text field for name form
+  handleChange = event => {
+    this.setState({
+      name: event.target.value
+    });
+  }
+
+  // changes visible name on submission of name form
+  handleSubmit = event => {
+      event.preventDefault();
+      this.setState({
+        name: this.state.name,
+        changeName: !this.state.changeName,
+        nameVisible: true
+      });
+  }
+
   render() {
     return (
       <div>
@@ -45,9 +74,18 @@ class Players extends React.Component {
 
         {
           this.state.players.map(player => (
-            <h2 key={player}>{player}</h2>
-          ))
-        }
+
+            this.state.nameVisible ? (
+              <h2 onClick={this.handleClick} key={player}>{player}</h2>
+            ) : null ),
+            this.state.changeName ? (
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
+                </label>
+              </form>
+            ) : null
+          )}
 
         {this.updatePlayersButton()}
       </div>
