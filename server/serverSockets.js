@@ -1,5 +1,7 @@
 const socketio = require('socket.io');
 
+// io.sockets.sockets.get(client) gets socket from id (client)
+
 module.exports = {
   init: (http) => {
     io = socketio(http, {
