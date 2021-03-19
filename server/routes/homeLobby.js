@@ -38,6 +38,8 @@ router.get("/:query", function (req, res, next) {
   var query = req.params.query;
   HomeLobby.find({ roomCode: query })
     .then(function (homelobby) {
+      console.log(homelobby);
+      
       res.send(homelobby);
     })
     .catch(next);

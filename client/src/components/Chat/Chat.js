@@ -24,7 +24,7 @@ class Chat extends React.Component {
       this.setState({ myRoom: room });
 
       // get the username by the room that it's in and its socket
-      this.findUserName(this.state.myRoom);
+      this.findUserName(room);
     });
   }
 
@@ -53,7 +53,8 @@ class Chat extends React.Component {
   async findUserName(roomCode) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(res => {
-        const room = res.data;
+        const usersInRoom = res.data[0].users;
+        
         console.log("Got room" + roomCode);
       });
       //loop through the user data by the socket.id to find the name
