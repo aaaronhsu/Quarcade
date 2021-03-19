@@ -44,14 +44,13 @@ class JoinRoom extends React.Component {
 
           // this means if it exists you can join
           if (matches.length > 0) {
-
             console.log("User has been added to room", roomCode);
 
             // adds user to the room in the database
-            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName } });
+            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName, socket: socket.id } });
 
             // adds user to socket room
-            clientSocket.emit("moveRoom", (roomCode));
+            clientSocket.emit("moveRoom", roomCode);
 
             // handles update of the players in the room
             clientSocket.emit("reqPlayersInRoom");

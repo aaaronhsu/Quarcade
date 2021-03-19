@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import socket from '../../ClientSocket.js';
+import socket from "../../ClientSocket.js";
 
 class Players extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -13,12 +12,14 @@ class Players extends React.Component {
       changeName: false,
       nameVisible: true,
       name: "Player 1",
+
     };
   }
 
   componentDidMount() {
     socket.on("recPlayersInRoom", (players) => {
       this.setState({players: players});
+
     });
 
     socket.on("recSocketRoom", (room) => {
@@ -56,6 +57,7 @@ class Players extends React.Component {
       });
   }
 
+
   render() {
     return (
       <div>
@@ -79,8 +81,10 @@ class Players extends React.Component {
             </form>
           ) : null
         }
+
       </div>
-    )}
+    );
+  }
 }
 
 export default Players;

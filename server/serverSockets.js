@@ -1,19 +1,18 @@
-const socketio = require('socket.io');
+const socketio = require("socket.io");
 
 // io.sockets.sockets.get(client) gets socket from id (client)
 
 module.exports = {
-  init: (http) => {
+  init: http => {
     io = socketio(http, {
       cors: {
         origin: "*",
         methods: ["GET", "POST"]
-      },
+      }
     });
 
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
-    io.on("connection", (client) => {
-
+    io.on("connection", client => {
       // ------------------------------------ Intial Requests ------------------------------------
       // adds user to the "unassigned" room
       client.join("unassigned");
@@ -25,8 +24,6 @@ module.exports = {
       client.on("disconnect", () => {
 
       });
-
-
 
       // ------------------------------------ Utility Requests ------------------------------------
 
@@ -43,6 +40,7 @@ module.exports = {
         let username = client.username;
 
         client.emit("recSocketUsername", username);
+
       });
 
       // emits a message that contains a list of the users currently in the room as the user
@@ -90,5 +88,5 @@ module.exports = {
       });
 
     });
-  },
+  }
 };
