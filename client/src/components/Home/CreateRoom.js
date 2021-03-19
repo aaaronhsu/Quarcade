@@ -31,7 +31,7 @@ class CreateRoom extends React.Component {
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
 
-    // first check if the it exists, this calls the post if it doesn't
+    // first check if the room exists, this calls the post if it doesn't
     this.createRoom(this.state.code, tempName);
 
     // clears the fields, this is just to make it look better
@@ -68,7 +68,7 @@ class CreateRoom extends React.Component {
 
       // adds user to socket room
       clientSocket.emit("moveRoom", (roomCode));
-      
+
     } catch (error) {
       console.log("There was an error with post");
     }
