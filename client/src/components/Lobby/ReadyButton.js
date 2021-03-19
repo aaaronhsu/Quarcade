@@ -26,7 +26,7 @@ class ReadyButton extends React.Component {
   // get information from backend about how many people have readied up
   // update the number as people ready up
 
-  // TODO conditional redirection based on whether or not everyone is readied up
+  // TODO conditional redirection to chosen game based on whether or not everyone is readied up
   render() {
     return (
       <div>
