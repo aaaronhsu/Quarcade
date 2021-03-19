@@ -23,21 +23,6 @@ class Players extends React.Component {
     })
   }
 
-  getPlayersInRoom = () => {
-    socket.emit("reqPlayersInRoom");
-    socket.emit("reqSocketRoom");
-  };
-
-  updatePlayersButton = () => {
-    return (
-      <div>
-        <button onClick={() => this.getPlayersInRoom()}>
-          Update Players
-        </button>
-      </div>
-    );
-  };
-
   render() {
     return (
       <div>
@@ -48,8 +33,6 @@ class Players extends React.Component {
             <h2 key={player}>{player}</h2>
           ))
         }
-
-        {this.updatePlayersButton()}
       </div>
     )}
 }
