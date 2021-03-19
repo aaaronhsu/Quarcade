@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import socket from '../../ClientSocket.js';
 
-class Home extends React.Component {
+class AlphaSoup extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,12 +24,10 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <JoinRoom />
-        <CreateRoom />
 
         {this.renderConnectedSocketsButton()}
       </div>
     )}
 }
 
-export default Home;
+export default AlphaSoup;
