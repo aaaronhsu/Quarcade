@@ -26,6 +26,7 @@ class Players extends React.Component {
     })
   }
 
+<<<<<<< HEAD
   getPlayersInRoom = () => {
     socket.emit("reqPlayersInRoom");
     socket.emit("reqSocketRoom");
@@ -67,6 +68,8 @@ class Players extends React.Component {
       });
   }
 
+=======
+>>>>>>> bd331286dba0ba8e3c082829fb58c48d460543e4
   render() {
     return (
       <div>
@@ -74,6 +77,7 @@ class Players extends React.Component {
 
         {
           this.state.players.map(player => (
+<<<<<<< HEAD
 
             this.state.nameVisible ? (
               <h2 onClick={this.handleClick} key={player}>{player}</h2>
@@ -88,6 +92,11 @@ class Players extends React.Component {
           )}
 
         {this.updatePlayersButton()}
+=======
+            <h2 key={player}>{player}</h2>
+          ))
+        }
+>>>>>>> bd331286dba0ba8e3c082829fb58c48d460543e4
       </div>
     )}
 }

@@ -71,6 +71,11 @@ class CreateRoom extends React.Component {
       // adds user to socket room
       clientSocket.emit("moveRoom", (roomCode));
 
+      // handles update of the players in the room
+      clientSocket.emit("reqPlayersInRoom");
+      clientSocket.emit("reqSocketRoom");
+
+
       // redirects user to lobby
       this.setState({
         redirectToLobby : true
