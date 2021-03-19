@@ -66,6 +66,8 @@ module.exports = {
         });
     
         client.join(newRoom);
+
+        client.emit("reqPlayersInRoom");
       });
 
       // changes a client's username
