@@ -53,7 +53,10 @@ module.exports = {
           ret.push(io.sockets.sockets.get(client).id);
         });
 
-        client.emit("recPlayersInRoom", ret);
+        // updates player list for all players in the room
+        clients.forEach(client => {
+          io.sockets.sockets.get(client).emit("recPlayersInRoom", ret);
+        });
       });
 
 
@@ -66,8 +69,6 @@ module.exports = {
         });
     
         client.join(newRoom);
-
-        client.emit("reqPlayersInRoom");
       });
 
       // changes a client's username
