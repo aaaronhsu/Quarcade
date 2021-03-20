@@ -19,11 +19,12 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    socket.on("getSocketRoom", room => {
-      this.setState({ myRoom: room });
+    socket.on("recMessage", ({message, user}) => {
+      let cMessages = [...this.state.messages];
 
-      // get the username by the room that it's in and its socket
-      this.findUserName(room);
+      cMessages.push({user: user, words: message});
+
+      this.setState({messages: cMessages});
     });
   }
 
@@ -38,32 +39,10 @@ class Chat extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    // requests the room, this adds the room to the state
-    socket.emit("requestSocketRoom");
+    socket.emit("sendMessage", this.state.message);
 
-    // name should be axios.get(roomCode/user/name) but not yet!
-    let tempName = `${socket.username}` + ": ";
-
-    this.state.messages.push({ user: tempName, words: this.state.message });
-
-    this.setState({ message: "" });
+    this.setState({message: ""});
   };
-
-  async findUserName(roomCode) {
-    try {
-      await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(res => {
-        const usersInRoom = res.data[0].users;
-
-        console.log("Got room" + roomCode);
-      });
-      //loop through the user data by the socket.id to find the name
-      //res.data.users()
-
-      //lastly, update the user with the user info
-    } catch (error) {
-      console.log("Could not find that room: " + roomCode);
-    }
-  }
 
   render() {
     return (
@@ -80,7 +59,7 @@ class Chat extends React.Component {
         <div>
           {this.state.messages.map(message => (
             <small>
-              {message.user}
+              {message.user}:
               {message.words}
               <br></br>
             </small>

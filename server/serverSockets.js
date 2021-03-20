@@ -113,6 +113,23 @@ module.exports = {
         client.username = username;
       });
 
+      // ------------------------------------ Player Interaction Requests ------------------------------------
+
+      // sends a message to all sockets in a room
+      client.on("sendMessage", (data) => {
+        const roomList = Array.from(client.rooms);
+
+        let info = {
+          message: data,
+          user: client.username
+        };
+
+        console.log(info);
+
+        io.to(roomList[1]).emit("recMessage", info);
+      });
+
     });
+
   }
 };
