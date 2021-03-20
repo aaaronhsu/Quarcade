@@ -124,8 +124,7 @@ module.exports = {
           user: client.username
         };
 
-        console.log(info);
-
+        // emits the payload to all sockets with the same room
         io.to(roomList[1]).emit("recMessage", info);
       });
 
