@@ -19,12 +19,14 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    socket.on("recMessage", ({message, user}) => {
+    socket.on("recMessage", ({ message, user }) => {
       let cMessages = [...this.state.messages];
 
-      cMessages.push({user: user, words: message});
+      const tempUser = user + ": ";
 
-      this.setState({messages: cMessages});
+      cMessages.push({ user: tempUser, words: message });
+
+      this.setState({ messages: cMessages });
     });
   }
 
@@ -41,7 +43,7 @@ class Chat extends React.Component {
 
     socket.emit("sendMessage", this.state.message);
 
-    this.setState({message: ""});
+    this.setState({ message: "" });
   };
 
   render() {
@@ -59,7 +61,7 @@ class Chat extends React.Component {
         <div>
           {this.state.messages.map(message => (
             <small>
-              {message.user}:
+              {message.user}
               {message.words}
               <br></br>
             </small>
