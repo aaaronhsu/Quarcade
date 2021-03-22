@@ -28,6 +28,10 @@ class Chat extends React.Component {
 
       this.setState({ messages: cMessages });
     });
+
+    socket.on("recSocketRoom", (room) => {
+      console.log(room);
+    });
   }
 
   handleChange = event => {
@@ -44,6 +48,18 @@ class Chat extends React.Component {
     socket.emit("sendMessage", this.state.message);
 
     this.setState({ message: "" });
+  };
+
+  checkRoom = () => {
+    socket.emit("reqSocketRoom");
+  };
+
+  checkRoomButton = () => {
+    return (
+      <button onClick={() => this.checkRoom()}>
+        Click this to check the room the user is in (prints to server console)
+      </button>
+    );
   };
 
   render() {
@@ -67,6 +83,8 @@ class Chat extends React.Component {
             </small>
           ))}
         </div>
+
+        {this.checkRoomButton()}
       </div>
     );
   }
