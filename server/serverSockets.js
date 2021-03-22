@@ -18,7 +18,7 @@ module.exports = {
       client.join("unassigned");
 
       // initializes client to have a username field
-      client.username = "holder username";
+      client.username = client.id;
 
       
       client.on("disconnect", () => {
