@@ -13,7 +13,7 @@ module.exports = {
 
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", client => {
-      // ------------------------------------ Intial Requests ------------------------------------
+      // ------------------------------------ Initial Requests ------------------------------------
       // adds user to the "unassigned" room
       client.join("unassigned");
 
