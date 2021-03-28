@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import './JoinRoom.css';
 
 class JoinRoom extends React.Component {
   constructor(props) {
@@ -77,10 +78,10 @@ class JoinRoom extends React.Component {
 
   render() {
     return (
-      <div>
+      <div class="join">
         <form onSubmit={this.handleSubmit}>
           <label>
-            Enter a room code to join a room:
+            Ready to play?
             <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
           </label>
         </form>

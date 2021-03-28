@@ -42,16 +42,15 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Quarcade</h1>
-        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-        <button onClick={() => this.handleClick()}>Log {this.state.isToggleOn ? "On" : "Out"}</button>
-        <br />
+        {/* <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+        <button onClick={() => this.handleClick()}>Log {this.state.isToggleOn ? "On" : "Out"}</button> */}
+        {/* <br /> */}
         <Router>
           <Switch>
             <NavBar />
           </Switch>
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={Home}/>
             <Route path="/lobby" component={Lobby} />
             <Route path="/about" component={About} />
             <Route path="/chat" component={Chat} />

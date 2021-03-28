@@ -1,0 +1,16 @@
+@font-face{
+    font-family: 'Inter', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+}
+body{
+    background-color: black;
+    color: #E9E8E8;
+    font-family: 'Inter', sans-serif;
+}
+h1{
+    width:50%;
+    position: absolute;
+    padding:20%;
+    font-size: 300%;
+    font-weight: normal;
+}

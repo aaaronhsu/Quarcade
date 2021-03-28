@@ -1,0 +1,18 @@
+@font-face{
+    font-family: 'Inter', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+}
+li{
+    list-style: none;
+    display: inline;
+    float:right;
+    padding:0.8%;
+}
+.homelink{
+    float:left;
+}
+a{
+    text-decoration: none;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
