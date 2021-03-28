@@ -2,7 +2,7 @@ import React, { Component, useEffect, useRef } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
-//import './CreateRoom.css';
+import './CreateRoom.css';
 
 class CreateRoom extends React.Component {
   constructor(props) {
@@ -88,8 +88,9 @@ class CreateRoom extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2 onClick={this.handleClick}>or, create a room</h2>
+      <div class="create">
+        <h2>or, </h2>
+        <div class="click" onClick={this.handleClick}>create a room</div>
         {this.state.createRoom ? (
           <form onSubmit={this.handleSubmit}>
             <label>

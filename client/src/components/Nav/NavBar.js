@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import './NavBar.css';
+import Chicken from './Chicken.png';
 
 class NavBar extends React.Component {
   render() {
@@ -8,7 +9,7 @@ class NavBar extends React.Component {
       <div>
         <ul>
           <li class="homelink">
-            <Link to="/">Home</Link>
+            <Link to="/"><img src={Chicken}/></Link>
           </li>
           <li>
             <Link to="/lobby">Lobby</Link>

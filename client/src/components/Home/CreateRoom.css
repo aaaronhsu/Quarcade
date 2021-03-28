@@ -1,7 +1,33 @@
-/* @font-face{
+@font-face{
     font-family: 'Inter', sans-serif;
     src: url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 }
 div{
     font-family: 'Inter', sans-serif;
-} */
+}
+.create{
+    margin-left:63.5%;
+    transform: translateY(200%);
+    padding-top: 0.2%;
+}
+.click{
+    color: #FF8F6B;
+    display: inline;
+    font-size: 150%;
+    font-weight: normal;
+}
+h2{
+    display: inline;
+    font-size: 150%;
+    font-weight: normal;
+}
+input{
+    display: block;
+    border-radius: 12px;
+    border: none;
+    width: 50%;
+}
+label{
+    padding: none;
+    font-weight: 100;
+}

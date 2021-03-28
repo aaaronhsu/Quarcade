@@ -10,9 +10,13 @@ li{
 }
 .homelink{
     float:left;
+    
 }
 a{
     text-decoration: none;
     color: white;
     font-family: 'Inter', sans-serif;
+}
+img{
+    width: 10%;
 }
