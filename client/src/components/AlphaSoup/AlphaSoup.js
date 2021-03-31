@@ -31,17 +31,6 @@ class AlphaSoup extends React.Component {
     // need to connect with backend database and reveal next tile once everyone readies up
   }
 
-  // submits word to clientSocket to determine its point value
-  submitWord = event => {
-    event.preventDefault();
-    // TODO: check if the word is able to be created
-    clientSocket.emit("reqPointValue", this.state.word);
-
-    this.setState({
-      word: "",
-    });
-  };
-
   // handles the change of the word being submitted
   handleWordChange = event => {
     event.preventDefault();
@@ -50,6 +39,18 @@ class AlphaSoup extends React.Component {
       word: event.target.value,
     });
   }
+
+  // submits word to clientSocket to determine its point value
+  submitWord = event => {
+    event.preventDefault();
+    // TODO: check if the word is able to be created from given letters
+    
+    clientSocket.emit("reqPointValue", this.state.word);
+
+    this.setState({
+      word: "",
+    });
+  };
 
   render() {
     return (
