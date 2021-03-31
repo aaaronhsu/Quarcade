@@ -26,6 +26,8 @@ class SubmitWord extends React.Component {
 
     clientSocket.emit("reqPointValue", this.state.word);
 
+    this.props.removeLetters(this.state.word);
+
     this.setState({
       word: "",
     });
