@@ -142,11 +142,11 @@ module.exports = {
 
       // ------------------------------------ AlphaSoup ------------------------------------
 
-      // checks if a word is valid and returns point value
+      // checks if a word is valid and returns point value, returns -1 if the word isn't in the dictionary
       client.on("reqPointValue", (word) => {
         const dictionary = require("./dictionary.js");
 
-        if (dictionary.dictionary.has(word)) {
+        if (word in dictionary.dictionary) {
           client.emit("recPointValue", dictionary.dictionary[word]);
         }
         else {

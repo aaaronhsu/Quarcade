@@ -8,10 +8,17 @@ class AlphaSoup extends React.Component {
     this.state = {
       ready: false,
       tileCount : 0,
+
+      word: "",
     }
   }
 
-  
+  componentDidMount() {
+    // retrieves the point value of the word that was submitted
+    clientSocket.on("recPointValue", (val) => {
+      console.log("point value: " + val);
+    });
+  }
 
   // handles clicking the ready for next tile button
   handleClick = event => {
@@ -24,16 +31,24 @@ class AlphaSoup extends React.Component {
     // need to connect with backend database and reveal next tile once everyone readies up
   }
 
-  submitWord = () => {
-    clientSocket.emit("reqPointValue", "dog");
+  // submits word to clientSocket to determine its point value
+  submitWord = event => {
+    event.preventDefault();
+    // TODO: check if the word is able to be created
+    clientSocket.emit("reqPointValue", this.state.word);
+
+    this.setState({
+      word: "",
+    });
   };
 
-  createWordButton = () => {
-    return (
-      <button onClick={() => this.submitWord()}>
-        click to submit word
-      </button>
-    );
+  // handles the change of the word being submitted
+  handleWordChange = event => {
+    event.preventDefault();
+
+    this.setState({
+      word: event.target.value,
+    });
   }
 
   render() {
@@ -47,7 +62,12 @@ class AlphaSoup extends React.Component {
             </label>
           </button>}
 
-        {this.createWordButton()}
+        <form onSubmit={this.submitWord}>
+          <label>
+            Enter a word to submit:
+            <input name="word" type="text" value={this.state.word} onChange={this.handleWordChange} />
+          </label>
+        </form>
       </div>
     );
   }
