@@ -50,6 +50,7 @@ class SubmitWord extends React.Component {
     event.preventDefault();
 
     if (this.checkValidWord(this.state.word)) {
+      // if the word is able to be made with the given letters, then retrieve the point value and remove the word from the list
       clientSocket.emit("reqPointValue", this.state.word);
       clientSocket.emit("reqRemoveWord", this.state.word);
     }
