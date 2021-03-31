@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
 
+import SubmitWord from './SubmitWord.js';
+
 class AlphaSoup extends React.Component {
 
   constructor(props) {
@@ -8,8 +10,6 @@ class AlphaSoup extends React.Component {
     this.state = {
       ready: false,
       tileCount : 0,
-
-      word: "",
     }
   }
 
@@ -31,27 +31,6 @@ class AlphaSoup extends React.Component {
     // need to connect with backend database and reveal next tile once everyone readies up
   }
 
-  // handles the change of the word being submitted
-  handleWordChange = event => {
-    event.preventDefault();
-
-    this.setState({
-      word: event.target.value,
-    });
-  }
-
-  // submits word to clientSocket to determine its point value
-  submitWord = event => {
-    event.preventDefault();
-    // TODO: check if the word is able to be created from given letters
-    
-    clientSocket.emit("reqPointValue", this.state.word);
-
-    this.setState({
-      word: "",
-    });
-  };
-
   render() {
     return (
       <div>
@@ -63,12 +42,7 @@ class AlphaSoup extends React.Component {
             </label>
           </button>}
 
-        <form onSubmit={this.submitWord}>
-          <label>
-            Enter a word to submit:
-            <input name="word" type="text" value={this.state.word} onChange={this.handleWordChange} />
-          </label>
-        </form>
+        <SubmitWord />
       </div>
     );
   }
