@@ -27,6 +27,8 @@ class JoinRoom extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
+    console.log(this.state.code);
+
     // need to connect with backend database and implement verification
     let tempName = "temporary name that will be updated in lobby";
     this.checkExistenceAndJoin(this.state.code, tempName);

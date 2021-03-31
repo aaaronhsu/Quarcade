@@ -104,6 +104,8 @@ module.exports = {
         client.rooms.forEach(room => {
           if (room != client.id) client.leave(room);
         });
+
+        console.log(newRoom);
     
         client.join(newRoom);
       });
@@ -196,7 +198,7 @@ module.exports = {
         io.to(roomList[1]).emit("recRemoveWord", word);
       });
 
-      
+
     });
 
   }
