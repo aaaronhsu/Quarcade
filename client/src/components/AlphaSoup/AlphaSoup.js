@@ -20,17 +20,6 @@ class AlphaSoup extends React.Component {
     });
   }
 
-  // handles clicking the ready for next tile button
-  handleClick = event => {
-    this.setState({
-      ready: !this.state.ready
-    });
-    console.log('Player ready for next tile');
-
-    // .put click to backend to update number of users who have readied up
-    // need to connect with backend database and reveal next tile once everyone readies up
-  }
-
   // adds a letter to the list of letters
   addLetter = (letter) => {
     let newLetters = [...this.state.letters];
