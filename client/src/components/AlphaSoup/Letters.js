@@ -22,7 +22,25 @@ class Letters extends React.Component {
     });
   }
 
-  
+  requestNewLetter = () => {
+    clientSocket.emit("reqNewLetter");
+  }
+
+  createNextLetterButton = () => {
+    return (
+      <button onClick={() => this.requestNewLetter()}>
+        Press this to get a new letter!
+      </button>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+
+      </div>
+    );
+  }
 
 
 }
