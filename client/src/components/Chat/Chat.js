@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import socket from "../../ClientSocket.js";
+import clientSocket from "../../ClientSocket.js";
 
 class Chat extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    socket.on("recMessage", ({ message, user }) => {
+    clientSocket.on("recMessage", ({ message, user }) => {
       let cMessages = [...this.state.messages];
 
       const tempUser = user + ": ";
@@ -29,7 +29,7 @@ class Chat extends React.Component {
       this.setState({ messages: cMessages });
     });
 
-    socket.on("recSocketRoom", (room) => {
+    clientSocket.on("recSocketRoom", (room) => {
       console.log(room);
     });
   }
@@ -45,13 +45,13 @@ class Chat extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    socket.emit("sendMessage", this.state.message);
+    clientSocket.emit("sendMessage", this.state.message);
 
     this.setState({ message: "" });
   };
 
   checkRoom = () => {
-    socket.emit("reqSocketRoom");
+    clientSocket.emit("reqSocketRoom");
   };
 
   checkRoomButton = () => {

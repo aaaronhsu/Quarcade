@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import socket from "../../ClientSocket.js";
+import clientSocket from "../../ClientSocket.js";
 
 class Players extends React.Component {
   constructor(props) {
@@ -13,12 +13,12 @@ class Players extends React.Component {
   }
 
   componentDidMount() {
-    socket.on("recUsersInRoom", (players) => {
+    clientSocket.on("recUsersInRoom", (players) => {
       this.setState({players: players});
 
     });
 
-    socket.on("recSocketRoom", (room) => {
+    clientSocket.on("recSocketRoom", (room) => {
       this.setState({room: room});
     });
   }
