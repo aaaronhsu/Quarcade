@@ -10,6 +10,26 @@ class SubmitWord extends React.Component {
     }
   }
 
+  // helper function for checkValidWord to check if the letter exists in the list of words
+  removeFirst = (src, element) => {
+    const index = src.indexOf(element);
+    if (index === -1) return [-1];
+    return [...src.slice(0, index), ...src.slice(index + 1)];
+  }
+
+  // this only checks if the word is able to be made with the letters currently in the list
+  checkValidWord = word => {
+    let newLetters = [...this.props.letters];
+
+    for (var i = 0; i < word.length; i++) {
+      newLetters = this.removeFirst(newLetters, word.charAt(i));
+
+      if (newLetters[0] == [-1]) return false;
+    }
+
+    return true;
+  };
+
   // handles the change of the word being submitted
   handleWordChange = event => {
     event.preventDefault();
@@ -22,11 +42,14 @@ class SubmitWord extends React.Component {
   // submits word to clientSocket to determine its point value
   submitWord = event => {
     event.preventDefault();
-    // TODO: check if the word is able to be created from given letters
 
-    clientSocket.emit("reqPointValue", this.state.word);
-
-    this.props.removeLetters(this.state.word);
+    if (this.checkValidWord(this.state.word)) {
+      clientSocket.emit("reqPointValue", this.state.word);
+      this.props.removeLetters(this.state.word);
+    }
+    else {
+      console.log("you cannot make the word", "\"" + this.state.word + "\"", "with the current letters");
+    }
 
     this.setState({
       word: "",
