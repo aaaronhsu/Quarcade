@@ -152,7 +152,42 @@ module.exports = {
         else {
           client.emit("recPointValue", -1);
         }
+      });
 
+      // returns a random letter to all clients connected
+      client.on("reqNewLetter", () => {
+        const roomList = Array.from(client.rooms);
+
+        const letterList = ["a", "a", "a", "a", "a", "a", "a", "a", "a", 
+                            "b", "b", 
+                            "c", "c",
+                            "d", "d", "d", "d", 
+                            "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", 
+                            "f", "f",
+                            "g", "g", "g",
+                            "h", "h",
+                            "i", "i", "i", "i", "i", "i", "i", "i", "i", 
+                            "j",
+                            "k",
+                            "l", "l", "l", "l", 
+                            "m", "m",
+                            "n", "n", "n", "n", "n", "n", 
+                            "o", "o", "o", "o", "o", "o", "o", "o", 
+                            "p", "p",
+                            "q",
+                            "r", "r", "r", "r", "r", "r", 
+                            "s", "s", "s", "s", 
+                            "t", "t", "t", "t", "t", "t", 
+                            "u", "u", "u", "u", 
+                            "v", "v",
+                            "w", "w",
+                            "x",
+                            "y", "y",
+                            "z"];
+        
+        let newLetter = letterList[Math.floor(Math.random() * letterList.length)];
+
+        io.to(roomList[1]).emit("recMessage", newLetter);
       });
 
     });
