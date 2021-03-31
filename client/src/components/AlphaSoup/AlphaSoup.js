@@ -9,9 +9,6 @@ class AlphaSoup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ready: false,
-      tileCount : 0,
-
       letters: [],
     }
   }
@@ -69,14 +66,6 @@ class AlphaSoup extends React.Component {
   render() {
     return (
       <div>
-        <h2>Tiles left: {this.state.tileCount}</h2>
-        {this.state.ready ? null :
-          <button onClick={this.handleClick}>
-            <label>
-              Ready for next tile?
-            </label>
-          </button>}
-
         <SubmitWord letters={this.state.letters} removeLetters={(word) => this.removeLetters(word)} />
 
         <Letters letters={this.state.letters} addLetter={(letter) => this.addLetter(letter)} />
