@@ -158,36 +158,10 @@ module.exports = {
 
       // returns a random letter to all clients connected
       client.on("reqNewLetter", () => {
+        const dictionary = require("./dictionary.js");
         const roomList = Array.from(client.rooms);
-
-        const letterList = ["j", "j",
-                            "k", "k",
-                            "q", "q",
-                            "x", "x",
-                            "z", "z",
-                            "b", "b", "b", 
-                            "c", "c", "c", 
-                            "f", "f", "f", 
-                            "h", "h", "h", 
-                            "m", "m", "m", 
-                            "p", "p", "p", 
-                            "v", "v", "v", 
-                            "w", "w", "w", 
-                            "y", "y", "y", 
-                            "g", "g", "g", "g", 
-                            "l", "l", "l", "l", "l", 
-                            "d", "d", "d", "d", "d", "d", 
-                            "s", "s", "s", "s", "s", "s", 
-                            "u", "u", "u", "u", "u", "u", 
-                            "n", "n", "n", "n", "n", "n", "n", "n", 
-                            "t", "t", "t", "t", "t", "t", "t", "t", "t", 
-                            "r", "r", "r", "r", "r", "r", "r", "r", "r", 
-                            "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", 
-                            "i", "i", "i", "i", "i", "i", "i", "i", "i", "i", "i", "i", 
-                            "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", 
-                            "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"];
         
-        let newLetter = letterList[Math.floor(Math.random() * letterList.length)];
+        let newLetter = dictionary.letterList[Math.floor(Math.random() * dictionary.letterList.length)];
 
         io.to(roomList[1]).emit("recNewLetter", newLetter);
       });
