@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
 
 import SubmitWord from './SubmitWord.js';
+import Letters from './Letters.js';
 
 class AlphaSoup extends React.Component {
 
@@ -43,6 +44,8 @@ class AlphaSoup extends React.Component {
           </button>}
 
         <SubmitWord />
+
+        <Letters />
       </div>
     );
   }

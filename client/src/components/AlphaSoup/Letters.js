@@ -4,6 +4,8 @@ import clientSocket from '../../ClientSocket.js';
 class Letters extends React.Component {
 
   constructor(props) {
+    super(props);
+    
     this.state = {
       letters: [],
     };
@@ -37,7 +39,15 @@ class Letters extends React.Component {
   render() {
     return (
       <div>
-
+        Current Letters:
+        <ul>
+        {
+          this.state.letters.map(letter => (
+            <li>{letter}</li>
+          ))
+        } 
+        </ul>
+        
       </div>
     );
   }
