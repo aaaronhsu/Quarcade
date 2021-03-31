@@ -187,7 +187,7 @@ module.exports = {
         
         let newLetter = letterList[Math.floor(Math.random() * letterList.length)];
 
-        io.to(roomList[1]).emit("recMessage", newLetter);
+        io.to(roomList[1]).emit("recNewLetter", newLetter);
       });
 
     });
