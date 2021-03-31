@@ -10,6 +10,12 @@ class SubmitWord extends React.Component {
     }
   }
 
+  componentDidMount() {
+    clientSocket.on("recRemoveWord", (word) => {
+      this.props.removeLetters(word);
+    })
+  }
+
   // helper function for checkValidWord to check if the letter exists in the list of words
   removeFirst = (src, element) => {
     const index = src.indexOf(element);
@@ -45,7 +51,7 @@ class SubmitWord extends React.Component {
 
     if (this.checkValidWord(this.state.word)) {
       clientSocket.emit("reqPointValue", this.state.word);
-      this.props.removeLetters(this.state.word);
+      clientSocket.emit("reqRemoveWord", this.state.word);
     }
     else {
       console.log("you cannot make the word", "\"" + this.state.word + "\"", "with the current letters");

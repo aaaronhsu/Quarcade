@@ -190,6 +190,13 @@ module.exports = {
         io.to(roomList[1]).emit("recNewLetter", newLetter);
       });
 
+      // removes word from the list of letters in all clients connected to the same room
+      client.on("reqRemoveWord", (word) => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recRemoveWord", word);
+      });
+
+      
     });
 
   }
