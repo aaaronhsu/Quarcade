@@ -3,7 +3,7 @@ const socketio = require("socket.io");
 // io.sockets.sockets.get(client) gets socket from id (client)
 
 module.exports = {
-  init: http => {
+  init: (http) => {
     io = socketio(http, {
       cors: {
         origin: "*",
@@ -126,6 +126,33 @@ module.exports = {
 
         // emits the payload to all sockets with the same room
         io.to(roomList[1]).emit("recMessage", info);
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // ------------------------------------ AlphaSoup ------------------------------------
+
+      // checks if a word is valid and returns point value
+      client.on("reqPointValue", (word) => {
+        const dictionary = require("./dictionary.js");
+
+        if (dictionary.dictionary.has(word)) {
+          client.emit("recPointValue", dictionary.dictionary[word]);
+        }
+        else {
+          client.emit("recPointValue", -1);
+        }
+
       });
 
     });

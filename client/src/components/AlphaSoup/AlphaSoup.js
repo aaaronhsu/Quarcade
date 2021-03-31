@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import socket from '../../ClientSocket.js';
+import clientSocket from '../../ClientSocket.js';
 
 class AlphaSoup extends React.Component {
 
@@ -10,6 +10,8 @@ class AlphaSoup extends React.Component {
       tileCount : 0,
     }
   }
+
+  
 
   // handles clicking the ready for next tile button
   handleClick = event => {
@@ -22,6 +24,18 @@ class AlphaSoup extends React.Component {
     // need to connect with backend database and reveal next tile once everyone readies up
   }
 
+  submitWord = () => {
+    clientSocket.emit("reqPointValue", "dog");
+  };
+
+  createWordButton = () => {
+    return (
+      <button onClick={() => this.submitWord()}>
+        click to submit word
+      </button>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -32,6 +46,8 @@ class AlphaSoup extends React.Component {
               Ready for next tile?
             </label>
           </button>}
+
+        {this.createWordButton()}
       </div>
     );
   }
