@@ -5,22 +5,13 @@ class Letters extends React.Component {
 
   constructor(props) {
     super(props);
-    
-    this.state = {
-      letters: [],
-    };
   }
 
   componentDidMount() {
 
     // takes a new letter and adds it to the list of letters
     clientSocket.on("recNewLetter", letter => {
-      let newLetters = [...this.state.letters];
-      newLetters.push(letter);
-
-      this.setState({
-        letters: newLetters
-      });
+      this.props.addLetter(letter);
     });
   }
 
@@ -43,7 +34,7 @@ class Letters extends React.Component {
         Current Letters:
         <ul>
         {
-          this.state.letters.map(letter => (
+          this.props.letters.map(letter => (
             <li>{letter}</li>
           ))
         } 
