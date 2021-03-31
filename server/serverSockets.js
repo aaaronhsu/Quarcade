@@ -148,12 +148,13 @@ module.exports = {
       client.on("reqPointValue", (word) => {
         const dictionary = require("./dictionary.js");
 
-        if (word in dictionary.dictionary) {
-          client.emit("recPointValue", dictionary.dictionary[word]);
+        let points = 0;
+        
+        for (var i = 0; i < word.length; i++) {
+          points += dictionary.pointList[word.charAt(i)];
         }
-        else {
-          client.emit("recPointValue", -1);
-        }
+
+        client.emit("recPointValue", points);
       });
 
       // returns a random letter to all clients connected
