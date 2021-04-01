@@ -79,10 +79,6 @@ class AlphaSoup extends React.Component {
 
     // request the socket's room
     clientSocket.emit("reqSocketRoom");
-
-    // use that room in an async function to get the homelobby data
-
-    // post that data into the alphasoup collection
     
   }
 
@@ -95,6 +91,8 @@ class AlphaSoup extends React.Component {
           const roomInfo = res.data[0];
           // logs the info of the room
           console.log(roomInfo);
+          // here we do axios.post roomInfo to the room hopefully 
+          // TODO: post that data into the alphasoup collection 
         }
       )
     } catch (error) {

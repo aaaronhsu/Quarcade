@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 //imports schema from models
-const AlphaSoup = require("../models/homeLobby");
+const AlphaSoup = require("../models/alphaSoup");
 
 const socketio = require("../serverSockets.js");
 
 // ------------------------------------ POST Requests ------------------------------------
 
-// Adds a room to the database
+// Adds a room to the database ALPHASOUP
 router.post("/", function (req, res, next) {
   console.log("Room", req.body.roomCode, "has been created");
 

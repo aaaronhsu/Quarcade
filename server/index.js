@@ -23,7 +23,7 @@ app.use("/homeLobby", homeLobbyRouter);
 
 //connect the routes that are in a room (alphasoup for now)
 const alphaSoupRouter = require("./routes/alphaSoup");
-app.use("/aphaSoup", alphaSoupRouter);
+app.use("/alphaSoup", alphaSoupRouter);
 
 //error handling middleware
 app.use(function (err, req, res, next) {
