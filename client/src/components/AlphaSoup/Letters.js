@@ -32,7 +32,7 @@ class Letters extends React.Component {
   render() {
     return (
       <div>
-        {this.createNextLetterButton()}
+        {this.createNextLetterButton()} <br></br>
         Current Letters:
         <ul>
         {

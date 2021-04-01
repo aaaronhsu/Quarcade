@@ -72,4 +72,8 @@ router.delete("/:query", function (req, res, next) {
     .catch(next);
 });
 
+router.delete("/", function (req, res, next) {
+  HomeLobby.remove({}).catch(next);
+})
+
 module.exports = router;
