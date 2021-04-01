@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
+import Axios from "axios";
 
 import SubmitWord from './SubmitWord.js';
 import Letters from './Letters.js';
@@ -17,6 +18,7 @@ class AlphaSoup extends React.Component {
   }
 
   componentDidMount() {
+    console.log("component mounted")
     // retrieves the point value of the word that was submitted
     clientSocket.on("recPointValue", ({word, pts}) => {
       let newWords = [...this.state.words];
@@ -29,6 +31,13 @@ class AlphaSoup extends React.Component {
         points: this.state.points + pts,
       });
     });
+
+    // records the room the socket is in
+    clientSocket.on("recSocketRoom", (room) => {
+      console.log("received room");
+      // console.log(room);
+      this.makeSwitch(room);
+    })
   }
 
   // adds a letter to the list of letters
@@ -63,10 +72,43 @@ class AlphaSoup extends React.Component {
     });
   };
 
+  // this is a testing function, will convert the homelobby data into alphasoup data
+  handleSwitch = () => {
+    // alert("button")
+    console.log("button clicked");
+
+    // request the socket's room
+    clientSocket.emit("reqSocketRoom");
+
+    // use that room in an async function to get the homelobby data
+
+    // post that data into the alphasoup collection
+    
+  }
+
+  // takes the room from socket and requests the data
+  async makeSwitch(room) {
+    console.log("made it to makeSwitch " + room);
+    try {
+      await Axios.get(`http://localhost:5000/homeLobby/${room}`).then(
+        res => {
+          const roomInfo = res.data[0];
+          // logs the info of the room
+          console.log(roomInfo);
+        }
+      )
+    } catch (error) {
+      console.log("Could not get that room");
+    }
+  }
+
   render() {
     return (
       <div>
-
+        <h3>For testing- this button switches room from homelobby to alphasoup</h3>
+        <button onClick={this.handleSwitch}>
+          Switch to alphasoup room
+        </button>
         <h2>You have {this.state.points} points</h2>
         <h2>These are the words you have:</h2>
         <ul>
