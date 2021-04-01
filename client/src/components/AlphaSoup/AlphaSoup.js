@@ -103,14 +103,14 @@ class AlphaSoup extends React.Component {
 
   async addRoom(roomInfo) {
     console.log("ran add room");
-    console.log(roomInfo.users);
+    console.log(roomInfo.roomCode);
     try {
       // should post the roomCode and the users, but currently only does roomCode
-      await Axios.post(`http://localhost:500/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
-      // find a way to PUT in all the users to the database
+      await Axios.post(`http://localhost:500/alphaSoup`, { roomCode: roomInfo.roomCode});
+
       
     } catch (error) {
-      console.log("Could not post that data");
+      console.log(error.message);
     }
   }
 

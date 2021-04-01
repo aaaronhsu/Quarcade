@@ -22,12 +22,11 @@ router.post("/", function (req, res, next) {
 
 // retrieves all room information
 router.get("/", async (req, res) => {
-  try {
-    const alphaSoup = await alphaSoup.find();
-    res.json(alphaSoup);
-  } catch (error) {
-    res.status(500).json({ message: error.message }); //500 error, something with our server is wrong
-  }
+  AlphaSoup.find()
+    .then(function(alphaSoups) {
+      res.send(alphaSoups)
+    })
+    .catch(next);
 });
 
 //get requests for one thing, if it doesn't get it, returns nothing (empty array)
