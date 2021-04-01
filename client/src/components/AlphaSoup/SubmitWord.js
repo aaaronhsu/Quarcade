@@ -25,15 +25,18 @@ class SubmitWord extends React.Component {
 
   // this only checks if the word is able to be made with the letters currently in the list
   checkValidWord = word => {
-    
+
     // words with less than 3 letters are not allowed
     if (word.length < 3) return false;
 
+    // available letters
     let newLetters = [...this.props.letters];
 
+    // loop through the letters in the word and remove them from the list of available letters
     for (var i = 0; i < word.length; i++) {
       newLetters = this.removeFirst(newLetters, word.charAt(i));
 
+      // if the letter doesn't exist, then you can't make the word
       if (newLetters[0] == [-1]) return false;
     }
 

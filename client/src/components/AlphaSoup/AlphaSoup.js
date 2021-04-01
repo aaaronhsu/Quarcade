@@ -21,6 +21,7 @@ class AlphaSoup extends React.Component {
     clientSocket.on("recPointValue", ({word, pts}) => {
       let newWords = [...this.state.words];
 
+      // add the new word to the list of words
       newWords.push(word);
 
       this.setState({
@@ -69,12 +70,13 @@ class AlphaSoup extends React.Component {
         <h2>You have {this.state.points} points</h2>
         <h2>These are the words you have:</h2>
         <ul>
-        {
-          this.state.words.map(word => (
-            <li key={word}>{word}</li>
-          ))
-        } 
+          {
+            this.state.words.map(word => (
+              <li key={word}>{word}</li>
+            ))
+          } 
         </ul>
+
         <SubmitWord 
           letters={this.state.letters}
           removeLetters={(word) => this.removeLetters(word)}

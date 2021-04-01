@@ -15,10 +15,12 @@ class Letters extends React.Component {
     });
   }
 
+  // requests new letter
   requestNewLetter = () => {
     clientSocket.emit("reqNewLetter");
   }
 
+  // requests new letter
   createNextLetterButton = () => {
     return (
       <button onClick={() => this.requestNewLetter()}>
