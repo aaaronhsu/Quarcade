@@ -146,9 +146,6 @@ module.exports = {
 
       // checks if a word is valid and returns point value, returns -1 if the word isn't in the dictionary
       client.on("reqPointValue", (word) => {
-
-        // words that are less than 3 letters long are not allowed
-        if (word.length < 3) return;
         
         const dictionary = require("./dictionary.js");
 

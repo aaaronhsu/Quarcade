@@ -25,6 +25,10 @@ class SubmitWord extends React.Component {
 
   // this only checks if the word is able to be made with the letters currently in the list
   checkValidWord = word => {
+    
+    // words with less than 3 letters are not allowed
+    if (word.length < 3) return false;
+
     let newLetters = [...this.props.letters];
 
     for (var i = 0; i < word.length; i++) {
