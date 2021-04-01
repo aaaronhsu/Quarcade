@@ -73,7 +73,10 @@ router.delete("/:query", function (req, res, next) {
 });
 
 router.delete("/", function (req, res, next) {
-  HomeLobby.remove({}).catch(next);
+  HomeLobby.deleteMany({}).then(function() {
+    console.log("All elements in collection deleted");
+  })
+  .catch(next); // weird here, for some reason it works but it never stops
 })
 
 module.exports = router;
