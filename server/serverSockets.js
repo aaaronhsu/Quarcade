@@ -154,7 +154,12 @@ module.exports = {
           points += dictionary.pointList[word.charAt(i)];
         }
 
-        client.emit("recPointValue", points);
+        let data = {
+          word: word,
+          pts: points
+        };
+
+        client.emit("recPointValue", data);
       });
 
       // returns a random letter to all clients connected

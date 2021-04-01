@@ -10,13 +10,23 @@ class AlphaSoup extends React.Component {
     super(props);
     this.state = {
       letters: [],
+
+      words: [],
+      points: 0,
     }
   }
 
   componentDidMount() {
     // retrieves the point value of the word that was submitted
-    clientSocket.on("recPointValue", (val) => {
-      console.log("point value: " + val);
+    clientSocket.on("recPointValue", ({word, pts}) => {
+      let newWords = [...this.state.words];
+
+      newWords.push(word);
+
+      this.setState({
+        words: newWords,
+        points: this.state.points + pts,
+      });
     });
   }
 
@@ -55,9 +65,26 @@ class AlphaSoup extends React.Component {
   render() {
     return (
       <div>
-        <SubmitWord letters={this.state.letters} removeLetters={(word) => this.removeLetters(word)} />
 
-        <Letters letters={this.state.letters} addLetter={(letter) => this.addLetter(letter)} />
+        <h2>You have {this.state.points} points</h2>
+        <h2>These are the words you have:</h2>
+        <ul>
+        {
+          this.state.words.map(word => (
+            <li key={word}>{word}</li>
+          ))
+        } 
+        </ul>
+        <SubmitWord 
+          letters={this.state.letters}
+          removeLetters={(word) => this.removeLetters(word)}
+          addWord={(word, pts) => this.addWord(word, pts)}
+        />
+
+        <Letters 
+          letters={this.state.letters} 
+          addLetter={(letter) => this.addLetter(letter)} 
+        />
       </div>
     );
   }
