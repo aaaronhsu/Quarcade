@@ -85,58 +85,30 @@ class AlphaSoup extends React.Component {
   // takes the room from socket and requests the data
   async makeSwitch(room) {
     console.log("made it to makeSwitch " + room);
-    // checks if the room already exists, if it does not, then continue
-    if (!this.existsCheck(room)) {
-      try {
-        // wait for the room to be found
-        await Axios.get(`http://localhost:5000/homeLobby/${room}`).then(
-          res => {
-            // takes the data
-            const roomInfo = res.data[0];
-            // logs the info of the room
-
-            // here we do axios.post roomInfo to the room 
-            // PROBLEM: this is running WAY too many times
-            this.addRoom(roomInfo);
-          }
-        )
-      } catch (error) {
-        console.log("Could not get that room");
-      }
-    }
-  }
-
-  async addRoom(roomInfo) {
-    console.log("ran add room");
     try {
-      // posts info to database. PROBLEM: posts too many times
-      await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
-      // by now, all the room info is now transferred to alphaSoup
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  async existsCheck(room) {
-    console.log("checking if already exists");
-    try {
-      //gets the data
-      await Axios.get(`http://localhsot:5000/alphaSoup/${room}`).then(
+      await Axios.get(`http://localhost:5000/homeLobby/${room}`).then(
         res => {
-          // if there are any matches, the room exists, otherwise it does not
-          //something here isn't working because it's not checking for existence properly
-          const matches = res.data; 
-          if (matches.length > 0) {
-            console.log("true");
-            return true;
-          } else {
-            console.log("false");
-            return false;
-          }
+          const roomInfo = res.data[0];
+          // logs the info of the room
+          console.log(roomInfo);
+          // here we do axios.post roomInfo to the room 
+          this.addRoom(roomInfo);
         }
       )
     } catch (error) {
-      console.log("error in existsCheck");
+      console.log("Could not get that room");
+    }
+  }
+  async addRoom(roomInfo) {
+    console.log("ran add room");
+    console.log(roomInfo.roomCode);
+    try {
+      // posts the data to the alphasoup database
+      // TODO: make sure it only happens once!!
+      await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
+      // by now, all the room info is now transferred to alphaSoup      } catch (error) {
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
