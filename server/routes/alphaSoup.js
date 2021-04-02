@@ -41,13 +41,19 @@ router.get("/:query", function (req, res, next) {
 
 // ------------------------------------ PUT Requests ------------------------------------
 
-//STILL EDITING THIS
+// TODO: put request that takes the word you just added and puts it under your user in the database
+router.put("/:query", function (req, res, next) {
+  var query = req.params.query;
+  var name = req.body.users.name;
 
-//put requests, allow you to update desired information on a term
-
-//IMPORTANT: in alphaSoup, no users can be added, only in the lobby
-
-//put requests will be used in alpha soup for the chat
+  AlphaSoup.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
+    .then(function () {
+      HomeLobby.find({ roomCode: query }).then(function (homelobby) {
+        res.send(homelobby);
+      });
+    })
+    .catch(next);
+});
 
 // ------------------------------------ DELETE Requests ------------------------------------
 

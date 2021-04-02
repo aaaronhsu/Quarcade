@@ -104,7 +104,6 @@ class AlphaSoup extends React.Component {
     console.log(roomInfo.roomCode);
     try {
       // posts the data to the alphasoup database
-      // TODO: make sure it only happens once!!
       await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
       // by now, all the room info is now transferred to alphaSoup      } catch (error) {
     } catch (error) {
