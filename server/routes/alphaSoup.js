@@ -9,7 +9,7 @@ const socketio = require("../serverSockets.js");
 
 // Adds a room to the database ALPHASOUP
 router.post("/", function (req, res, next) {
-  console.log("Room", req.body.roomCode, "has been created");
+  console.log("Room", req.body.roomCode, "has been created in alphaSoup");
 
   AlphaSoup.create(req.body)
     .then(function (alphaSoup) {
@@ -42,18 +42,45 @@ router.get("/:query", function (req, res, next) {
 // ------------------------------------ PUT Requests ------------------------------------
 
 // TODO: put request that takes the word you just added and puts it under your user in the database
-router.put("/:query", function (req, res, next) {
+router.patch("/:query", function (req, res, next) {
   var query = req.params.query;
-  var name = req.body.users.name;
-
-  AlphaSoup.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
-    .then(function () {
-      HomeLobby.find({ roomCode: query }).then(function (homelobby) {
-        res.send(homelobby);
-      });
+  var updatedInfo = req.params.body;
+  AlphaSoup.findOneAndUpdate({roomCode: query}, {$set: updatedInfo})
+    .then(function (alphasoup) {
+      res.send(alphasoup);
     })
     .catch(next);
-});
+})
+
+/*
+router.patch("/:query", function (req, res, next) {
+  var query = req.params.query;
+  var updatedInfo = req.params.body;
+  AlphaSoup.findOneAndUpdate({roomCode: query}, {$set: updatedInfo})
+    .then(function (alphasoup) {
+      res.send(alphasoup);
+    })
+    .catch(next);
+})
+router.patch("/:query", function (req, res, next) {
+  //takes in a socket and a word for the request
+  var socketId = req.body.socketId;
+  var word = req.body.word;
+  var points = req.body.points;
+  AlphaSoup.find({roomCode: req.params.query})
+    .then(function (alphaSoup) {
+      alphaSoup.users.find({socket: socketId})
+        .then(function (user) {
+          user.wordCount.push({
+            word: word,
+            points: points
+          })
+          res.send(alphaSoup);
+        })
+    })
+    .catch(next)
+})
+*/
 
 // ------------------------------------ DELETE Requests ------------------------------------
 

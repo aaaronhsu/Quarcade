@@ -9,7 +9,7 @@ const socketio = require("../serverSockets.js");
 
 // Adds a room to the database
 router.post("/", function (req, res, next) {
-  console.log("Room", req.body.roomCode, "has been created");
+  console.log("Room", req.body.roomCode, "has been created in homelobby");
   HomeLobby.create(req.body)
     .then(function (homelobby) {
       res.send(homelobby); // sends the message back to the client with the added data
@@ -51,7 +51,7 @@ router.put("/:query", function (req, res, next) {
   var query = req.params.query;
   var name = req.body.users.name;
 
-  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket } } })
+  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: { name: name, socket: socket} } })
     .then(function () {
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);
