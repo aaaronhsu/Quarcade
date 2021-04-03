@@ -25,6 +25,10 @@ app.use("/homeLobby", homeLobbyRouter);
 const alphaSoupRouter = require("./routes/alphaSoup");
 app.use("/alphaSoup", alphaSoupRouter);
 
+//connect the user routes
+const userRouter = require("./routes/user");
+app.use("/user", userRouter);
+
 //error handling middleware
 app.use(function (err, req, res, next) {
   //console.log(err);

@@ -49,6 +49,7 @@ class CreateRoom extends React.Component {
             alert("This room already exists, please choose another name");
           } else {
             this.pushCodeToBackend(roomCode);
+            this.addUser(roomCode);
           }
         },
         error => {
@@ -64,7 +65,7 @@ class CreateRoom extends React.Component {
   async pushCodeToBackend(roomCode) {
     try {
       await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: {socket: clientSocket.id } });
-      console.log("Room was succesfully created");
+      console.log("Room was succesfully created");      
 
       // adds user to socket room
       clientSocket.emit("moveRoom", (roomCode));
@@ -80,6 +81,15 @@ class CreateRoom extends React.Component {
       });
     } catch (error) {
       console.log("There was an error with post");
+    }
+  }
+
+  async addUser(roomCode) {
+    try {
+      await Axios.post("http://localhost:5000/user", { roomCode: roomCode, name: "temp name", socket: clientSocket.id});
+      console.log("user added");
+    } catch (error) {
+      console.log("There was an error adding the user");
     }
   }
 

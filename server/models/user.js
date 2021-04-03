@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 //create users model
 const UserSchema = new Schema({
   //object names should start lowercase and be camelcase
+  roomCode: {
+    type: String, 
+    required: true
+  },
   name: {
     type: String, 
     required: true
@@ -28,4 +32,4 @@ const UserSchema = new Schema({
 
 //this saves the user model in a users collection in mongo
 const User = mongoose.model("user", UserSchema);
-module.exports = UserSchema;
+module.exports = User;
