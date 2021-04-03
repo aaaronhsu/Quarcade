@@ -42,17 +42,22 @@ router.get("/:query", function (req, res, next) {
 // ------------------------------------ PUT Requests ------------------------------------
 
 // TODO: put request that takes the word you just added and puts it under your user in the database
-router.patch("/:query", function (req, res, next) {
-  var query = req.params.query;
-  var updatedInfo = req.params.body;
-  AlphaSoup.findOneAndUpdate({roomCode: query}, {$set: updatedInfo})
+
+/*
+router.put("/:query/addWord", function (req, res, next) {
+  var roomCode = req.params.query;
+  var socket = req.body.socket;
+  AlphaSoup.findOneAndUpdate(
+    {"roomCode": roomCode},
+    {$push: {"users.0.wordsOwned": 
+    {"word": req.body.word, "points": req.body.points}}},
+    {"arrayFilters": [{"socket": socket}]}
+  )
     .then(function (alphasoup) {
       res.send(alphasoup);
     })
     .catch(next);
 })
-
-/*
 router.patch("/:query", function (req, res, next) {
   var query = req.params.query;
   var updatedInfo = req.params.body;
