@@ -111,9 +111,27 @@ class AlphaSoup extends React.Component {
     }
   }
 
+  //these next two functions are to test add word functionality
+  testUserPut = () => {
+    this.addWord();
+  }
+  
+  async addWord() {
+    console.log("made it to add word");
+    try {
+      await Axios.put(`http://localhost:5000/user/${clientSocket.id}`, {wordsOwned: {word: "hi", points: 10}});
+    } catch (error) {
+      console.log("something went wrong with adding word");
+    }
+  }
+
   render() {
     return (
       <div>
+        <h3>For users put testing</h3>
+        <button onClick={this.testUserPut}>
+          add hardcoded word
+        </button>
         <h3>For testing- this button switches room from homelobby to alphasoup</h3>
         <button onClick={this.handleSwitch}>
           Switch to alphasoup room

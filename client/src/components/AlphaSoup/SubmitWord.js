@@ -60,6 +60,10 @@ class SubmitWord extends React.Component {
       // if the word is able to be made with the given letters, then retrieve the point value and remove the word from the list
       clientSocket.emit("reqPointValue", this.state.word);
       clientSocket.emit("reqRemoveWord", this.state.word);
+
+      // then add it to the list for that user
+      // some kind of put request here, but it requires the socketID
+      
     }
     else {
       console.log("you cannot make the word", "\"" + this.state.word + "\"", "with the current letters");
