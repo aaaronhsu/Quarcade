@@ -30,15 +30,14 @@ class JoinRoom extends React.Component {
     console.log(this.state.code);
 
     // need to connect with backend database and implement verification
-    let tempName = "temporary name that will be updated in lobby";
-    this.checkExistenceAndJoin(this.state.code, tempName);
+    this.checkExistenceAndJoin(this.state.code);
 
     //clears the fields, this is just to make it look better
     this.setState({ code: "" });
   };
 
   // get request to see if it exists, if it doesn't, call post
-  async checkExistenceAndJoin(roomCode, tempName) {
+  async checkExistenceAndJoin(roomCode) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
@@ -49,7 +48,7 @@ class JoinRoom extends React.Component {
             console.log("User has been added to room", roomCode);
 
             // adds user to the room in the database
-            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: { name: tempName, socket: clientSocket.id } });
+            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {socket: clientSocket.id } });
 
             // adds user to socket room
             clientSocket.emit("moveRoom", roomCode);

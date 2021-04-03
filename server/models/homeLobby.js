@@ -19,26 +19,9 @@ const HomeLobbySchema = new Schema({
     required: true,
     default: Date.now
   },
-
   users: [
     {
-      name: {
-        type: String,
-        required: true
-      },
       socket: {
-        type: String,
-        required: true
-      }
-    }
-  ],
-  chatMessages: [
-    {
-      message: {
-        type: String,
-        required: true
-      },
-      sender: {
         type: String,
         required: true
       }

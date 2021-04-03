@@ -31,17 +31,15 @@ class CreateRoom extends React.Component {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
-    let tempName = "temporary name that will be updated in lobby";
-
     // first check if the room exists, this calls the post if it doesn't
-    this.createRoom(this.state.code, tempName);
+    this.createRoom(this.state.code);
 
     // clears the fields, this is just to make it look better
     this.setState({ code: "" });
   };
 
   // get request to see if it exists (true if it exists)
-  async createRoom(roomCode, tempName) {
+  async createRoom(roomCode) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
@@ -50,7 +48,7 @@ class CreateRoom extends React.Component {
             // this means if it exists, send an alert
             alert("This room already exists, please choose another name");
           } else {
-            this.pushCodeToBackend(roomCode, tempName);
+            this.pushCodeToBackend(roomCode);
           }
         },
         error => {
@@ -63,9 +61,9 @@ class CreateRoom extends React.Component {
   }
 
   // uses axios to post client socket id and creates room
-  async pushCodeToBackend(roomCode, tempName) {
+  async pushCodeToBackend(roomCode) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: { name: tempName, socket: clientSocket.id } });
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: {socket: clientSocket.id } });
       console.log("Room was succesfully created");
 
       // adds user to socket room

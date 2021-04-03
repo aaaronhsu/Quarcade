@@ -21,26 +21,10 @@ const AlphaSoupSchema = new Schema({
   },
   users: [
     {
-      name: {
-        type: String,
-        required: true
-      },
       socket: {
         type: String,
         required: true
-      },
-      wordsOwned: [
-        {
-          word: {
-            type: String,
-            required: true
-          },
-          points: {
-            type: Number,
-            required: true
-          }
-        }
-      ]
+      }
     }
   ]
 });
