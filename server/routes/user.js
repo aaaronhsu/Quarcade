@@ -29,13 +29,22 @@ router.get("/", async (req, res) => {
 });
 
 //find user by socketId
-router.get("/:socket", function (req, res, next) {
+router.get("/bySocket/:socket", function (req, res, next) {
   var socket = req.params.socket;
   User.find({ socket: socket })
     .then(function (user) {
       console.log(user);
       
       res.send(user);
+    })
+    .catch(next);
+});
+
+router.get("/byRoom/:roomCode", function (req, res, next) {
+  var roomCode = req.params.roomCode;
+  User.find({roomCode: roomCode})
+    .then(function (users) {
+      res.send(users);
     })
     .catch(next);
 });
