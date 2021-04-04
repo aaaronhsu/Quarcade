@@ -198,6 +198,14 @@ module.exports = {
         // emits the payload to all sockets with the same room
         io.to(roomList[1]).emit("recUpdateNextLetterVote", (roomList[1]));
       });
+
+      // tells all users in room to reset the number of votes for the next letter
+      client.on("reqResetVotesForNextLetter", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recResetVotesForNextLetter", (roomList[1]));
+      })
     });
 
   }

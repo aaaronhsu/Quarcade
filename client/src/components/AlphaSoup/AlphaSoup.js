@@ -43,6 +43,13 @@ class AlphaSoup extends React.Component {
     clientSocket.on("recUpdateNextLetterVote", () => {
       this.changeVote(0);
     });
+
+    clientSocket.on("recResetVotesForNextLetter", () => {
+      this.setState({
+        votedForNextLetter: false,
+        votesForNextLetter: 0
+      });
+    });
   }
 
   // updates all playerData
@@ -236,16 +243,30 @@ class AlphaSoup extends React.Component {
           const votes = res.data[0].votes; // up to here works
           //console.log(votes);
 
-          this.setState({
-            votesForNextLetter: votes + vote
-          });
-          //console.log(numVotes);
+          // all players will have voted
+          if (votes + vote == this.state.playerData.length) {
+            this.setState({
+              votesForNextLetter: 0,
+            });
 
-          // uses that room code to patch the new current votes value to database
-          this.patchVotes(roomCode, votes + vote);
+            this.patchVotes(roomCode, 0);
 
-          // requests all users to update the number of votes
-          if (vote != 0) clientSocket.emit("reqUpdateNextLetterVote");
+            clientSocket.emit("reqNewLetter");
+            clientSocket.emit("reqResetVotesForNextLetter");
+          }
+          else {
+            this.setState({
+              votesForNextLetter: votes + vote
+            });
+            //console.log(numVotes);
+  
+            // uses that room code to patch the new current votes value to database
+            this.patchVotes(roomCode, votes + vote);
+  
+            // requests all users to update the number of votes
+            if (vote != 0) clientSocket.emit("reqUpdateNextLetterVote");
+          }
+
         }
       )
 
