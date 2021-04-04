@@ -82,7 +82,7 @@ class SubmitWord extends React.Component {
 
     }
     else {
-      console.log("you cannot make the word", "\"" + this.state.word + "\"", "with the current letters");
+      console.log(`you cannot make the word "${this.state.word}" with the current letters`);
     }
 
     this.setState({
