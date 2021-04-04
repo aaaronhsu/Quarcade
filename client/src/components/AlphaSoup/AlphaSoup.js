@@ -228,10 +228,13 @@ class AlphaSoup extends React.Component {
         res => {
           // already have roomCode
           const votes = res.data[0].votes; // up to here works
-          votes += 1; // add one to the votes
+          //console.log(votes);
+
+          const numVotes = votes + 1;
+          //console.log(numVotes);
 
           // uses that room code to patch the new current votes value to database
-          this.patchVotes(roomCode, votes);
+          this.patchVotes(roomCode, numVotes);
 
         }
       )
@@ -242,15 +245,14 @@ class AlphaSoup extends React.Component {
   }
 
   async patchVotes(roomCode, votes) {
+    console.log("this is the roomCode: " + roomCode);
     try {
       await Axios.patch(`http://localhost:5000/alphaSoup/${roomCode}`, {votes: votes}).then(
-        res => {
-          const toCheckVotes = res.data[0].votes;
-          console.log("updated vote count: " + toCheckVotes);
-        }
+        // for some reason, patch doesn't actually return the new data fast enough... 
+        console.log("votes updated")
       )
     } catch (error) {
-      console.log("problem patching the new vote count");
+      console.log(error.message);
     }
   }
 
