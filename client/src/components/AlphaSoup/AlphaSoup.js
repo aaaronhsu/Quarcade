@@ -13,6 +13,7 @@ class AlphaSoup extends React.Component {
       letters: [],
 
       playerData: [],
+
     }
   }
 
@@ -163,6 +164,8 @@ class AlphaSoup extends React.Component {
     }
   }
 
+
+
   // renders the words that each player has, as well as the points
   renderPlayerData = () => {
     return (
@@ -185,6 +188,20 @@ class AlphaSoup extends React.Component {
       </div>
       
     );
+  }
+
+
+  //adds one vote to the roomcode counter
+  async addOneVote() {
+    // gets roomcode based on id (users collection)
+
+    // uses roomcode info to get the alphaSoup (alphasoups collection) 
+
+    // with the info, store the roomcode and the current votes
+
+    // add 1 to current votes
+    
+    // uses that room code to patch the new current votes value to database
   }
 
   render() {
@@ -212,6 +229,7 @@ class AlphaSoup extends React.Component {
           numLetters={this.state.letters.length}
           letters={this.state.letters} 
           addLetter={(letter) => this.addLetter(letter)} 
+          addOneVote={this.addOneVote()}
         />
       </div>
     );

@@ -28,10 +28,11 @@ class Letters extends React.Component {
   }
 
   addVote = () => {
-    // add 1 to the counter 
+    // add 1 to the counter
+    this.props.addOneVote();
     // somehow stop you from adding another vote
     // should make the button disappear - ask how
-  }
+  } 
 
   // requests new letter
   createNextLetterButton = () => {
