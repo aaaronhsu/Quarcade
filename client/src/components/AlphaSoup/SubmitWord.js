@@ -76,7 +76,6 @@ class SubmitWord extends React.Component {
 
       // request the word to be created (removes letters from the state of all players)
       clientSocket.emit("reqCreateWord", this.state.word);
-      this.props.removeLetters(this.state.word);
 
       // submit the word to the database and request all users to update states
       clientSocket.emit("reqSubmitWord", this.state.word);
