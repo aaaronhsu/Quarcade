@@ -144,7 +144,7 @@ module.exports = {
 
       // ------------------------------------ AlphaSoup ------------------------------------
 
-      // returns point value of a word
+      // calculates point value of a word
       client.on("reqSubmitWord", (word) => {
         
         const dictionary = require("./dictionary.js");
@@ -160,13 +160,15 @@ module.exports = {
           points: points
         };
 
+        // requests word to be put to the database
         client.emit("recSubmitWord", data);
       });
 
+      // tells all users to remove the letters of the given word from the list of letters
       client.on("reqCreateWord", (word) => {
         const roomList = Array.from(client.rooms);
 
-        // emits the payload to all sockets with the same room
+        // emits the word to all users in the same room
         io.to(roomList[1]).emit("recCreateWord", (word));
       })
 

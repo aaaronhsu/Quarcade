@@ -37,16 +37,20 @@ class AlphaSoup extends React.Component {
     });
   }
 
+  // updates all playerData
   async retrieveWords(room) {
-    console.log("made it to retrieve words", room);
     try {
-      await
-      Axios.get(`http://localhost:5000/user/byRoom/${room}`).then(
+      await Axios.get(`http://localhost:5000/user/byRoom/${room}`).then(
         res => {
+
+          // retrievedPlayerData contains all the user information
           const retrievedPlayerData = res.data;
+
           let playerData = [];
           
           for (var i = 0; i < retrievedPlayerData.length; i++) {
+
+            // construct object for each player
             let player = {
               username: retrievedPlayerData[i].socket,
               points: 0,
@@ -54,6 +58,8 @@ class AlphaSoup extends React.Component {
             };
 
             for (var j = 0; j < retrievedPlayerData[i].wordsOwned.length; j++) {
+
+              // construct object for each word
               let wordData = {
                 word: retrievedPlayerData[i].wordsOwned[j].word,
                 points: retrievedPlayerData[i].wordsOwned[j].points
@@ -61,14 +67,15 @@ class AlphaSoup extends React.Component {
 
               player.points += retrievedPlayerData[i].wordsOwned[j].points;
 
+              // push the word object to the list of words for the player
               player.wordsOwned.push(wordData);
             }
 
+            // push the player object to the list of players
             playerData.push(player);
           }
 
-          console.log(playerData);
-
+          // update old playerData with new playerData
           this.setState({
             playerData: playerData
           });
@@ -149,6 +156,7 @@ class AlphaSoup extends React.Component {
     }
   }
 
+  // renders the words that each player has, as well as the points
   renderPlayerData = () => {
     return (
       <div>
@@ -179,10 +187,14 @@ class AlphaSoup extends React.Component {
         <button onClick={this.handleSwitch}>
           Switch to alphasoup room
         </button>
-        <h2>You have {this.state.points} points</h2>
-        <h2>These are the words each player has:</h2>
 
+
+
+        <h2>These are the words each player has:</h2>
         {this.renderPlayerData()}
+
+
+
 
         <SubmitWord 
           letters={this.state.letters}

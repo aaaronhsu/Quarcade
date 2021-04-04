@@ -25,8 +25,7 @@ class SubmitWord extends React.Component {
   // adds word to the list of words for the user
   async addWord(word, points) {
     try {
-      await
-      Axios.put(`http://localhost:5000/user/${clientSocket.id}`, { wordsOwned: {word: word, points: points}});
+      await Axios.put(`http://localhost:5000/user/${clientSocket.id}`, { wordsOwned: {word: word, points: points}});
     }
     catch (error) {
       console.log("word was not submitted properly");
@@ -76,13 +75,14 @@ class SubmitWord extends React.Component {
     event.preventDefault();
 
     if (this.checkValidWord(this.state.word)) {
-      // if the word is able to be made with the given letters, then retrieve the point value and remove the word from the list
+      // if the word is valid (the letters are there)...
+
+      // request the word to be created (removes letters from the state of all players)
       clientSocket.emit("reqCreateWord", this.state.word);
+
+      // submit the word to the database and request all users to update states
       clientSocket.emit("reqSubmitWord", this.state.word);
 
-      // then add it to the list for that user
-      // some kind of put request here, but it requires the socketID
-      
     }
     else {
       console.log("you cannot make the word", "\"" + this.state.word + "\"", "with the current letters");
