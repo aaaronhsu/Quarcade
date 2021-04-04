@@ -144,7 +144,7 @@ module.exports = {
 
       // ------------------------------------ AlphaSoup ------------------------------------
 
-      // checks if a word is valid and returns point value, returns -1 if the word isn't in the dictionary
+      // returns point value of a word
       client.on("reqSubmitWord", (word) => {
         
         const dictionary = require("./dictionary.js");
