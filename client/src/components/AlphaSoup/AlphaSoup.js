@@ -19,18 +19,6 @@ class AlphaSoup extends React.Component {
 
   componentDidMount() {
     console.log("component mounted")
-    // retrieves the point value of the word that was submitted
-    clientSocket.on("recPointValue", ({word, pts}) => {
-      let newWords = [...this.state.words];
-
-      // add the new word to the list of words
-      newWords.push(word);
-
-      this.setState({
-        words: newWords,
-        points: this.state.points + pts,
-      });
-    });
 
     // records the room the socket is in
     clientSocket.on("recSocketRoom", (room) => {
