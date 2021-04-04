@@ -49,6 +49,7 @@ class AlphaSoup extends React.Component {
           for (var i = 0; i < retrievedPlayerData.length; i++) {
             let player = {
               username: retrievedPlayerData[i].socket,
+              points: 0,
               wordsOwned: []
             };
 
@@ -57,6 +58,8 @@ class AlphaSoup extends React.Component {
                 word: retrievedPlayerData[i].wordsOwned[j].word,
                 points: retrievedPlayerData[i].wordsOwned[j].points
               };
+
+              player.points += retrievedPlayerData[i].wordsOwned[j].points;
 
               player.wordsOwned.push(wordData);
             }
@@ -152,7 +155,7 @@ class AlphaSoup extends React.Component {
         {
           this.state.playerData.map(player => (
             <div>
-            <h3>{player.username}:</h3>
+            <h3>{player.username} ({player.points}):</h3>
 
             <ul>
             {
