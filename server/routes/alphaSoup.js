@@ -39,53 +39,18 @@ router.get("/:query", function (req, res, next) {
     .catch(next);
 });
 
-// ------------------------------------ PUT Requests ------------------------------------
+// ------------------------------------ PATCH Requests ------------------------------------
 
-// TODO: put request that takes the word you just added and puts it under your user in the database
-
-/*
-router.put("/:query/addWord", function (req, res, next) {
-  var roomCode = req.params.query;
-  var socket = req.body.socket;
-  AlphaSoup.findOneAndUpdate(
-    {"roomCode": roomCode},
-    {$push: {"users.0.wordsOwned": 
-    {"word": req.body.word, "points": req.body.points}}},
-    {"arrayFilters": [{"socket": socket}]}
-  )
-    .then(function (alphasoup) {
-      res.send(alphasoup);
-    })
-    .catch(next);
-})
+// this function allows you to change the new word votes of an alphasoup room
 router.patch("/:query", function (req, res, next) {
+  // query is the roomCode you want to patch the counter to
   var query = req.params.query;
-  var updatedInfo = req.params.body;
-  AlphaSoup.findOneAndUpdate({roomCode: query}, {$set: updatedInfo})
-    .then(function (alphasoup) {
-      res.send(alphasoup);
+  AlphaSoup.findOneAndUpdate({roomCode: query}, {votes: req.body.votes})
+    .then(function (alphaSoup) {
+      res.send(alphaSoup);
     })
     .catch(next);
 })
-router.patch("/:query", function (req, res, next) {
-  //takes in a socket and a word for the request
-  var socketId = req.body.socketId;
-  var word = req.body.word;
-  var points = req.body.points;
-  AlphaSoup.find({roomCode: req.params.query})
-    .then(function (alphaSoup) {
-      alphaSoup.users.find({socket: socketId})
-        .then(function (user) {
-          user.wordCount.push({
-            word: word,
-            points: points
-          })
-          res.send(alphaSoup);
-        })
-    })
-    .catch(next)
-})
-*/
 
 // ------------------------------------ DELETE Requests ------------------------------------
 

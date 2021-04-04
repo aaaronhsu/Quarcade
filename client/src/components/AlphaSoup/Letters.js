@@ -14,7 +14,9 @@ class Letters extends React.Component {
       this.props.addLetter(letter);
     });
 
+    // if the number of letters sent in is less than 10
     if (this.props.numLetters < 10) {
+      // request a new letter
       this.requestNewLetter();
     }
   
@@ -25,11 +27,17 @@ class Letters extends React.Component {
     clientSocket.emit("reqNewLetter");
   }
 
+  addVote = () => {
+    // add 1 to the counter 
+    // somehow stop you from adding another vote
+    // should make the button disappear - ask how
+  }
+
   // requests new letter
   createNextLetterButton = () => {
     return (
-      <button onClick={() => this.requestNewLetter()}>
-        Press this to get a new letter!
+      <button onClick={() => this.addVote()}>
+        Press this to vote to get another letter;
       </button>
     );
   }

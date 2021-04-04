@@ -96,7 +96,9 @@ class AlphaSoup extends React.Component {
       letters: newLetters
     });
 
+    // if (after we add the new letter) there are still less than 10
     if (this.state.letters.length < 10) {
+      // add a new letter
       clientSocket.emit("reqNewLetter");
     }
   };

@@ -26,7 +26,12 @@ const AlphaSoupSchema = new Schema({
         required: true
       }
     }
-  ]
+  ],
+  votes: {
+    type: Number,
+    required: true, 
+    default: 0
+  }
 });
 
 //this saves the AlphaSoup model in a alphasoups collection in mongo
