@@ -12,9 +12,7 @@ class AlphaSoup extends React.Component {
     this.state = {
       letters: [],
 
-      playerData: {
-
-      },
+      playerData: [],
     }
   }
 
@@ -143,6 +141,27 @@ class AlphaSoup extends React.Component {
     }
   }
 
+  renderPlayerData = () => {
+    return (
+      <div>
+        {
+          this.state.playerData.map(player => (
+            <div>
+            <h3>{player.username}</h3>
+
+            {
+              player.wordsOwned.map(word => (
+                <h4>{word.word} ({word.points})</h4>
+              ))
+            }
+            </div>
+          ))
+        }
+      </div>
+      
+    );
+  }
+
   render() {
     return (
       <div>
@@ -159,7 +178,7 @@ class AlphaSoup extends React.Component {
             ))
           } 
         </ul> */}
-
+        {this.renderPlayerData()}
         <SubmitWord 
           letters={this.state.letters}
           removeLetters={(word) => this.removeLetters(word)}
