@@ -196,14 +196,6 @@ class AlphaSoup extends React.Component {
     // gets roomcode based on id (users collection)
     this.getRoomCode(clientSocket.id);
 
-    // uses roomcode info to get the alphaSoup (alphasoups collection) 
-    // happens in getRoomCode
-
-    // with the info, store the roomcode and the current votes
-
-    // add 1 to current votes
-    
-    // uses that room code to patch the new current votes value to database
   }
 
   async getRoomCode(socketId) {
