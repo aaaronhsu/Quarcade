@@ -192,10 +192,12 @@ class AlphaSoup extends React.Component {
 
 
   //adds one vote to the roomcode counter
-  async addOneVote() {
+  addOneVote = () => {
     // gets roomcode based on id (users collection)
+    this.getRoomCode(clientSocket.id);
 
     // uses roomcode info to get the alphaSoup (alphasoups collection) 
+    // happens in getRoomCode
 
     // with the info, store the roomcode and the current votes
 
@@ -203,6 +205,55 @@ class AlphaSoup extends React.Component {
     
     // uses that room code to patch the new current votes value to database
   }
+
+  async getRoomCode(socketId) {
+    try {
+      await Axios.get(`http://localhost:5000/user/bySocket/${socketId}`).then(
+        res => {
+          // up to here, success! gets the roomcode
+          const roomCode = res.data[0].roomCode;
+
+          // now must use roomcode info to get the alphasoup
+          this.getAlpha(roomCode);
+        }
+      )
+    } catch (error) {
+      console.log("problem getting room by socket");
+    }
+  }
+
+  async getAlpha(roomCode) {
+    try {
+      await Axios.get(`http://localhost:5000/alphaSoup/${roomCode}`).then(
+        res => {
+          // already have roomCode
+          const votes = res.data[0].votes; // up to here works
+          votes += 1; // add one to the votes
+
+          // uses that room code to patch the new current votes value to database
+          this.patchVotes(roomCode, votes);
+
+        }
+      )
+
+    } catch (error) {
+      console.log("problem getting the correct alphasoup");
+    }
+  }
+
+  async patchVotes(roomCode, votes) {
+    try {
+      await Axios.patch(`http://localhost:5000/alphaSoup/${roomCode}`, {votes: votes}).then(
+        res => {
+          const toCheckVotes = res.data[0].votes;
+          console.log("updated vote count: " + toCheckVotes);
+        }
+      )
+    } catch (error) {
+      console.log("problem patching the new vote count");
+    }
+  }
+
 
   render() {
     return (
@@ -229,7 +280,7 @@ class AlphaSoup extends React.Component {
           numLetters={this.state.letters.length}
           letters={this.state.letters} 
           addLetter={(letter) => this.addLetter(letter)} 
-          addOneVote={this.addOneVote()}
+          addOneVote={() => this.addOneVote()}
         />
       </div>
     );

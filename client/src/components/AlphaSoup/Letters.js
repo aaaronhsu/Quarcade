@@ -29,7 +29,7 @@ class Letters extends React.Component {
 
   addVote = () => {
     // add 1 to the counter
-    this.props.addOneVote();
+    //this.props.addOneVote();
     // somehow stop you from adding another vote
     // should make the button disappear - ask how
   } 
@@ -37,7 +37,7 @@ class Letters extends React.Component {
   // requests new letter
   createNextLetterButton = () => {
     return (
-      <button onClick={() => this.addVote()}>
+      <button onClick={() => this.props.addOneVote()}>
         Press this to vote to get another letter;
       </button>
     );
