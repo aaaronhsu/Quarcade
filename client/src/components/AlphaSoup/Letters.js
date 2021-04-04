@@ -17,6 +17,7 @@ class Letters extends React.Component {
     if (this.props.numLetters < 10) {
       this.requestNewLetter();
     }
+  
   }
 
   // requests new letter
