@@ -14,6 +14,7 @@ class SubmitWord extends React.Component {
   componentDidMount() {
     // receives word submission after calculating points
     clientSocket.on("recSubmitWord", ({ word: word, points: points }) => {
+
       // removes letters from list of letters
       this.props.removeLetters(word);
 

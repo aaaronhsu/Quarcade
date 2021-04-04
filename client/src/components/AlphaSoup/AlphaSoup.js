@@ -61,8 +61,6 @@ class AlphaSoup extends React.Component {
   removeLetters = (word) => {
     let newLetters = [...this.state.letters];
 
-    console.log(word);
-
     for (var i = 0; i < word.length; i++) {
       newLetters = this.removeFirst(newLetters, word.charAt(i));
     }
