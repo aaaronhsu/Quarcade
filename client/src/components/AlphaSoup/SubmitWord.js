@@ -32,7 +32,7 @@ class SubmitWord extends React.Component {
       console.log("word was not submitted properly");
     }
 
-    clientSocket.on("")
+    clientSocket.emit("reqUpdateWords");
   }
 
   // helper function for checkValidWord to check if the letter exists in the list of words

@@ -12,8 +12,9 @@ class AlphaSoup extends React.Component {
     this.state = {
       letters: [],
 
-      words: [],
-      points: 0,
+      playerData: {
+
+      },
     }
   }
 
@@ -25,7 +26,52 @@ class AlphaSoup extends React.Component {
       console.log("received room");
       // console.log(room);
       this.makeSwitch(room);
-    })
+    });
+
+    // updates list of all users words
+    clientSocket.on("recUpdateWords", (room) => {
+      this.retrieveWords(room);
+    });
+  }
+
+  async retrieveWords(room) {
+    console.log("made it to retrieve words", room);
+    try {
+      await
+      Axios.get(`http://localhost:5000/user/byRoom/${room}`).then(
+        res => {
+          const retrievedPlayerData = res.data;
+          let playerData = [];
+          
+          for (var i = 0; i < retrievedPlayerData.length; i++) {
+            let player = {
+              username: retrievedPlayerData[i].socket,
+              wordsOwned: []
+            };
+
+            for (var j = 0; j < retrievedPlayerData[i].wordsOwned.length; j++) {
+              let wordData = {
+                word: retrievedPlayerData[i].wordsOwned[j].word,
+                points: retrievedPlayerData[i].wordsOwned[j].points
+              };
+
+              player.wordsOwned.push(wordData);
+            }
+
+            playerData.push(player);
+          }
+
+          console.log(playerData);
+
+          this.setState({
+            playerData: playerData
+          });
+        }
+      );
+    }
+    catch (error) {
+      console.log("there was an error with retrieving the words of each player");
+    }
   }
 
   // adds a letter to the list of letters
@@ -106,13 +152,13 @@ class AlphaSoup extends React.Component {
         </button>
         <h2>You have {this.state.points} points</h2>
         <h2>These are the words you have:</h2>
-        <ul>
+        {/* <ul>
           {
             this.state.words.map(word => (
               <li key={word}>{word}</li>
             ))
           } 
-        </ul>
+        </ul> */}
 
         <SubmitWord 
           letters={this.state.letters}
