@@ -27,15 +27,9 @@ class Letters extends React.Component {
     clientSocket.emit("reqNewLetter");
   }
 
-  addVote = () => {
-    // add 1 to the counter
-    //this.props.addOneVote();
-    // somehow stop you from adding another vote
-    // should make the button disappear - ask how
-  } 
-
   // requests new letter
   createNextLetterButton = () => {
+    // VERY IMPORTANT TODO: should make the button no longer clickable after you click once
     return (
       <button onClick={() => this.props.addOneVote()}>
         Press this to vote to get another letter;
