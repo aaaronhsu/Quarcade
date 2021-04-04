@@ -46,9 +46,19 @@ class Letters extends React.Component {
   // requests new letter
   createNextLetterButton = () => {
     return (
-      <button onClick={() => this.handleVote()}>
-        Press this to vote to get another letter;
-      </button>
+      <div>
+        {
+          this.props.voted ?
+
+          <button onClick={() => this.handleVote()}>
+            Press this to remove your vote for the next letter
+          </button>
+          :
+          <button onClick={() => this.handleVote()}>
+            Press this to add your vote for the next letter
+          </button>
+        }
+      </div>
     );
   }
 
@@ -66,7 +76,7 @@ class Letters extends React.Component {
         {this.testerPassing()} <br></br>
 
         Number of votes: {this.props.votes}/{this.props.playerData.length}
-        
+
         {this.createNextLetterButton()} <br></br>
         Current Letters:
         <ul>
