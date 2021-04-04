@@ -28,6 +28,7 @@ class SubmitWord extends React.Component {
       console.log("word was not submitted properly");
     }
 
+    // requests all users to pull the added word to the database
     clientSocket.emit("reqUpdateWords");
   }
 
