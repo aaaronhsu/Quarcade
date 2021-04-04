@@ -40,7 +40,6 @@ class AlphaSoup extends React.Component {
       this.retrieveWords(room);
     });
 
-    this.retrieveWords();
   }
 
   // updates all playerData

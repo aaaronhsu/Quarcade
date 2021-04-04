@@ -66,6 +66,7 @@ class Letters extends React.Component {
         {this.testerPassing()} <br></br>
 
         Number of votes: {this.props.votes}/{this.props.playerData.length}
+        
         {this.createNextLetterButton()} <br></br>
         Current Letters:
         <ul>
