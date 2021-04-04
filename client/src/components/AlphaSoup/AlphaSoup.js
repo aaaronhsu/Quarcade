@@ -10,6 +10,9 @@ class AlphaSoup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      votesForNextLetter: 0,
+      votedForNextLetter: false,
+
       letters: [],
 
       playerData: [],
@@ -195,7 +198,6 @@ class AlphaSoup extends React.Component {
   addOneVote = () => {
     // gets roomcode based on id (users collection)
     this.getRoomCode(clientSocket.id);
-
   }
 
   async getRoomCode(socketId) {
@@ -221,12 +223,14 @@ class AlphaSoup extends React.Component {
           // already have roomCode
           const votes = res.data[0].votes; // up to here works
           //console.log(votes);
-
-          const numVotes = votes + 1;
+          
+          this.setState({
+            votesForNextLetter: votes + 1
+          });
           //console.log(numVotes);
 
           // uses that room code to patch the new current votes value to database
-          this.patchVotes(roomCode, numVotes);
+          this.patchVotes(roomCode, votes + 1);
 
         }
       )
@@ -272,7 +276,12 @@ class AlphaSoup extends React.Component {
 
         <Letters 
           numLetters={this.state.letters.length}
-          letters={this.state.letters} 
+          letters={this.state.letters}
+          votes={this.state.votesForNextLetter}
+          voted={this.state.votedForNextLetter}
+          playerData={this.state.playerData}
+
+
           addLetter={(letter) => this.addLetter(letter)} 
           addOneVote={() => this.addOneVote()}
         />
