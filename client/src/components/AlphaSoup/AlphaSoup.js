@@ -199,7 +199,6 @@ class AlphaSoup extends React.Component {
         <SubmitWord 
           letters={this.state.letters}
           removeLetters={(word) => this.removeLetters(word)}
-          addWord={(word, pts) => this.addWord(word, pts)}
         />
 
         <Letters 
