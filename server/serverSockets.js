@@ -173,6 +173,15 @@ module.exports = {
         io.to(roomList[1]).emit("recNewLetter", newLetter);
       });
 
+      // tells all users in room to get current words
+      client.on("reqUpdateWords", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recUpdateWords");
+
+      });
+
     });
 
   }
