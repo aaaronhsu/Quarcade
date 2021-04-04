@@ -14,10 +14,7 @@ class SubmitWord extends React.Component {
   componentDidMount() {
     // receives word submission after calculating points
     clientSocket.on("recSubmitWord", ({ word: word, points: points }) => {
-
-      // removes letters from list of letters
-      this.props.removeLetters(word);
-
+      // add word to database
       this.addWord(word, points);
     })
   }
@@ -79,6 +76,7 @@ class SubmitWord extends React.Component {
 
       // request the word to be created (removes letters from the state of all players)
       clientSocket.emit("reqCreateWord", this.state.word);
+      this.props.removeLetters(this.state.word);
 
       // submit the word to the database and request all users to update states
       clientSocket.emit("reqSubmitWord", this.state.word);
