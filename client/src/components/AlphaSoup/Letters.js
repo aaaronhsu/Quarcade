@@ -27,17 +27,11 @@ class Letters extends React.Component {
     clientSocket.emit("reqNewLetter");
   }
 
-  addVote = () => {
-    // add 1 to the counter 
-    // somehow stop you from adding another vote
-    // should make the button disappear - ask how
-  }
-
   // requests new letter
   createNextLetterButton = () => {
     return (
-      <button onClick={() => this.addVote()}>
-        Press this to vote to get another letter;
+      <button onClick={() => this.requestNewLetter()}>
+        Press for another letter
       </button>
     );
   }
