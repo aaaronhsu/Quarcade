@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
+import Axios from "axios";
 
 class SubmitWord extends React.Component {
 
@@ -11,9 +12,24 @@ class SubmitWord extends React.Component {
   }
 
   componentDidMount() {
-    clientSocket.on("recRemoveWord", (word) => {
+    // receives word submission after calculating points
+    clientSocket.on("recSubmitWord", ({ word: word, points: points }) => {
+      // removes letters from list of letters
       this.props.removeLetters(word);
+
+      this.addWord(word, points);
     })
+  }
+
+  // adds word to the list of words for the user
+  async addWord(word, points) {
+    try {
+      await
+      Axios.put(`http://localhost:5000/user/${clientSocket.id}`, { wordsOwned: {word: word, points: points}});
+    }
+    catch (error) {
+      console.log("word was not submitted properly");
+    }
   }
 
   // helper function for checkValidWord to check if the letter exists in the list of words
@@ -58,8 +74,8 @@ class SubmitWord extends React.Component {
 
     if (this.checkValidWord(this.state.word)) {
       // if the word is able to be made with the given letters, then retrieve the point value and remove the word from the list
-      clientSocket.emit("reqPointValue", this.state.word);
       clientSocket.emit("reqRemoveWord", this.state.word);
+      clientSocket.emit("reqSubmitWord", this.state.word);
 
       // then add it to the list for that user
       // some kind of put request here, but it requires the socketID

@@ -145,7 +145,7 @@ module.exports = {
       // ------------------------------------ AlphaSoup ------------------------------------
 
       // checks if a word is valid and returns point value, returns -1 if the word isn't in the dictionary
-      client.on("reqPointValue", (word) => {
+      client.on("reqSubmitWord", (word) => {
         
         const dictionary = require("./dictionary.js");
 
@@ -157,10 +157,10 @@ module.exports = {
 
         let data = {
           word: word,
-          pts: points
+          points: points
         };
 
-        client.emit("recPointValue", data);
+        client.emit("recSubmitWord", data);
       });
 
       // returns a random letter to all clients connected
@@ -172,13 +172,6 @@ module.exports = {
 
         io.to(roomList[1]).emit("recNewLetter", newLetter);
       });
-
-      // removes word from the list of letters in all clients connected to the same room
-      client.on("reqRemoveWord", (word) => {
-        const roomList = Array.from(client.rooms);
-        io.to(roomList[1]).emit("recRemoveWord", word);
-      });
-
 
     });
 
