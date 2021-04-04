@@ -45,7 +45,6 @@ class Letters extends React.Component {
 
   // requests new letter
   createNextLetterButton = () => {
-    // VERY IMPORTANT TODO: should make the button no longer clickable after you click once
     return (
       <button onClick={() => this.handleVote()}>
         Press this to vote to get another letter;

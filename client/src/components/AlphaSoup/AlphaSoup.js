@@ -196,10 +196,9 @@ class AlphaSoup extends React.Component {
   }
 
 
-  //adds one vote to the roomcode counter
+  // changes vote in database (if parameter is 1 then +1, if -1 then -1)
   changeVote = (vote) => {
     // gets roomcode based on id (users collection)
-    console.log(vote);
     this.getRoomCode(clientSocket.id, vote);
   }
 
