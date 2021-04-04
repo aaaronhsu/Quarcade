@@ -27,11 +27,27 @@ class Letters extends React.Component {
     clientSocket.emit("reqNewLetter");
   }
 
+  // handles vote
+  handleVote = () => {
+    if (this.props.voted) {
+      // removes vote
+      this.props.changeVote(-1);
+
+      this.props.changeVoteStatus(false);
+    }
+    else {
+      // adds vote
+      this.props.changeVote(1);
+
+      this.props.changeVoteStatus(true);
+    }
+  }
+
   // requests new letter
   createNextLetterButton = () => {
     // VERY IMPORTANT TODO: should make the button no longer clickable after you click once
     return (
-      <button onClick={() => this.props.addOneVote()}>
+      <button onClick={() => this.handleVote()}>
         Press this to vote to get another letter;
       </button>
     );
@@ -49,6 +65,8 @@ class Letters extends React.Component {
     return (
       <div>
         {this.testerPassing()} <br></br>
+
+        Number of votes: {this.props.votes}/{this.props.playerData.length}
         {this.createNextLetterButton()} <br></br>
         Current Letters:
         <ul>

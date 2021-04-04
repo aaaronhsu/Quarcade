@@ -39,6 +39,8 @@ class AlphaSoup extends React.Component {
     clientSocket.on("recUpdateWords", (room) => {
       this.retrieveWords(room);
     });
+
+    this.retrieveWords();
   }
 
   // updates all playerData
@@ -195,12 +197,19 @@ class AlphaSoup extends React.Component {
 
 
   //adds one vote to the roomcode counter
-  addOneVote = () => {
+  changeVote = (vote) => {
     // gets roomcode based on id (users collection)
-    this.getRoomCode(clientSocket.id);
+    console.log(vote);
+    this.getRoomCode(clientSocket.id, vote);
   }
 
-  async getRoomCode(socketId) {
+  changeVoteStatus = (voted) => {
+    this.setState({
+      votedForNextLetter: voted
+    });
+  }
+
+  async getRoomCode(socketId, vote) {
     try {
       await Axios.get(`http://localhost:5000/user/bySocket/${socketId}`).then(
         res => {
@@ -208,7 +217,7 @@ class AlphaSoup extends React.Component {
           const roomCode = res.data[0].roomCode;
 
           // now must use roomcode info to get the alphasoup
-          this.getAlpha(roomCode);
+          this.getAlpha(roomCode, vote);
         }
       )
     } catch (error) {
@@ -216,21 +225,21 @@ class AlphaSoup extends React.Component {
     }
   }
 
-  async getAlpha(roomCode) {
+  async getAlpha(roomCode, vote) {
     try {
       await Axios.get(`http://localhost:5000/alphaSoup/${roomCode}`).then(
         res => {
           // already have roomCode
           const votes = res.data[0].votes; // up to here works
           //console.log(votes);
-          
+
           this.setState({
-            votesForNextLetter: votes + 1
+            votesForNextLetter: votes + vote
           });
           //console.log(numVotes);
 
           // uses that room code to patch the new current votes value to database
-          this.patchVotes(roomCode, votes + 1);
+          this.patchVotes(roomCode, votes + vote);
 
         }
       )
@@ -283,7 +292,8 @@ class AlphaSoup extends React.Component {
 
 
           addLetter={(letter) => this.addLetter(letter)} 
-          addOneVote={() => this.addOneVote()}
+          changeVote={(vote) => this.changeVote(vote)}
+          changeVoteStatus={(vote) => this.changeVoteStatus(vote)}
         />
       </div>
     );
