@@ -191,6 +191,13 @@ module.exports = {
 
       });
 
+      // tells all users in room to get current number of votes for next letter
+      client.on("reqUpdateNextLetterVote", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recUpdateNextLetterVote", (roomList[1]));
+      });
     });
 
   }

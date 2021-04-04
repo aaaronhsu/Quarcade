@@ -40,6 +40,9 @@ class AlphaSoup extends React.Component {
       this.retrieveWords(room);
     });
 
+    clientSocket.on("recUpdateNextLetterVote", () => {
+      this.changeVote(0);
+    });
   }
 
   // updates all playerData
@@ -216,6 +219,8 @@ class AlphaSoup extends React.Component {
 
           // now must use roomcode info to get the alphasoup
           this.getAlpha(roomCode, vote);
+
+          
         }
       )
     } catch (error) {
@@ -239,6 +244,8 @@ class AlphaSoup extends React.Component {
           // uses that room code to patch the new current votes value to database
           this.patchVotes(roomCode, votes + vote);
 
+          // requests all users to update the number of votes
+          if (vote != 0) clientSocket.emit("reqUpdateNextLetterVote");
         }
       )
 
