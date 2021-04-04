@@ -203,6 +203,7 @@ class AlphaSoup extends React.Component {
         />
 
         <Letters 
+          numLetters={this.state.letters.length}
           letters={this.state.letters} 
           addLetter={(letter) => this.addLetter(letter)} 
         />

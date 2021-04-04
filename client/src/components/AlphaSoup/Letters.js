@@ -13,6 +13,10 @@ class Letters extends React.Component {
     clientSocket.on("recNewLetter", letter => {
       this.props.addLetter(letter);
     });
+
+    if (this.props.numLetters < 10) {
+      this.requestNewLetter();
+    }
   }
 
   // requests new letter
@@ -29,9 +33,18 @@ class Letters extends React.Component {
     );
   }
 
+  testerPassing = () => {
+    return (
+      <h3>
+        Here is the letter count: {this.props.numLetters}
+      </h3>
+    )
+  }
+
   render() {
     return (
       <div>
+        {this.testerPassing()} <br></br>
         {this.createNextLetterButton()} <br></br>
         Current Letters:
         <ul>
