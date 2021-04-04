@@ -152,13 +152,15 @@ class AlphaSoup extends React.Component {
         {
           this.state.playerData.map(player => (
             <div>
-            <h3>{player.username}</h3>
+            <h3>{player.username}:</h3>
 
+            <ul>
             {
               player.wordsOwned.map(word => (
-                <h4>{word.word} ({word.points})</h4>
+                <li>{word.word} ({word.points})</li>
               ))
             }
+            </ul>
             </div>
           ))
         }
@@ -175,15 +177,10 @@ class AlphaSoup extends React.Component {
           Switch to alphasoup room
         </button>
         <h2>You have {this.state.points} points</h2>
-        <h2>These are the words you have:</h2>
-        {/* <ul>
-          {
-            this.state.words.map(word => (
-              <li key={word}>{word}</li>
-            ))
-          } 
-        </ul> */}
+        <h2>These are the words each player has:</h2>
+
         {this.renderPlayerData()}
+
         <SubmitWord 
           letters={this.state.letters}
           removeLetters={(word) => this.removeLetters(word)}
