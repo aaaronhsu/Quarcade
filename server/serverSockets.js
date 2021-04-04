@@ -163,6 +163,13 @@ module.exports = {
         client.emit("recSubmitWord", data);
       });
 
+      client.on("reqCreateWord", (word) => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recCreateWord", (word));
+      })
+
       // returns a random letter to all clients connected
       client.on("reqNewLetter", () => {
         const dictionary = require("./dictionary.js");

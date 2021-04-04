@@ -77,7 +77,7 @@ class SubmitWord extends React.Component {
 
     if (this.checkValidWord(this.state.word)) {
       // if the word is able to be made with the given letters, then retrieve the point value and remove the word from the list
-      clientSocket.emit("reqRemoveWord", this.state.word);
+      clientSocket.emit("reqCreateWord", this.state.word);
       clientSocket.emit("reqSubmitWord", this.state.word);
 
       // then add it to the list for that user

@@ -26,6 +26,11 @@ class AlphaSoup extends React.Component {
       this.makeSwitch(room);
     });
 
+    // removes word from the list of letters
+    clientSocket.on("recCreateWord", (word) => {
+      this.removeLetters(word);
+    });
+
     // updates list of all users words
     clientSocket.on("recUpdateWords", (room) => {
       this.retrieveWords(room);
