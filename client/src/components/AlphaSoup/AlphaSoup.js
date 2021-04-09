@@ -21,12 +21,9 @@ class AlphaSoup extends React.Component {
   }
 
   componentDidMount() {
-    console.log("component mounted")
 
     // records the room the socket is in
     clientSocket.on("recSocketRoom", (room) => {
-      console.log("received room");
-      // console.log(room);
       this.makeSwitch(room);
     });
 
@@ -136,7 +133,6 @@ class AlphaSoup extends React.Component {
     let newLetters = [...this.state.letters];
 
     for (var i = 0; i < word.length; i++) {
-      console.log("removing", word.charAt(i));
       newLetters = this.removeFirst(newLetters, word.charAt(i));
     }
 
@@ -147,8 +143,6 @@ class AlphaSoup extends React.Component {
 
   // this is a testing function, will convert the homelobby data into alphasoup data
   handleSwitch = () => {
-    // alert("button")
-    console.log("button clicked");
 
     // request the socket's room
     clientSocket.emit("reqSocketRoom");
@@ -160,13 +154,11 @@ class AlphaSoup extends React.Component {
 
   // takes the room from socket and requests the data
   async makeSwitch(room) {
-    console.log("made it to makeSwitch " + room);
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${room}`).then(
         res => {
           const roomInfo = res.data[0];
           // logs the info of the room
-          console.log(roomInfo);
           // here we do axios.post roomInfo to the room 
           this.addRoom(roomInfo);
         }
@@ -175,9 +167,9 @@ class AlphaSoup extends React.Component {
       console.log("Could not get that room");
     }
   }
+
+  // adds a clone of the room from homelobbies to alphasoup
   async addRoom(roomInfo) {
-    console.log("ran add room");
-    console.log(roomInfo.roomCode);
     try {
       // posts the data to the alphasoup database
       await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
@@ -249,8 +241,7 @@ class AlphaSoup extends React.Component {
       await Axios.get(`http://localhost:5000/alphaSoup/${roomCode}`).then(
         res => {
           // already have roomCode
-          const votes = res.data[0].votes; // up to here works
-          //console.log(votes);
+          const votes = res.data[0].votes;
 
           // all players will have voted
           if (votes + vote == this.state.playerData.length) {
@@ -268,7 +259,6 @@ class AlphaSoup extends React.Component {
             this.setState({
               votesForNextLetter: votes + vote
             });
-            //console.log(numVotes);
   
             // uses that room code to patch the new current votes value to database
             this.patchVotes(roomCode, votes + vote);
@@ -286,11 +276,9 @@ class AlphaSoup extends React.Component {
   }
 
   async patchVotes(roomCode, votes) {
-    console.log("this is the roomCode: " + roomCode);
     try {
       await Axios.patch(`http://localhost:5000/alphaSoup/${roomCode}`, {votes: votes}).then(
         // for some reason, patch doesn't actually return the new data fast enough... 
-        console.log("votes updated")
       )
     } catch (error) {
       console.log(error.message);
