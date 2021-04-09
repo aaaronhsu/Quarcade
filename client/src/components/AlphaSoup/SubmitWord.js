@@ -19,6 +19,10 @@ class SubmitWord extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    clientSocket.off("recSubmitWord");
+  }
+
   // adds word to the list of words for the user
   async addWord(word, points) {
     try {
