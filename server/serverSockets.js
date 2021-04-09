@@ -169,7 +169,7 @@ module.exports = {
         const roomList = Array.from(client.rooms);
 
         // emits the word to all users in the same room
-        client.to(roomList[1]).emit("recCreateWord", (word));
+        io.to(roomList[1]).emit("recCreateWord", (word));
       })
 
       // returns a random letter to all clients connected
