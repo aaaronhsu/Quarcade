@@ -92,6 +92,12 @@ class AlphaSoup extends React.Component {
             playerData.push(player);
           }
 
+          playerData.sort((a, b) => (a.points > b.points ? 1 : -1));
+
+          for (var i = 1; i < playerData.length + 1; i++) {
+            playerData[i].place = i;
+          }
+
           // update old playerData with new playerData
           this.setState({
             playerData: playerData
