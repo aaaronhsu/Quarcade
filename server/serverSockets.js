@@ -179,8 +179,8 @@ module.exports = {
         
         let newLetter = dictionary.letterList[Math.floor(Math.random() * dictionary.letterList.length)];
 
-        // io.to(roomList[1]).emit("recNewLetter", newLetter);
-        client.emit("recNewLetter", newLetter);
+        io.to(roomList[1]).emit("recNewLetter", newLetter);
+        // client.emit("recNewLetter", newLetter);
       });
 
       // tells all users in room to get current words
