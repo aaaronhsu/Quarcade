@@ -40,10 +40,12 @@ class AlphaSoup extends React.Component {
       this.retrieveWords(room);
     });
 
+    // updates the number of users that have voted for a new letter
     clientSocket.on("recUpdateNextLetterVote", () => {
       this.changeVote(0);
     });
 
+    // resets the vote for the next letter
     clientSocket.on("recResetVotesForNextLetter", () => {
       this.setState({
         votedForNextLetter: false,
@@ -245,13 +247,14 @@ class AlphaSoup extends React.Component {
 
           // all players will have voted
           if (votes + vote == this.state.playerData.length) {
-            this.setState({
-              votesForNextLetter: 0,
-            });
 
+            // reset the vote count in the database
             this.patchVotes(roomCode, 0);
 
+            // requests new letter
             clientSocket.emit("reqNewLetter");
+
+            // requests all users to reset their vote states
             clientSocket.emit("reqResetVotesForNextLetter");
           }
           else {
