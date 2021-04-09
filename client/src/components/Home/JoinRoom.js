@@ -27,8 +27,6 @@ class JoinRoom extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    console.log(this.state.code);
-
     // need to connect with backend database and implement verification
     this.checkExistenceAndJoin(this.state.code);
 
@@ -45,7 +43,6 @@ class JoinRoom extends React.Component {
 
           // this means if it exists you can join
           if (matches.length > 0) {
-            console.log("User has been added to room", roomCode);
 
             // adds user to the room in the database
             Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {socket: clientSocket.id } });

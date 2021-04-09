@@ -17,7 +17,6 @@ class ReadyButton extends React.Component {
     this.setState({
       ready: !this.state.ready
     });
-    console.log(this.state.ready);
 
     // .put submission to backend to update number of users who have readied up
     // need to connect with backend database and route user to the actual game once everyone readies up

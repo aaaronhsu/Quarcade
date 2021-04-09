@@ -28,10 +28,6 @@ class Chat extends React.Component {
 
       this.setState({ messages: cMessages });
     });
-
-    clientSocket.on("recSocketRoom", (room) => {
-      console.log(room);
-    });
   }
 
   handleChange = event => {

@@ -22,7 +22,6 @@ class ChooseGame extends React.Component {
   // TODO right now, if you submit the form for the same game twice, you can't ready up
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.votedGame)
     this.setState({
       votedGame: !this.state.votedGame,
     });
