@@ -148,6 +148,9 @@ class AlphaSoup extends React.Component {
 
     // request the socket's room
     clientSocket.emit("reqSocketRoom");
+
+    // requests player information to be retrieved
+    clientSocket.emit("reqUpdateWords");
     
   }
 
