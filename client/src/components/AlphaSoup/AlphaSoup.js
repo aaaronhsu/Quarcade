@@ -92,11 +92,15 @@ class AlphaSoup extends React.Component {
             playerData.push(player);
           }
 
-          playerData.sort((a, b) => (a.points > b.points ? 1 : -1));
+          playerData.sort(function (a, b) {
+            return b.points - a.points;
+          });
 
-          for (var i = 1; i < playerData.length + 1; i++) {
-            playerData[i].place = i;
+          for (var i = 0; i < playerData.length; i++) {
+            playerData[i].place = i + 1;
           }
+
+          console.log(playerData);
 
           // update old playerData with new playerData
           this.setState({
@@ -192,7 +196,7 @@ class AlphaSoup extends React.Component {
         {
           this.state.playerData.map(player => (
             <div>
-            <h3>{player.username} ({player.points}):</h3>
+            <h3>{player.username} ({player.points}, #{player.place}):</h3>
 
             <ul>
             {
