@@ -5,6 +5,10 @@ class Letters extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      numLettersDEBUG: 0,
+    };
   }
 
   componentDidMount() {
@@ -64,6 +68,39 @@ class Letters extends React.Component {
     )
   }
 
+  createNLetters = (event) => {
+    event.preventDefault();
+
+    for (var i = 0; i < this.state.numLettersDEBUG; i++) {
+      this.requestNewLetter();
+    }
+
+    this.setState({
+      numLettersDEBUG: 0
+    });
+  }
+
+  changeNLetters = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      numLettersDEBUG: event.target.value
+    });
+  }
+
+  createNLettersButton = () => {
+    return (
+      <div>
+        <form onSubmit={this.createNLetters}>
+          <label>
+            Enter number of letters to create (DEBUG ONLY): 
+            <input name="numLettersDEBUG" type="text" value={this.state.numLettersDEBUG} onChange={this.changeNLetters} />
+          </label>
+        </form>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
@@ -71,7 +108,7 @@ class Letters extends React.Component {
 
         Number of votes: {this.props.votes}/{this.props.playerData.length}
 
-        {this.createNextLetterButton()} <br></br>
+        {this.createNextLetterButton()} {this.createNLettersButton()} <br></br>
         Current Letters:
         <ul>
         {
