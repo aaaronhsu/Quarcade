@@ -104,8 +104,6 @@ module.exports = {
         client.rooms.forEach(room => {
           if (room != client.id) client.leave(room);
         });
-
-        console.log(newRoom);
     
         client.join(newRoom);
       });
