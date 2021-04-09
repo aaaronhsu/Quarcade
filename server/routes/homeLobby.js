@@ -9,7 +9,6 @@ const socketio = require("../serverSockets.js");
 
 // Adds a room to the database
 router.post("/", function (req, res, next) {
-  console.log("Room", req.body.roomCode, "has been created in homelobby");
   HomeLobby.create(req.body)
     .then(function (homelobby) {
       res.send(homelobby); // sends the message back to the client with the added data

@@ -9,7 +9,6 @@ const socketio = require("../serverSockets.js");
 
 // Adds a room to the database
 router.post("/", function (req, res, next) {
-  console.log("user has been created");
   User.create(req.body)
     .then(function (user) {
       res.send(user); // sends the message back to the client with the added data

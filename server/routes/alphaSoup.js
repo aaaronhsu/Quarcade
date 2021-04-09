@@ -9,8 +9,6 @@ const socketio = require("../serverSockets.js");
 
 // Adds a room to the database ALPHASOUP
 router.post("/", function (req, res, next) {
-  console.log("Room", req.body.roomCode, "has been created in alphaSoup");
-
   AlphaSoup.create(req.body)
     .then(function (alphaSoup) {
       res.send(alphaSoup); // sends the message back to the client with the added data
