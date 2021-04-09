@@ -113,7 +113,7 @@ class Letters extends React.Component {
         <ul>
         {
           this.props.letters.map(letter => (
-            <li>{letter}</li>
+            <li key={letter.id}>{letter}</li>
           ))
         } 
         </ul>

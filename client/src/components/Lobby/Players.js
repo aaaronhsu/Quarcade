@@ -30,7 +30,7 @@ class Players extends React.Component {
 
         {
           this.state.players.map(player => (
-            <h1>{player}</h1>
+            <h1 key={player.id}>{player}</h1>
           ))
         }
 

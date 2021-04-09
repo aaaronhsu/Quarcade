@@ -187,16 +187,16 @@ class AlphaSoup extends React.Component {
       <div>
         {
           this.state.playerData.map(player => (
-            <div>
-            <h3>{player.username} ({player.points}, #{player.place}):</h3>
+            <div key={player.id}>
+              <h3>{player.username} ({player.points}, #{player.place}):</h3>
 
-            <ul>
-            {
-              player.wordsOwned.map(word => (
-                <li>{word.word} ({word.points})</li>
-              ))
-            }
-            </ul>
+              <ul>
+              {
+                player.wordsOwned.map(word => (
+                  <li key={word.id}>{word.word} ({word.points})</li>
+                ))
+              }
+              </ul>
             </div>
           ))
         }
