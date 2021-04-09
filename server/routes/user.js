@@ -32,7 +32,6 @@ router.get("/bySocket/:socket", function (req, res, next) {
   var socket = req.params.socket;
   User.find({ socket: socket })
     .then(function (user) {
-      console.log(user);
       
       res.send(user);
     })
