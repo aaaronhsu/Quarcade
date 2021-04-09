@@ -112,12 +112,6 @@ class AlphaSoup extends React.Component {
     this.setState({
       letters: newLetters
     });
-
-    // if (after we add the new letter) there are still less than 10
-    if (this.state.letters.length < 10) {
-      // add a new letter
-      clientSocket.emit("reqNewLetter");
-    }
   };
 
   // helper function for removeLetters that removes the first occurence of a letter in a list
