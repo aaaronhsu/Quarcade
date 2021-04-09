@@ -13,14 +13,6 @@ class Letters extends React.Component {
     clientSocket.on("recNewLetter", letter => {
       this.props.addLetter(letter);
     });
-
-    // // if the number of letters sent in is less than 10
-    // if (this.props.numLetters < 10) {
-    //   // request a new letter
-    //   this.requestNewLetter();
-    // }
-
-    
   
   }
 
