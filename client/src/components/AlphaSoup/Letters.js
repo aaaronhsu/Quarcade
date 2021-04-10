@@ -20,6 +20,10 @@ class Letters extends React.Component {
   
   }
 
+  componentWillUnmount() {
+    clientSocket.off("recNewLetter");
+  }
+
   // requests new letter
   requestNewLetter = () => {
     clientSocket.emit("reqNewLetter");

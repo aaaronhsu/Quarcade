@@ -51,6 +51,14 @@ class AlphaSoup extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    clientSocket.off("recSocketRoom");
+    clientSocket.off("recCreateWord");
+    clientSocket.off("recUpdateWords");
+    clientSocket.off("recUpdateNextLetterVote");
+    clientSocket.off("recResetVotesForNextLetter");
+  }
+
   // updates all playerData
   async retrieveWords(room) {
     try {

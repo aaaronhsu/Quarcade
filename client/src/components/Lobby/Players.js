@@ -23,6 +23,11 @@ class Players extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    clientSocket.off("recUsersInRoom");
+    clientSocket.off("recSocketRoom");
+  }
+  
   render() {
     return (
       <div>

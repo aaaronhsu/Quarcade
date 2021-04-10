@@ -30,6 +30,10 @@ class Chat extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    clientSocket.off("recMessage");
+  }
+
   handleChange = event => {
     const message = event.target.value;
 
