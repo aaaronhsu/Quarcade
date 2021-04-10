@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NameSwitch from './NameSwitch.js'
 
 import clientSocket from "../../ClientSocket.js";
 
@@ -27,6 +28,13 @@ class Players extends React.Component {
     clientSocket.off("recUsersInRoom");
     clientSocket.off("recSocketRoom");
   }
+
+  handleSwitchName = () => {
+    alert("clicked name");
+    //make it so a form appears in place
+  }
+
+  //for each player, 
   
   render() {
     return (
@@ -35,7 +43,12 @@ class Players extends React.Component {
 
         {
           this.state.players.map(player => (
-            <h1 key={player.id}>{player}</h1>
+            <div>
+            <NameSwitch
+              key={player.username}
+              player={player}
+            />
+            </div>
           ))
         }
 
