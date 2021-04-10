@@ -5,6 +5,11 @@ import clientSocket from "../../ClientSocket.js";
 class NameSwitch extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      // should the name be in form mode to switch it 
+      switchMode: false
+    };
   }
 
   componentDidMount() {
@@ -16,8 +21,11 @@ class NameSwitch extends React.Component {
   }
 
   handleSwitchName = () => {
-    alert("clicked name");
-    //make it so a form appears in place
+    //it will change the state so the form will render
+    this.setState({
+      switchMode: true
+    });
+
   }
 
   //for each player, 
@@ -25,8 +33,15 @@ class NameSwitch extends React.Component {
   render() {
     return (
       <div>
-        <h1 key={this.props.key}>Player: {this.props.player} </h1>
-        
+        {this.state.switchMode ? (
+          <form>
+            <input name="newName" type="text"/>
+          </form>
+        ) : 
+          <h1 onClick={this.handleSwitchName} key={this.props.key}>
+            {this.props.player} 
+          </h1>
+        }
       </div>
     );
   }
