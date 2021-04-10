@@ -8,7 +8,8 @@ class NameSwitch extends React.Component {
 
     this.state = {
       // should the name be in form mode to switch it 
-      switchMode: false
+      switchMode: false,
+      currentName: this.props.player
     };
   }
 
@@ -25,21 +26,34 @@ class NameSwitch extends React.Component {
     this.setState({
       switchMode: true
     });
-
   }
 
-  //for each player, 
+  handleChange = (event) => {
+    this.setState({
+      currentName: event.target.value
+    });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();    
+    // set switch mode to false again
+    this.setState({
+      switchMode: false
+    });
+  }
+
   
   render() {
     return (
       <div>
         {this.state.switchMode ? (
-          <form>
-            <input name="newName" type="text"/>
+          <form onSubmit={this.handleSubmit}>
+            <label>Edit: </label>
+            <input name="newName" type="text" value={this.state.currentName} onChange={this.handleChange}/>
           </form>
         ) : 
           <h1 onClick={this.handleSwitchName} key={this.props.key}>
-            {this.props.player} 
+            {this.state.currentName} 
           </h1>
         }
       </div>
