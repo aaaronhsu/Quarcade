@@ -9,12 +9,12 @@ class NameSwitch extends React.Component {
     this.state = {
       // should the name be in form mode to switch it 
       switchMode: false,
-      currentName: this.props.player
+      currentName: this.props.player,
     };
   }
 
   componentDidMount() {
-    
+
   }
 
   componentWillUnmount() {
@@ -22,10 +22,17 @@ class NameSwitch extends React.Component {
   }
 
   handleSwitchName = () => {
-    //it will change the state so the form will render
-    this.setState({
-      switchMode: true
-    });
+    // first check if you are allowed to switch the name (is it you)
+    // TO DO: this currently is a problem because you can only switch name once
+    if (this.state.currentName === clientSocket.id) {
+      // it will change the state so the form will render
+      this.setState({
+        switchMode: true
+      });
+    } else {
+      alert("you may only change your name");
+    }
+
   }
 
   handleChange = (event) => {
@@ -40,6 +47,9 @@ class NameSwitch extends React.Component {
     this.setState({
       switchMode: false
     });
+    // TODO: add to database
+
+    // TODO: emit message to be caught in other file to pull all info for rendering
   }
 
   
