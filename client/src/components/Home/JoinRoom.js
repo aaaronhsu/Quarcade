@@ -28,20 +28,21 @@ class JoinRoom extends React.Component {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
-    this.checkExistenceAndJoin(this.state.code);
+    this.joinRoom(this.state.code);
 
     //clears the fields, this is just to make it look better
     this.setState({ code: "" });
   };
 
-  // get request to see if it exists, if it doesn't, call post
-  async checkExistenceAndJoin(roomCode) {
+  // joins room if it exists
+  async joinRoom(roomCode) {
     try {
+      // checks if room exists
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
           const matches = res.data;
 
-          // this means if it exists you can join
+          // joins the room if it exists
           if (matches.length > 0) {
 
             // adds user to the room in the database
