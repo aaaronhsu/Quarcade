@@ -58,9 +58,9 @@ module.exports = {
 
         const ret = [];
 
-        // converts the client ids to socket objects
+        // converts the client ids to socket objects and retrieves username
         clients.forEach(client => {
-          ret.push(io.sockets.sockets.get(client).username);
+          ret.push([io.sockets.sockets.get(client).username, io.sockets.sockets.get(client).id]);
         });
 
         // updates player list for all players in the room
@@ -95,8 +95,6 @@ module.exports = {
         });
       });
 
-
-
       // ------------------------------------ Update Requests ------------------------------------
 
       // removes a user from all rooms, except for personal room & adds socket to newRoom
@@ -110,6 +108,7 @@ module.exports = {
 
       // changes a client's username
       client.on("changeUsername", (username) => {
+        // console.log("server side change user");
         client.username = username;
       });
 
