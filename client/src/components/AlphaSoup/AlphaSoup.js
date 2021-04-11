@@ -74,7 +74,7 @@ class AlphaSoup extends React.Component {
 
             // construct object for each player
             let player = {
-              username: retrievedPlayerData[i].socket,
+              username: retrievedPlayerData[i].name,
               points: 0,
               wordsOwned: []
             };
