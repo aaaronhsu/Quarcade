@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Axios from 'axios';
 import clientSocket from "../../ClientSocket.js";
 
 class NameSwitch extends React.Component {
@@ -58,7 +58,20 @@ class NameSwitch extends React.Component {
     });
     // TODO: add to database
 
+    this.addName()
+
     // TODO: emit message to be caught in other file to pull all info for rendering
+  }
+
+  async addName() {
+    try {
+      await Axios.patch(`http://localhost:5000/user/name/${clientSocket.id}`, 
+      {name: this.state.currentName}).then(
+        //this works, the name is added to the databse
+      )
+    } catch (error) {
+      console.log("problem updating the name")
+    }
   }
 
   
@@ -72,7 +85,7 @@ class NameSwitch extends React.Component {
           </form>
         ) : 
           <h1 onClick={this.handleSwitchName} key={this.props.key}>
-            {this.state.currentName}
+            {this.state.currentName} 
           </h1>
         }
       </div>

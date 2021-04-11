@@ -47,6 +47,19 @@ router.get("/byRoom/:roomCode", function (req, res, next) {
     .catch(next);
 });
 
+// ------------------------------------ PATCH Requests ------------------------------------
+
+// this function allows you to change the new word votes of an alphasoup room
+router.patch("/name/:query", function (req, res, next) {
+  // query is the roomCode you want to patch the counter to
+  var socket = req.params.query;
+  User.findOneAndUpdate({socket: socket}, {name: req.body.name})
+    .then(function (user) {
+      res.send(user);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ PUT Requests ------------------------------------
 
 // adds a word based on socket id
