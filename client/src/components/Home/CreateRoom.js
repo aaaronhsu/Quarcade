@@ -4,38 +4,40 @@ import clientSocket from "../../ClientSocket.js";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 class CreateRoom extends React.Component {
+
   constructor(props) {
     super(props);
+
     this.state = {
       createRoom: false,
-      code: "",
+      roomCode: "",
       redirectToLobby : false
     };
   }
 
   // determines whether or not "create room" is shown
-  handleClick = event => {
+  handleShowCreateRoom = event => {
     this.setState({ createRoom: !this.state.createRoom });
     event.preventDefault();
   };
 
   // handles changes to text field for room code
-  handleChange = event => {
+  handleChangeCreateRoom = event => {
     this.setState({
-      code: event.target.value
+      roomCode: event.target.value
     });
   };
 
   // submits room code to database
-  handleSubmit = event => {
+  handleSubmitCreateRoom = event => {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
     // first check if the room exists, this calls the post if it doesn't
-    this.createRoom(this.state.code);
+    this.createRoom(this.state.roomCode);
 
     // clears the fields, this is just to make it look better
-    this.setState({ code: "" });
+    this.setState({ roomCode: "" });
   };
 
   // get request to see if it exists (true if it exists)
@@ -94,12 +96,12 @@ class CreateRoom extends React.Component {
   render() {
     return (
       <div>
-        <h2 onClick={this.handleClick}>or, create a room</h2>
+        <h2 onClick={this.handleShowCreateRoom}>or, create a room</h2>
         {this.state.createRoom ? (
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmitCreateRoom}>
             <label>
               Enter a roomcode to create a room:
-              <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
+              <input name="code" type="text" value={this.state.roomCode} onChange={this.handleChangeCreateRoom} />
             </label>
           </form>
         ) : null}
