@@ -23,12 +23,10 @@ class NameSwitch extends React.Component {
   }
 
   handleSwitchName = () => {
-    /*
-    CODE BELOW: VERY IMPORTANT- used to check if you can change
+
 
     // first check if you are allowed to switch the name (is it you)
-    // TO DO: this currently is a problem because you can only switch name once
-    if (this.state.currentName === clientSocket.id) {
+    if (this.state.currentID === clientSocket.id) {
       // it will change the state so the form will render
       this.setState({
         switchMode: true
@@ -36,12 +34,6 @@ class NameSwitch extends React.Component {
     } else {
       alert("you may only change your name");
     }
-    */
-
-    // for now using this code, allows anyone to switch any name
-    this.setState({
-      switchMode: true
-    });
 
   }
 
