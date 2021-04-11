@@ -9,7 +9,8 @@ class NameSwitch extends React.Component {
     this.state = {
       // should the name be in form mode to switch it 
       switchMode: false,
-      currentName: this.props.player,
+      currentName: this.props.player[0],
+      currentID: this.props.player[1],
     };
   }
 
@@ -96,7 +97,7 @@ class NameSwitch extends React.Component {
           </form>
         ) : 
           <h1 onClick={this.handleSwitchName} key={this.props.key}>
-            {this.state.currentName} 
+            {this.state.currentName + ": " + this.state.currentID} 
           </h1>
         }
       </div>

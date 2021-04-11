@@ -60,7 +60,7 @@ module.exports = {
 
         // converts the client ids to socket objects and retrieves username
         clients.forEach(client => {
-          ret.push(io.sockets.sockets.get(client).username);
+          ret.push([io.sockets.sockets.get(client).username, io.sockets.sockets.get(client).id]);
         });
 
         // updates player list for all players in the room
