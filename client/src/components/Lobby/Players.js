@@ -16,7 +16,6 @@ class Players extends React.Component {
   componentDidMount() {
     clientSocket.on("recUsersInRoom", (players) => {
       this.setState({players: players});
-
     });
 
     clientSocket.on("recSocketRoom", (room) => {
@@ -28,13 +27,6 @@ class Players extends React.Component {
     clientSocket.off("recUsersInRoom");
     clientSocket.off("recSocketRoom");
   }
-
-  handleSwitchName = () => {
-    alert("clicked name");
-    //make it so a form appears in place
-  }
-
-  //for each player, 
   
   render() {
     return (

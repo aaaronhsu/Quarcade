@@ -56,18 +56,26 @@ class NameSwitch extends React.Component {
     this.setState({
       switchMode: false
     });
-    // TODO: add to database
+    console.log("submitted");
 
+    // adds to the database, for later games
     this.addName()
 
-    // TODO: emit message to be caught in other file to pull all info for rendering
+    // causes the backend to change client.username
+    
+    clientSocket.emit("changeUsername", this.state.currentName);
+    // now that the username is changed, emit the request to repull users
+    // this is caught in players.js and updates its state
+    clientSocket.emit("reqUsersInRoom");
   }
 
   async addName() {
     try {
       await Axios.patch(`http://localhost:5000/user/name/${clientSocket.id}`, 
       {name: this.state.currentName}).then(
-        //this works, the name is added to the databse
+        console.log("added new name")
+        // this works, the name is added to the databse
+        // nothing needs to be done, it's just so that you have a name in the game
       )
     } catch (error) {
       console.log("problem updating the name")

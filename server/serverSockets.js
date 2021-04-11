@@ -95,8 +95,6 @@ module.exports = {
         });
       });
 
-
-
       // ------------------------------------ Update Requests ------------------------------------
 
       // removes a user from all rooms, except for personal room & adds socket to newRoom
@@ -110,6 +108,7 @@ module.exports = {
 
       // changes a client's username
       client.on("changeUsername", (username) => {
+        // console.log("server side change user");
         client.username = username;
       });
 
