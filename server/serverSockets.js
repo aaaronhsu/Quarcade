@@ -58,7 +58,7 @@ module.exports = {
 
         const ret = [];
 
-        // converts the client ids to socket objects
+        // converts the client ids to socket objects and retrieves username
         clients.forEach(client => {
           ret.push(io.sockets.sockets.get(client).username);
         });

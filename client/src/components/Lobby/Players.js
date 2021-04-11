@@ -15,7 +15,9 @@ class Players extends React.Component {
 
   componentDidMount() {
     clientSocket.on("recUsersInRoom", (players) => {
+      console.log("re-render state");
       this.setState({players: players});
+      console.log(this.state.players);
     });
 
     clientSocket.on("recSocketRoom", (room) => {
@@ -35,15 +37,13 @@ class Players extends React.Component {
 
         {
           this.state.players.map(player => (
-            <div>
             <NameSwitch
-              key={player.username}
+              key={player}
               player={player}
               // TODO:
               // 1. some code here that pushes each player's socket ID
               // 2. should render a (me) at the end if it is your name 
             />
-            </div>
           ))
         }
 
