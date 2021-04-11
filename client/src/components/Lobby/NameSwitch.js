@@ -61,8 +61,11 @@ class NameSwitch extends React.Component {
     // adds to the database, for later games
     this.addName()
 
+    // ERROR: something here isn't working
+    // I think it's that the changeUsername in the backend
+    // doesn't actually work
+
     // causes the backend to change client.username
-    
     clientSocket.emit("changeUsername", this.state.currentName);
     // now that the username is changed, emit the request to repull users
     // this is caught in players.js and updates its state
