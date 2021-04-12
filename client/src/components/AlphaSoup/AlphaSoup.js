@@ -5,6 +5,8 @@ import Axios from "axios";
 import SubmitWord from './SubmitWord.js';
 import Letters from './Letters.js';
 
+import Chat from '../Chat/Chat.js';
+
 class AlphaSoup extends React.Component {
 
   constructor(props) {
@@ -327,6 +329,7 @@ class AlphaSoup extends React.Component {
           changeVote={(vote) => this.changeVote(vote)}
           changeVoteStatus={(vote) => this.changeVoteStatus(vote)}
         />
+        <Chat />
       </div>
     );
   }

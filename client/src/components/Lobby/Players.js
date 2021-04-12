@@ -15,9 +15,7 @@ class Players extends React.Component {
 
   componentDidMount() {
     clientSocket.on("recUsersInRoom", (players) => {
-      console.log("re-render state");
       this.setState({players: players});
-      console.log(this.state.players);
     });
 
     clientSocket.on("recSocketRoom", (room) => {

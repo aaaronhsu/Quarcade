@@ -6,6 +6,7 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: false,
       messages: [
         {
           user: "",
@@ -54,37 +55,43 @@ class Chat extends React.Component {
     clientSocket.emit("reqSocketRoom");
   };
 
-  checkRoomButton = () => {
-    return (
-      <button onClick={() => this.checkRoom()}>
-        Click this to check the room the user is in (prints to server console)
-      </button>
-    );
-  };
+  openChat = () => {
+    this.setState({visible: true});
+  }
 
+  closeChat = () => {
+    this.setState({visible: false});
+  }
+ 
   render() {
     return (
       <div>
-        <h1>Chat!</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Send Message:
-            <input name="message" type="text" value={this.state.message} onChange={this.handleChange} />
-          </label>
-          {/* <input type="submit" value="Submit" /> */}
-        </form>
-        <h3>See Messages Below:</h3>
-        <div>
-          {this.state.messages.map(message => (
-            <small>
-              {message.user}
-              {message.words}
-              <br></br>
-            </small>
-          ))}
-        </div>
+        {this.state.visible ?
+          <div>
+            <button onClick={this.closeChat}>Hide Chat</button>
+            <h1>Chat!</h1>
+            <form onSubmit={this.handleSubmit}>
+              <label>
+               Send Message:
+               <input name="message" type="text" value={this.state.message} onChange={this.handleChange} />
+              </label>
+              {/* <input type="submit" value="Submit" /> */}
+            </form>
+            <h3>See Messages Below:</h3>
+            <div>
+              {this.state.messages.map(message => (
+              <small>
+                {message.user}
+                {message.words}
+                <br></br>
+              </small>
+              ))}
+            </div>
+          </div>
+          :
+          <button onClick={this.openChat}>Show Chat</button>
+        }
 
-        {this.checkRoomButton()}
       </div>
     );
   }
