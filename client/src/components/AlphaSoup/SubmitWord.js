@@ -12,7 +12,7 @@ class SubmitWord extends React.Component {
   }
 
   // ------------------------------------ Socket.io ------------------------------------
-  
+
   componentDidMount() {
     // receives word submission after calculating points
     clientSocket.on("recSubmitWord", ({ word: word, points: points }) => {
@@ -111,7 +111,7 @@ class SubmitWord extends React.Component {
 
 
 
-  // ------------------------------------ Render Helpers ------------------------------------
+  // ------------------------------------ Render ------------------------------------
   
   // form to submit a word
   renderWordSubmission = () => {
