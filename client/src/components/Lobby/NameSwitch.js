@@ -11,11 +11,15 @@ class NameSwitch extends React.Component {
       switchMode: false,
       currentName: this.props.player[0],
       currentID: this.props.player[1],
+      displayName: this.props.player[0]
     };
   }
 
   componentDidMount() {
-
+    if (this.state.currentID === clientSocket.id) {
+      const toDisplay = this.state.displayName + "(me)";
+      this.setState({displayName: toDisplay});
+    }
   }
 
   componentWillUnmount() {
@@ -89,7 +93,9 @@ class NameSwitch extends React.Component {
           </form>
         ) : 
           <h1 onClick={this.handleSwitchName} key={this.props.key}>
-            {this.state.currentName + ": " + this.state.currentID} 
+              <div>
+                {this.state.displayName}
+              </div>
           </h1>
         }
       </div>
