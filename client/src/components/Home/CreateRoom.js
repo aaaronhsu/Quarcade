@@ -32,26 +32,26 @@ class CreateRoom extends React.Component {
   handleSubmitCreateRoom = event => {
     event.preventDefault();
 
-    // need to connect with backend database and implement verification
-    // first check if the room exists, this calls the post if it doesn't
-    this.createRoom(this.state.roomCode);
+    // checks if the room exists
+    this.checkExistence(this.state.roomCode);
 
-    // clears the fields, this is just to make it look better
+    // clears the roomCode field
     this.setState({ roomCode: "" });
   };
 
   // get request to see if it exists (true if it exists)
-  async createRoom(roomCode) {
+  async checkExistence(roomCode) {
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
-          const matches = res.data;
-          if (matches.length > 0) {
-            // this means if it exists, send an alert
+
+          const allRooms = res.data;
+
+          if (allRooms.length > 0) {
             alert("This room already exists, please choose another name");
           } else {
-            this.pushCodeToBackend(roomCode);
-            this.addUser(roomCode);
+            this.createRoom(roomCode);
+            this.addUserToRoom(roomCode);
           }
         },
         error => {
@@ -59,12 +59,12 @@ class CreateRoom extends React.Component {
         }
       );
     } catch (error) {
-      console.log("There was an error with get Room");
+      console.log("There was an error with Axios getRoom");
     }
   }
 
-  // uses axios to post client socket id and creates room
-  async pushCodeToBackend(roomCode) {
+  // post request to create new room
+  async createRoom(roomCode) {
     try {
       await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: {socket: clientSocket.id } }); 
 
@@ -75,19 +75,19 @@ class CreateRoom extends React.Component {
       clientSocket.emit("reqUsersInRoom");
       clientSocket.emit("reqSocketRoom");
 
-
       // redirects user to lobby
       this.setState({
         redirectToLobby : true
       });
+
     } catch (error) {
       console.log("There was an error with post");
     }
   }
 
-  async addUser(roomCode) {
+  async addUserToRoom(roomCode) {
     try {
-      await Axios.post("http://localhost:5000/user", { roomCode: roomCode, name: "temp name", socket: clientSocket.id});
+      await Axios.post("http://localhost:5000/user", { roomCode: roomCode, name: clientSocket.id, socket: clientSocket.id});
     } catch (error) {
       console.log("There was an error adding the user to the room homelobbies room");
     }

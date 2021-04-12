@@ -7,31 +7,27 @@ class JoinRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      code: "",
+      roomCode: "",
       redirectToLobby: false,
     };
   }
 
   // handles changes to text field for room code
-  handleChange = event => {
-    const change = event.target.value;
-    const name = event.target.name;
-
+  handleChangeJoinRoom = event => {
     this.setState({
-      [name]: change
+      roomCode: event.target.value
     });
   };
 
   // submits room code to database
-  handleSubmit = event => {
+  handleSubmitJoinRoom = event => {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
     this.joinRoom(this.state.code);
 
     //clears the fields, this is just to make it look better
-    this.setState({ code: "" });
+    this.setState({ roomCode: "" });
   };
 
   // joins room if it exists
@@ -73,17 +69,17 @@ class JoinRoom extends React.Component {
         }
       );
     } catch (error) {
-      console.log("There was an error with get Room");
+      console.log("There was an error with Axios getRoom");
     }
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmitJoinRoom}>
           <label>
             Enter a room code to join a room:
-            <input name="code" type="text" value={this.state.code} onChange={this.handleChange} />
+            <input name="roomCode" type="text" value={this.state.roomCode} onChange={this.handleChangeJoinRoom} />
           </label>
         </form>
         {this.state.redirectToLobby ? (<Redirect to="/lobby" />) : null}

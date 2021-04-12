@@ -5,29 +5,28 @@ import clientSocket from "../../ClientSocket.js";
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       visible: false,
       messages: [
         {
-          user: "",
-          words: ""
+          username: "",
+          message: ""
         }
       ],
-      message: "",
-      myRoom: "",
-      myName: ""
+
+      message: "",      
     };
   }
 
   componentDidMount() {
+    // appends message to list of messages
     clientSocket.on("recMessage", ({ message, user }) => {
-      let cMessages = [...this.state.messages];
+      let messages = [...this.state.messages];
 
-      const tempUser = user + ": ";
+      messages.push({ username: user, message: message });
 
-      cMessages.push({ user: tempUser, words: message });
-
-      this.setState({ messages: cMessages });
+      this.setState({ messages: messages });
     });
   }
 
@@ -35,7 +34,8 @@ class Chat extends React.Component {
     clientSocket.off("recMessage");
   }
 
-  handleChange = event => {
+  // updates the message state
+  handleChangeMessage = event => {
     const message = event.target.value;
 
     this.setState({
@@ -43,11 +43,13 @@ class Chat extends React.Component {
     });
   };
 
-  handleSubmit = event => {
+  // requests message to be created
+  handleSubmitMessage = event => {
     event.preventDefault();
 
     clientSocket.emit("sendMessage", this.state.message);
 
+    // resets message state
     this.setState({ message: "" });
   };
 
