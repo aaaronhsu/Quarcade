@@ -89,7 +89,7 @@ class Chat extends React.Component {
             </div>
           </div>
           :
-          <button onClick={this.openChat}> Show Chat</button>
+          <button onClick={this.openChat}>Show Chat</button>
         }
 
       </div>
