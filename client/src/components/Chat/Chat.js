@@ -8,12 +8,7 @@ class Chat extends React.Component {
 
     this.state = {
       visible: false,
-      messages: [
-        {
-          username: "",
-          message: ""
-        }
-      ],
+      messages: [],
 
       message: "",      
     };
@@ -86,8 +81,7 @@ class Chat extends React.Component {
               {
                 this.state.messages.map(message => (
                   <small>
-                    {message.username}
-                    {message.message}
+                    {message.username}: {message.message}
                     <br></br>
                   </small>
                 ))
