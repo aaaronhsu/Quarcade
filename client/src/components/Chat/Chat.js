@@ -68,32 +68,36 @@ class Chat extends React.Component {
   render() {
     return (
       <div>
-        {this.state.visible ?
+        {
+          this.state.visible ?
           <div>
             <button onClick={this.closeChat}>Hide Chat</button>
+
             <h1>Chat!</h1>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmitMessage}>
               <label>
                Send Message:
-               <input name="message" type="text" value={this.state.message} onChange={this.handleChange} />
+               <input name="message" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
               </label>
-              {/* <input type="submit" value="Submit" /> */}
             </form>
+
             <h3>See Messages Below:</h3>
             <div>
-              {this.state.messages.map(message => (
-              <small>
-                {message.user}
-                {message.words}
-                <br></br>
-              </small>
-              ))}
+              {
+                this.state.messages.map(message => (
+                  <small>
+                    {message.username}
+                    {message.message}
+                    <br></br>
+                  </small>
+                ))
+              }
             </div>
+
           </div>
           :
           <button onClick={this.openChat}>Show Chat</button>
         }
-
       </div>
     );
   }
