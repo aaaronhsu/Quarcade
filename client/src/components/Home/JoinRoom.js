@@ -24,7 +24,7 @@ class JoinRoom extends React.Component {
     event.preventDefault();
 
     // need to connect with backend database and implement verification
-    this.joinRoom(this.state.code);
+    this.joinRoom(this.state.roomCode);
 
     //clears the fields, this is just to make it look better
     this.setState({ roomCode: "" });
@@ -33,6 +33,7 @@ class JoinRoom extends React.Component {
   // joins room if it exists
   async joinRoom(roomCode) {
     try {
+
       // checks if room exists
       await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
         res => {
