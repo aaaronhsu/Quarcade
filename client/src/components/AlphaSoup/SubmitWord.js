@@ -61,15 +61,18 @@ class SubmitWord extends React.Component {
   submitWord = event => {
     event.preventDefault();
 
-    let lettersLeftAfterWordSubmission = this.checkValidWord(this.state.word);
+
+    // dataReturned[0] is the rest of the letters, it is [-1] if the letter can't be made
+    // dataReturned[1] is the list of words that are stolen
+    let dataReturned = this.checkValidWord(this.state.word);
 
     // lettersLeftAfterWordSubmission will be [-1] if there the word is not valid
-    if (!(lettersLeftAfterWordSubmission.length === 1 & lettersLeftAfterWordSubmission[0] === -1)) {
+    if (!(dataReturned[0].length === 1 & dataReturned[0][0] === -1)) {
 
       // request the letters left to be updated in state (removes letters from the state of all players)
-      clientSocket.emit("reqUpdateLetters", lettersLeftAfterWordSubmission);
+      clientSocket.emit("reqUpdateLetters", dataReturned[0]);
 
-      this.removeWords();
+      this.removeWords(dataReturned[1]);
 
       // submit the word to the database and request all users to update states
       clientSocket.emit("reqSubmitWord", this.state.word);
@@ -89,13 +92,13 @@ class SubmitWord extends React.Component {
   // ------------------------------------ Utility ------------------------------------
 
   // TODO request axios to remove words from state of players
-  removeWords = () => {
-    for (let i = 0; i < this.state.wordsBeingStolen.length; i++) {
-      console.log("the word", this.state.wordsBeingStolen[i], "will be removed from the db");
+  removeWords = (wordsBeingStolen) => {
+    for (let i = 0; i < wordsBeingStolen.length; i++) {
+      console.log("the word", wordsBeingStolen[i][1], "will be removed from", wordsBeingStolen[i][0]);
     }
   }
 
-  // helper function for checkValidWord to check if the letter exists in the list of words
+  // helper function for checkValidWord to remove element from src, returns [-1] if it's not possible
   removeFirst = (src, element) => {
     try {
 
@@ -134,7 +137,7 @@ class SubmitWord extends React.Component {
         if (this.props.playerData[i].wordsOwned[j].beingStolen) {
           // add the word's letters to the list of letters
 
-          wordsBeingStolen.push(this.props.playerData[i].wordsOwned[j].word);
+          wordsBeingStolen.push([this.props.playerData[i].username, this.props.playerData[i].wordsOwned[j].word]);
 
           for (let k = 0; k < this.props.playerData[i].wordsOwned[j].word.length; k++) {
             letters.push(this.props.playerData[i].wordsOwned[j].word.charAt(k));
@@ -143,17 +146,13 @@ class SubmitWord extends React.Component {
       }
     }
 
-    this.setState({
-      wordsBeingStolen: wordsBeingStolen
-    });
-
-    return letters;
+    return [letters, wordsBeingStolen];
   }
 
   // this only checks if the word is able to be made with the letters currently in the list
   checkValidWord = word => {
     // words with less than 3 letters are not allowed
-    if (word.length < 3) return [-1];
+    if (word.length < 3) return [[-1], []];
 
     let lettersFromWord = [];
 
@@ -168,21 +167,21 @@ class SubmitWord extends React.Component {
     let lettersFromPool = [...this.props.letters];
 
     // loop through the letters in the stolen words and remove them from the list of letters from the word being made
-    for (var i = 0; i < lettersFromStolenWords.length; i++) {
-      lettersFromWord = this.removeFirst(lettersFromWord, lettersFromStolenWords[i]);
+    for (var i = 0; i < lettersFromStolenWords[0].length; i++) {
+      lettersFromWord = this.removeFirst(lettersFromWord, lettersFromStolenWords[0][i]);
 
       // if the letter doesn't exist in the word you are trying to make, then you can't make the word
-      if (lettersFromWord.length === 1 && lettersFromWord[0] === -1) return [-1];
+      if (lettersFromWord.length === 1 && lettersFromWord[0] === -1) return [[-1], []];
     }
 
     for (var i = 0; i < lettersFromWord.length; i++) {
 
       lettersFromPool = this.removeFirst(lettersFromPool, lettersFromWord[i]);
 
-      if (lettersFromPool.length === 1 && lettersFromPool[0] === -1) return [-1];
+      if (lettersFromPool.length === 1 && lettersFromPool[0] === -1) return [[-1], []];
     }
 
-    return lettersFromPool;
+    return [lettersFromPool, lettersFromStolenWords[1]];
   };
 
 
