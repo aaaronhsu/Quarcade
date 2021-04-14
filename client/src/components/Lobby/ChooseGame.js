@@ -5,22 +5,22 @@ class ChooseGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      selectedGame: '',
       votedGame: false,
     }
   }
 
   // handles changes in game selection
-  handleChange = event => {
+  handleChangeGameChoice = event => {
     this.setState({
-      value: event.target.value,
+      selectedGame: event.target.selectedGame,
       votedGame: false,
     });
   }
 
   // handles submission of game selection
   // TODO right now, if you submit the form for the same game twice, you can't ready up
-  handleSubmit = event => {
+  handleSubmitGameChoice = event => {
     event.preventDefault();
     this.setState({
       votedGame: !this.state.votedGame,
@@ -31,10 +31,10 @@ class ChooseGame extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmitGameChoice}>
           <label>
             Please choose a game:
-            <select value={this.state.value} onChange={this.handleChange}>
+            <select value={this.state.selectedGame} onChange={this.handleChangeGameChoice}>
               <option value='alphasoup'>AlphaSoup</option>
               <option value='codenames'>CodeNames</option>
             </select>
