@@ -8,17 +8,15 @@ import LetterVote from './LetterVote.js';
 
 import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
+import RoomSwitch from './RoomSwitch.js';
 
 class AlphaSoup extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      votesForNextLetter: 0,
-      votedForNextLetter: false,
 
       letters: [],
-
       playerData: [],
 
     }
@@ -202,19 +200,15 @@ class AlphaSoup extends React.Component {
   render() {
     return (
       <div>
-        <h3>For testing- this button switches room from homelobby to alphasoup</h3>
-        <button onClick={this.handleSwitchRoom}>
-          Switch to alphasoup room
-        </button>
+        <RoomSwitch
+
+        />
 
 
-
-        <h2>These are the words each player has:</h2>
         
         <PlayerData
           playerData={this.state.playerData}
         />
-
 
 
 
