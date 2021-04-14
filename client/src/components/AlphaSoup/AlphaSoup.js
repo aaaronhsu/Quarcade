@@ -148,7 +148,6 @@ class AlphaSoup extends React.Component {
 
   // ------------------------------------ Render ------------------------------------
 
-
   render() {
     return (
       <div>
@@ -181,7 +180,7 @@ class AlphaSoup extends React.Component {
 
           addLetter={(letter) => this.addLetter(letter)} 
         />
-        
+
         <Chat />
 
       </div>
