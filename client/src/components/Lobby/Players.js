@@ -13,6 +13,9 @@ class Players extends React.Component {
     };
   }
 
+
+
+  // ------------------------------------ Socket.io ------------------------------------
   componentDidMount() {
     clientSocket.on("recUsersInRoom", (players) => {
       this.setState({players: players});
@@ -27,6 +30,11 @@ class Players extends React.Component {
     clientSocket.off("recUsersInRoom");
     clientSocket.off("recSocketRoom");
   }
+
+
+
+  
+  // ------------------------------------ Render ------------------------------------
   
   render() {
     return (
