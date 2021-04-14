@@ -4,6 +4,7 @@ import Axios from "axios";
 
 import SubmitWord from './SubmitWord.js';
 import Letters from './Letters.js';
+import LetterVote from './LetterVote.js';
 
 import Chat from '../Chat/Chat.js';
 
@@ -334,6 +335,17 @@ class AlphaSoup extends React.Component {
           removeLetters={(word) => this.removeLetters(word)}
         />
 
+
+        <LetterVote 
+          voted={this.state.votedForNextLetter}
+          numPlayers={this.state.playerData.length}
+
+
+          changeVote={(vote) => this.changeVote(vote)}
+          changeVoteStatus={(vote) => this.changeVoteStatus(vote)}
+        />
+
+        
         <Letters 
           numLetters={this.state.letters.length}
           letters={this.state.letters}
