@@ -11,6 +11,10 @@ class Letters extends React.Component {
     };
   }
 
+
+
+  // ------------------------------------ Socket.io ------------------------------------
+
   componentDidMount() {
 
     // takes a new letter and adds it to the list of letters
@@ -29,8 +33,38 @@ class Letters extends React.Component {
     clientSocket.emit("reqNewLetter");
   }
 
-  // handles vote
-  handleVote = () => {
+  
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
+
+  // FOR DEBUG, generates N letters
+  createNLetters = (event) => {
+    event.preventDefault();
+
+    for (var i = 0; i < this.state.numLettersDEBUG; i++) {
+      this.requestNewLetter();
+    }
+
+    this.setState({
+      numLettersDEBUG: 0
+    });
+  }
+
+  // FOR DEBUG, sets the number of letters made
+  changeNLetters = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      numLettersDEBUG: event.target.value
+    });
+  }
+
+
+
+  // ------------------------------------ Utility ------------------------------------
+
+  // handles voting for next letter
+  handleVoteSubmission = () => {
     if (this.props.voted) {
       // removes vote
       this.props.changeVote(-1);
@@ -44,27 +78,13 @@ class Letters extends React.Component {
       this.props.changeVoteStatus(true);
     }
   }
+  
 
-  // requests new letter
-  createNextLetterButton = () => {
-    return (
-      <div>
-        {
-          this.props.voted ?
 
-          <button onClick={() => this.handleVote()}>
-            Press this to remove your vote for the next letter
-          </button>
-          :
-          <button onClick={() => this.handleVote()}>
-            Press this to add your vote for the next letter
-          </button>
-        }
-      </div>
-    );
-  }
+  // ------------------------------------ Render ------------------------------------
 
-  testerPassing = () => {
+  // renders text that shows how many letters there are
+  renderNumberOfLetters = () => {
     return (
       <h3>
         Here is the letter count: {this.props.numLetters}
@@ -72,27 +92,27 @@ class Letters extends React.Component {
     )
   }
 
-  createNLetters = (event) => {
-    event.preventDefault();
+  // renders button for voting for next letter
+  renderButtonVoteNextLetter = () => {
+    return (
+      <div>
+        {
+          this.props.voted ?
 
-    for (var i = 0; i < this.state.numLettersDEBUG; i++) {
-      this.requestNewLetter();
-    }
-
-    this.setState({
-      numLettersDEBUG: 0
-    });
+          <button onClick={() => this.handleVoteSubmission()}>
+            Press this to remove your vote for the next letter
+          </button>
+          :
+          <button onClick={() => this.handleVoteSubmission()}>
+            Press this to add your vote for the next letter
+          </button>
+        }
+      </div>
+    );
   }
 
-  changeNLetters = (event) => {
-    event.preventDefault();
-
-    this.setState({
-      numLettersDEBUG: event.target.value
-    });
-  }
-
-  createNLettersButton = () => {
+  // FOR DEBUG, renders the button to change the number of letters rendered
+  renderButtonAddNLetters = () => {
     return (
       <div>
         <form onSubmit={this.createNLetters}>
@@ -105,14 +125,16 @@ class Letters extends React.Component {
     )
   }
 
+  
+
   render() {
     return (
       <div>
-        {this.testerPassing()} <br></br>
+        {this.renderNumberOfLetters()} <br></br>
 
         Number of votes: {this.props.votes}/{this.props.playerData.length}
 
-        {this.createNextLetterButton()} {this.createNLettersButton()} <br></br>
+        {this.renderButtonVoteNextLetter()} {this.renderButtonAddNLetters()} <br></br>
         Current Letters:
         <ul>
         {
