@@ -22,6 +22,10 @@ class AlphaSoup extends React.Component {
     }
   }
 
+
+
+  // ------------------------------------ Socket.io ------------------------------------
+
   componentDidMount() {
 
     // records the room the socket is in
@@ -60,6 +64,10 @@ class AlphaSoup extends React.Component {
     clientSocket.off("recUpdateNextLetterVote");
     clientSocket.off("recResetVotesForNextLetter");
   }
+
+
+
+  // ------------------------------------ Axios ------------------------------------
 
   // updates all playerData
   async retrieveWords(room) {
@@ -121,47 +129,6 @@ class AlphaSoup extends React.Component {
     }
   }
 
-  // adds a letter to the list of letters
-  addLetter = (letter) => {
-    let newLetters = [...this.state.letters];
-    newLetters.push(letter);
-
-    this.setState({
-      letters: newLetters
-    });
-  };
-
-  // helper function for removeLetters that removes the first occurence of a letter in a list
-  removeFirst = (src, element) => {
-    const index = src.indexOf(element);
-    if (index === -1) return src;
-    return [...src.slice(0, index), ...src.slice(index + 1)];
-  }
-
-  // removes all letters in the word from the list of letters  
-  removeLetters = (word) => {
-    let newLetters = [...this.state.letters];
-
-    for (var i = 0; i < word.length; i++) {
-      newLetters = this.removeFirst(newLetters, word.charAt(i));
-    }
-
-    this.setState({
-      letters: newLetters
-    });
-  };
-
-  // this is a testing function, will convert the homelobby data into alphasoup data
-  handleSwitch = () => {
-
-    // request the socket's room
-    clientSocket.emit("reqSocketRoom");
-
-    // requests player information to be retrieved
-    clientSocket.emit("reqUpdateWords");
-    
-  }
-
   // takes the room from socket and requests the data
   async makeSwitch(room) {
     try {
@@ -187,45 +154,6 @@ class AlphaSoup extends React.Component {
     } catch (error) {
       console.log(error.message);
     }
-  }
-
-
-
-  // renders the words that each player has, as well as the points
-  renderPlayerData = () => {
-    return (
-      <div>
-        {
-          this.state.playerData.map(player => (
-            <div key={player.id}>
-              <h3>{player.username} ({player.points}, #{player.place}):</h3>
-
-              <ul>
-              {
-                player.wordsOwned.map(word => (
-                  <li key={word.id}>{word.word} ({word.points})</li>
-                ))
-              }
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-      
-    );
-  }
-
-
-  // changes vote in database (if parameter is 1 then +1, if -1 then -1)
-  changeVote = (vote) => {
-    // gets roomcode based on id (users collection)
-    this.getRoomCode(clientSocket.id, vote);
-  }
-
-  changeVoteStatus = (voted) => {
-    this.setState({
-      votedForNextLetter: voted
-    });
   }
 
   async getRoomCode(socketId, vote) {
@@ -296,11 +224,100 @@ class AlphaSoup extends React.Component {
   }
 
 
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
+
+  // this is a testing function, will convert the homelobby data into alphasoup data
+  handleSwitchRoom = () => {
+
+    // request the socket's room
+    clientSocket.emit("reqSocketRoom");
+
+    // requests player information to be retrieved
+    clientSocket.emit("reqUpdateWords");
+    
+  }
+
+
+
+  // ------------------------------------ Utility ------------------------------------
+
+  // adds a letter to the list of letters
+  addLetter = (letter) => {
+    let newLetters = [...this.state.letters];
+    newLetters.push(letter);
+
+    this.setState({
+      letters: newLetters
+    });
+  };
+
+  // helper function for removeLetters that removes the first occurence of a letter in a list
+  removeFirst = (src, element) => {
+    const index = src.indexOf(element);
+    if (index === -1) return src;
+    return [...src.slice(0, index), ...src.slice(index + 1)];
+  }
+
+  // removes all letters in the word from the list of letters  
+  removeLetters = (word) => {
+    let newLetters = [...this.state.letters];
+
+    for (var i = 0; i < word.length; i++) {
+      newLetters = this.removeFirst(newLetters, word.charAt(i));
+    }
+
+    this.setState({
+      letters: newLetters
+    });
+  };
+
+  // changes vote in database (if parameter is 1 then +1, if -1 then -1)
+  changeVote = (vote) => {
+    // gets roomcode based on id (users collection)
+    this.getRoomCode(clientSocket.id, vote);
+  }
+
+  changeVoteStatus = (voted) => {
+    this.setState({
+      votedForNextLetter: voted
+    });
+  }
+
+
+
+  // ------------------------------------ Render ------------------------------------
+
+  // renders the words that each player has, as well as the points
+  renderPlayerData = () => {
+    return (
+      <div>
+        {
+          this.state.playerData.map(player => (
+            <div key={player.id}>
+              <h3>{player.username} ({player.points}, #{player.place}):</h3>
+
+              <ul>
+              {
+                player.wordsOwned.map(word => (
+                  <li key={word.id}>{word.word} ({word.points})</li>
+                ))
+              }
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      
+    );
+  }
+
+
   render() {
     return (
       <div>
         <h3>For testing- this button switches room from homelobby to alphasoup</h3>
-        <button onClick={this.handleSwitch}>
+        <button onClick={this.handleSwitchRoom}>
           Switch to alphasoup room
         </button>
 
