@@ -15,53 +15,9 @@ class CreateRoom extends React.Component {
     };
   }
 
-  // determines whether or not "create room" is shown
-  handleShowCreateRoom = event => {
-    this.setState({ createRoom: !this.state.createRoom });
-    event.preventDefault();
-  };
 
-  // handles changes to text field for room code
-  handleChangeCreateRoom = event => {
-    this.setState({
-      roomCode: event.target.value
-    });
-  };
 
-  // submits room code to database
-  handleSubmitCreateRoom = event => {
-    event.preventDefault();
-
-    // checks if the room exists
-    this.checkExistence(this.state.roomCode);
-
-    // clears the roomCode field
-    this.setState({ roomCode: "" });
-  };
-
-  // get request to see if it exists (true if it exists)
-  async checkExistence(roomCode) {
-    try {
-      await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
-        res => {
-
-          const allRooms = res.data;
-
-          if (allRooms.length > 0) {
-            alert("This room already exists, please choose another name");
-          } else {
-            this.createRoom(roomCode);
-            this.addUserToRoom(roomCode);
-          }
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    } catch (error) {
-      console.log("There was an error with Axios getRoom");
-    }
-  }
+  // ------------------------------------ Axios ------------------------------------
 
   // post request to create new room
   async createRoom(roomCode) {
@@ -92,6 +48,62 @@ class CreateRoom extends React.Component {
       console.log("There was an error adding the user to the room homelobbies room");
     }
   }
+
+  // get request to see if the room exists (true if it exists)
+  async checkExistence(roomCode) {
+    try {
+      await Axios.get(`http://localhost:5000/homeLobby/${roomCode}`).then(
+        res => {
+
+          const allRooms = res.data;
+
+          if (allRooms.length > 0) {
+            alert("This room already exists, please choose another name");
+          } else {
+            this.createRoom(roomCode);
+            this.addUserToRoom(roomCode);
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } catch (error) {
+      console.log("There was an error with Axios getRoom");
+    }
+  }
+
+
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
+
+  // determines whether or not "create room" is shown
+  handleShowCreateRoom = event => {
+    this.setState({ createRoom: !this.state.createRoom });
+    event.preventDefault();
+  };
+
+  // handles changes to text field for room code
+  handleChangeCreateRoom = event => {
+    this.setState({
+      roomCode: event.target.value
+    });
+  };
+
+  // submits room code to database
+  handleSubmitCreateRoom = event => {
+    event.preventDefault();
+
+    // checks if the room exists
+    this.checkExistence(this.state.roomCode);
+
+    // clears the roomCode field
+    this.setState({ roomCode: "" });
+  };
+
+  
+
+  // ------------------------------------ Render ------------------------------------
 
   render() {
     return (
