@@ -44,7 +44,7 @@ class NameSwitch extends React.Component {
 
   // ------------------------------------ Form & Button Handling ------------------------------------
 
-  handleChangeNameChange = (event) => {
+  handleChangeName = (event) => {
     event.preventDefault();
 
     this.setState({
@@ -90,7 +90,7 @@ class NameSwitch extends React.Component {
   }
 
 
-  
+
   // ------------------------------------ Render ------------------------------------
 
   render() {
@@ -100,7 +100,7 @@ class NameSwitch extends React.Component {
           this.state.switchMode ? (
             <form onSubmit={this.handleSubmitNameChange}>
               <label>Edit: </label>
-              <input name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeNameChange}/>
+              <input name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
             </form>
           ) : 
           <h1 onClick={this.handleSwitchName} key={this.props.key}>
