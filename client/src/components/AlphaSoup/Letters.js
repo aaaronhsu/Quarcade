@@ -61,26 +61,6 @@ class Letters extends React.Component {
 
 
 
-  // ------------------------------------ Utility ------------------------------------
-
-  // handles voting for next letter
-  handleVoteSubmission = () => {
-    if (this.props.voted) {
-      // removes vote
-      this.props.changeVote(-1);
-
-      this.props.changeVoteStatus(false);
-    }
-    else {
-      // adds vote
-      this.props.changeVote(1);
-
-      this.props.changeVoteStatus(true);
-    }
-  }
-  
-
-
   // ------------------------------------ Render ------------------------------------
 
   // renders text that shows how many letters there are
@@ -90,25 +70,6 @@ class Letters extends React.Component {
         Here is the letter count: {this.props.numLetters}
       </h3>
     )
-  }
-
-  // renders button for voting for next letter
-  renderButtonVoteNextLetter = () => {
-    return (
-      <div>
-        {
-          this.props.voted ?
-
-          <button onClick={() => this.handleVoteSubmission()}>
-            Press this to remove your vote for the next letter
-          </button>
-          :
-          <button onClick={() => this.handleVoteSubmission()}>
-            Press this to add your vote for the next letter
-          </button>
-        }
-      </div>
-    );
   }
 
   // FOR DEBUG, renders the button to change the number of letters rendered
@@ -132,9 +93,8 @@ class Letters extends React.Component {
       <div>
         {this.renderNumberOfLetters()} <br></br>
 
-        Number of votes: {this.props.votes}/{this.props.playerData.length}
 
-        {this.renderButtonVoteNextLetter()} {this.renderButtonAddNLetters()} <br></br>
+        {this.renderButtonAddNLetters()} <br></br>
         Current Letters:
         <ul>
         {

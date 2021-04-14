@@ -349,14 +349,9 @@ class AlphaSoup extends React.Component {
         <Letters 
           numLetters={this.state.letters.length}
           letters={this.state.letters}
-          votes={this.state.votesForNextLetter}
-          voted={this.state.votedForNextLetter}
-          playerData={this.state.playerData}
 
 
           addLetter={(letter) => this.addLetter(letter)} 
-          changeVote={(vote) => this.changeVote(vote)}
-          changeVoteStatus={(vote) => this.changeVoteStatus(vote)}
         />
         <Chat />
       </div>
