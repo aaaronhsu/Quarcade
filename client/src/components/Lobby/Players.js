@@ -33,7 +33,7 @@ class Players extends React.Component {
 
 
 
-  
+
   // ------------------------------------ Render ------------------------------------
   
   render() {
@@ -46,9 +46,6 @@ class Players extends React.Component {
             <NameSwitch
               key={player}
               player={player}
-              // TODO:
-              // 1. some code here that pushes each player's socket ID
-              // 2. should render a (me) at the end if it is your name 
             />
           ))
         }
