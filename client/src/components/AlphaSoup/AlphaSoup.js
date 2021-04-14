@@ -72,7 +72,8 @@ class AlphaSoup extends React.Component {
               // construct object for each word
               let wordData = {
                 word: retrievedPlayerData[i].wordsOwned[j].word,
-                points: retrievedPlayerData[i].wordsOwned[j].points
+                points: retrievedPlayerData[i].wordsOwned[j].points,
+                beingStolen: false
               };
 
               player.points += retrievedPlayerData[i].wordsOwned[j].points;
@@ -142,6 +143,34 @@ class AlphaSoup extends React.Component {
       letters: newLetters
     });
   };
+
+  changeStealStatus = (player, word) => {
+    let copyPlayerData = [...this.state.playerData];
+
+    // loop through all of the players
+    for (let i = 0; i < copyPlayerData.length; i++) {
+
+      // find the player that owns word
+      if (copyPlayerData[i].username === player) {
+
+        // loop through the player's words
+        for (let j = 0; j < copyPlayerData[i].wordsOwned.length; j++) {
+
+          // find the word that the player owns
+          if (copyPlayerData[i].wordsOwned[j].word === word) {
+
+            // set the word to be stolen/unstolen
+            copyPlayerData[i].wordsOwned[j].beingStolen = !copyPlayerData[i].wordsOwned[j].beingStolen;
+            break;
+          }
+        }
+      }
+    }
+
+    this.setState({
+      playerData: copyPlayerData
+    });
+  }
 
 
 

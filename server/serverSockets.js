@@ -35,11 +35,9 @@ module.exports = {
         client.emit("recSocketRoom", roomList[roomList.length - 1]);
       });
       
-      // emits the username associated to a client
+      // emits the username associated to a socket
       client.on("reqSocketUsername", () => {
-        let username = client.username;
-
-        client.emit("recSocketUsername", username);
+        client.emit("recSocketUsername", client.username);
 
       });
 
