@@ -11,24 +11,10 @@ class JoinRoom extends React.Component {
       redirectToLobby: false,
     };
   }
+  
 
-  // handles changes to text field for room code
-  handleChangeJoinRoom = event => {
-    this.setState({
-      roomCode: event.target.value
-    });
-  };
 
-  // submits room code to database
-  handleSubmitJoinRoom = event => {
-    event.preventDefault();
-
-    // need to connect with backend database and implement verification
-    this.joinRoom(this.state.roomCode);
-
-    //clears the fields, this is just to make it look better
-    this.setState({ roomCode: "" });
-  };
+  // ------------------------------------ Axios Requests ------------------------------------
 
   // joins room if it exists
   async joinRoom(roomCode) {
@@ -74,6 +60,32 @@ class JoinRoom extends React.Component {
     }
   }
 
+
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
+
+  // handles changes to text field for room code
+  handleChangeJoinRoom = event => {
+    this.setState({
+      roomCode: event.target.value
+    });
+  };
+
+  // submits room code to database
+  handleSubmitJoinRoom = event => {
+    event.preventDefault();
+
+    // need to connect with backend database and implement verification
+    this.joinRoom(this.state.roomCode);
+
+    //clears the fields, this is just to make it look better
+    this.setState({ roomCode: "" });
+  };
+
+
+
+  // ------------------------------------ Render ------------------------------------
+  
   render() {
     return (
       <div>
