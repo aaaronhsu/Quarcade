@@ -26,37 +26,42 @@ class NameSwitch extends React.Component {
     
   }
 
-  handleSwitchName = () => {
+  // ------------------------------------ Axios Requests ------------------------------------
 
-
-    // first check if you are allowed to switch the name (is it you)
-    if (this.state.currentID === clientSocket.id) {
-      // it will change the state so the form will render
-      this.setState({
-        switchMode: true
-      });
-    } else {
-      alert("you may only change your name");
+  // changes name in database
+  async addName() {
+    try {
+      await Axios.patch(`http://localhost:5000/user/name/${clientSocket.id}`, 
+      {name: this.state.currentName}).then(
+        console.log("added new name")
+      )
+    } catch (error) {
+      console.log("problem updating the name")
     }
-
   }
 
-  handleChange = (event) => {
+
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
+
+  handleChangeNameChange = (event) => {
+    event.preventDefault();
+
     this.setState({
       currentName: event.target.value
     });
   }
 
-  handleSubmit = (event) => {
+  handleSubmitNameChange = (event) => {
     event.preventDefault();    
-    // set switch mode to false again
+
+    // unrenders the name changing form
     this.setState({
       switchMode: false
     });
-    console.log("submitted");
 
     // adds to the database, for later games
-    this.addName()
+    this.addName();
 
     // ERROR: something here isn't working
     // I think it's that the changeUsername in the backend
@@ -69,29 +74,35 @@ class NameSwitch extends React.Component {
     clientSocket.emit("reqUsersInRoom");
   }
 
-  async addName() {
-    try {
-      await Axios.patch(`http://localhost:5000/user/name/${clientSocket.id}`, 
-      {name: this.state.currentName}).then(
-        console.log("added new name")
-        // this works, the name is added to the databse
-        // nothing needs to be done, it's just so that you have a name in the game
-      )
-    } catch (error) {
-      console.log("problem updating the name")
+
+  // ------------------------------------ Utility ------------------------------------
+
+  handleSwitchName = () => {
+    // first check if you are allowed to switch the name (is it you)
+    if (this.state.currentID === clientSocket.id) {
+      // it will change the state so the form will render
+      this.setState({
+        switchMode: true
+      });
+    } else {
+      alert("you may only change your name");
     }
   }
 
+
   
+  // ------------------------------------ Render ------------------------------------
+
   render() {
     return (
       <div>
-        {this.state.switchMode ? (
-          <form onSubmit={this.handleSubmit}>
-            <label>Edit: </label>
-            <input name="newName" type="text" value={this.state.currentName} onChange={this.handleChange}/>
-          </form>
-        ) : 
+        {
+          this.state.switchMode ? (
+            <form onSubmit={this.handleSubmitNameChange}>
+              <label>Edit: </label>
+              <input name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeNameChange}/>
+            </form>
+          ) : 
           <h1 onClick={this.handleSwitchName} key={this.props.key}>
               <div>
                 {this.state.displayName}
