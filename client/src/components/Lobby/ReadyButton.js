@@ -9,6 +9,10 @@ class ReadyButton extends React.Component {
     }
   }
 
+
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
+  
   // handles clicking the ready button
   handleClick = event => {
     if (!this.props.votedGame) {
@@ -26,6 +30,10 @@ class ReadyButton extends React.Component {
   // update the number as people ready up
 
   // TODO conditional redirection to chosen game based on whether or not everyone is readied up
+
+
+  // ------------------------------------ Render ------------------------------------
+
   render() {
     return (
       <div>
