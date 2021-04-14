@@ -43,27 +43,12 @@ class AlphaSoup extends React.Component {
     clientSocket.on("recUpdateWords", (room) => {
       this.retrieveWords(room);
     });
-
-    // updates the number of users that have voted for a new letter
-    clientSocket.on("recUpdateNextLetterVote", () => {
-      this.changeVote(0);
-    });
-
-    // resets the vote for the next letter
-    clientSocket.on("recResetVotesForNextLetter", () => {
-      this.setState({
-        votedForNextLetter: false,
-        votesForNextLetter: 0
-      });
-    });
   }
 
   componentWillUnmount() {
     clientSocket.off("recSocketRoom");
     clientSocket.off("recCreateWord");
     clientSocket.off("recUpdateWords");
-    clientSocket.off("recUpdateNextLetterVote");
-    clientSocket.off("recResetVotesForNextLetter");
   }
 
 
@@ -157,73 +142,6 @@ class AlphaSoup extends React.Component {
     }
   }
 
-  async getRoomCode(socketId, vote) {
-    try {
-      await Axios.get(`http://localhost:5000/user/bySocket/${socketId}`).then(
-        res => {
-          // up to here, success! gets the roomcode
-          const roomCode = res.data[0].roomCode;
-
-          // now must use roomcode info to get the alphasoup
-          this.getAlpha(roomCode, vote);
-
-          
-        }
-      )
-    } catch (error) {
-      console.log("problem getting room by socket");
-    }
-  }
-
-  async getAlpha(roomCode, vote) {
-    try {
-      await Axios.get(`http://localhost:5000/alphaSoup/${roomCode}`).then(
-        res => {
-          // already have roomCode
-          const votes = res.data[0].votes;
-
-          // all players will have voted
-          if (votes + vote == this.state.playerData.length) {
-
-            // reset the vote count in the database
-            this.patchVotes(roomCode, 0);
-
-            // requests new letter
-            clientSocket.emit("reqNewLetter");
-
-            // requests all users to reset their vote states
-            clientSocket.emit("reqResetVotesForNextLetter");
-          }
-          else {
-            this.setState({
-              votesForNextLetter: votes + vote
-            });
-  
-            // uses that room code to patch the new current votes value to database
-            this.patchVotes(roomCode, votes + vote);
-  
-            // requests all users to update the number of votes
-            if (vote != 0) clientSocket.emit("reqUpdateNextLetterVote");
-          }
-
-        }
-      )
-
-    } catch (error) {
-      console.log("problem getting the correct alphasoup");
-    }
-  }
-
-  async patchVotes(roomCode, votes) {
-    try {
-      await Axios.patch(`http://localhost:5000/alphaSoup/${roomCode}`, {votes: votes}).then(
-        // for some reason, patch doesn't actually return the new data fast enough... 
-      )
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
 
 
   // ------------------------------------ Form & Button Handling ------------------------------------
@@ -245,6 +163,8 @@ class AlphaSoup extends React.Component {
 
   // adds a letter to the list of letters
   addLetter = (letter) => {
+
+    console.log(letter);
     let newLetters = [...this.state.letters];
     newLetters.push(letter);
 
@@ -272,18 +192,6 @@ class AlphaSoup extends React.Component {
       letters: newLetters
     });
   };
-
-  // changes vote in database (if parameter is 1 then +1, if -1 then -1)
-  changeVote = (vote) => {
-    // gets roomcode based on id (users collection)
-    this.getRoomCode(clientSocket.id, vote);
-  }
-
-  changeVoteStatus = (voted) => {
-    this.setState({
-      votedForNextLetter: voted
-    });
-  }
 
 
 
