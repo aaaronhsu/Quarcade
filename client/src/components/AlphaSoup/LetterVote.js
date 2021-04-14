@@ -13,6 +13,10 @@ class LetterVote extends React.Component {
     }
   }
 
+
+
+  // ------------------------------------ Socket.io ------------------------------------
+
   componentDidMount() {
     // updates the number of users that have voted for a new letter
     clientSocket.on("recUpdateNextLetterVote", () => {
@@ -32,6 +36,10 @@ class LetterVote extends React.Component {
     clientSocket.off("recUpdateNextLetterVote");
     clientSocket.off("recResetVotesForNextLetter");
   }
+
+
+
+  // ------------------------------------ Axios ------------------------------------
 
   async getRoomCode(socketId, vote) {
     try {
@@ -102,11 +110,8 @@ class LetterVote extends React.Component {
   }
 
 
-  // changes vote in database (if parameter is 1 then +1, if -1 then -1)
-  changeVote = (vote) => {
-    // gets roomcode based on id (users collection)
-    this.getRoomCode(clientSocket.id, vote);
-  }
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
 
   changeVoteStatus = (voted) => {
     this.setState({
@@ -129,6 +134,20 @@ class LetterVote extends React.Component {
       this.changeVoteStatus(true);
     }
   }
+
+
+
+  // ------------------------------------ Utility ------------------------------------
+
+  // changes vote in database (if parameter is 1 then +1, if -1 then -1)
+  changeVote = (vote) => {
+    // gets roomcode based on id (users collection)
+    this.getRoomCode(clientSocket.id, vote);
+  }
+
+
+
+  // ------------------------------------ Render ------------------------------------
 
   // renders button for voting for next letter
   renderButtonVoteNextLetter = () => {
