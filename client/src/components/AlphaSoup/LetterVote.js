@@ -41,15 +41,16 @@ class LetterVote extends React.Component {
 
   // ------------------------------------ Axios ------------------------------------
 
-  async getRoomCode(socketId, vote) {
+  // retrieves roomCode through db through socketID
+  async getRoomCode(socketID, vote) {
     try {
-      await Axios.get(`http://localhost:5000/user/bySocket/${socketId}`).then(
+      await Axios.get(`http://localhost:5000/user/bySocket/${socketID}`).then(
         res => {
           // up to here, success! gets the roomcode
           const roomCode = res.data[0].roomCode;
 
           // now must use roomcode info to get the alphasoup
-          this.getAlpha(roomCode, vote);
+          this.updateVotesInRoom(roomCode, vote);
 
           
         }
@@ -59,7 +60,8 @@ class LetterVote extends React.Component {
     }
   }
 
-  async getAlpha(roomCode, vote) {
+  // retrieves and edits the number of votes in a room
+  async updateVotesInRoom(roomCode, vote) {
     try {
       await Axios.get(`http://localhost:5000/alphaSoup/${roomCode}`).then(
         res => {
@@ -113,6 +115,7 @@ class LetterVote extends React.Component {
 
   // ------------------------------------ Form & Button Handling ------------------------------------
 
+  // ensures that players can't vote twice (enables the toggle)
   changeVoteStatus = (voted) => {
     this.setState({
       votedForNextLetter: voted
@@ -139,7 +142,7 @@ class LetterVote extends React.Component {
 
   // ------------------------------------ Utility ------------------------------------
 
-  // changes vote in database (if parameter is 1 then +1, if -1 then -1)
+  // changes vote in database (if parameter is 1 then +1, if -1 then -1 to the vote count)
   changeVote = (vote) => {
     // gets roomcode based on id (users collection)
     this.getRoomCode(clientSocket.id, vote);
@@ -173,8 +176,9 @@ class LetterVote extends React.Component {
     return (
       <div>
 
-        <h3>{this.props.votesForNextLetter ? 1 : 0} out of {this.props.numPlayers} have voted</h3>
+        <h3>{this.state.votesForNextLetter} out of {this.props.numPlayers} have voted</h3>
         {this.renderButtonVoteNextLetter()}
+
       </div>
     );
   }
