@@ -190,6 +190,8 @@ class AlphaSoup extends React.Component {
 
         <SubmitWord 
           letters={this.state.letters}
+          playerData={this.state.playerData}
+          
           removeLetters={(word) => this.removeLetters(word)}
         />
 

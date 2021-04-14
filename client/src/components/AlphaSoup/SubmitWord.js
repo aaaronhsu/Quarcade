@@ -83,31 +83,75 @@ class SubmitWord extends React.Component {
   // ------------------------------------ Utility ------------------------------------
 
   // helper function for checkValidWord to check if the letter exists in the list of words
-    removeFirst = (src, element) => {
-      const index = src.indexOf(element);
-      if (index === -1) return [-1]; // the letter does not exist in the list of available letters
-      return [...src.slice(0, index), ...src.slice(index + 1)]; // the letter does exist and return the list of letters without the letter
+  removeFirst = (src, element) => {
+    try {
+      src.remove(element);
+    }
+    catch (err) {
+      return [-1];
     }
 
-    // this only checks if the word is able to be made with the letters currently in the list
-    checkValidWord = word => {
+    return src;
+  }
 
-      // words with less than 3 letters are not allowed
-      if (word.length < 3) return false;
+  fetchLettersFromStolenWords = () => {
+    let letters = [];
 
-      // available letters
-      let newLetters = [...this.props.letters];
+    // loop through all of the players
+    for (let i = 0; i < this.props.playerData.length; i++) {
 
-      // loop through the letters in the word and remove them from the list of available letters
-      for (var i = 0; i < word.length; i++) {
-        newLetters = this.removeFirst(newLetters, word.charAt(i));
+      // loop through the player's words
+      for (let j = 0; j < this.props.playerData[i].wordsOwned.length; j++) {
 
-        // if the letter doesn't exist, then you can't make the word
-        if (newLetters[0] == [-1]) return false;
+        // check if the word is being stolen
+        if (this.props.playerData[i].wordsOwned[j].beingStolen) {
+          // add the word's letters to the list of letters
+
+          for (let k = 0; k < this.props.playerData[i].wordsOwned[j].word.length; k++) {
+            letters.push(this.props.playerData[i].wordsOwned[j].word.charAt(k));
+          }
+        }
       }
+    }
 
-      return true;
-    };
+    return letters;
+  }
+
+  // this only checks if the word is able to be made with the letters currently in the list
+  checkValidWord = word => {
+    // words with less than 3 letters are not allowed
+    if (word.length < 3) return false;
+
+    let lettersFromWord = [];
+
+    for (let i = 0; i < word.length; i++) {
+      lettersFromWord.push(word.charAt(i));
+    }
+
+    // available letters from stolen words
+    let lettersFromStolenWords = this.fetchLettersFromStolenWords();
+    
+    // available letters from community
+    let lettersFromPool = [...this.props.letters];
+
+    // loop through the letters in the stolen words and remove them from the list of letters from the word being made
+    for (var i = 0; i < lettersFromStolenWords.length; i++) {
+      lettersFromWord = this.removeFirst(lettersFromWord, lettersFromStolenWords[i]);
+
+      // if the letter doesn't exist in the word you are trying to make, then you can't make the word
+      if (lettersFromWord === [-1]) return false;
+    }
+
+    for (var i = 0; i < lettersFromWord.length; i++) {
+
+      lettersFromPool = this.removeFirst(lettersFromPool, lettersFromWord[i]);
+
+      if (lettersFromPool == [-1]) return false;
+    }
+
+
+    return true;
+  };
 
 
 
