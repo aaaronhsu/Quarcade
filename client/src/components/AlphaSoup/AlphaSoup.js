@@ -108,17 +108,6 @@ class AlphaSoup extends React.Component {
     }
   }
 
-  // adds a clone of the room from homelobbies to alphasoup
-  async addRoom(roomInfo) {
-    try {
-      // posts the data to the alphasoup database
-      await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
-      // by now, all the room info is now transferred to alphaSoup      } catch (error) {
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
 
 
   // ------------------------------------ Utility ------------------------------------
@@ -163,23 +152,17 @@ class AlphaSoup extends React.Component {
   render() {
     return (
       <div>
-        <RoomSwitch
 
-        />
-
-
+        <RoomSwitch />
         
         <PlayerData
           playerData={this.state.playerData}
         />
 
-
-
         <SubmitWord 
           letters={this.state.letters}
           removeLetters={(word) => this.removeLetters(word)}
         />
-
 
         <LetterVote 
           voted={this.state.votedForNextLetter}
@@ -191,7 +174,6 @@ class AlphaSoup extends React.Component {
           changeVoteStatus={(vote) => this.changeVoteStatus(vote)}
         />
 
-        
         <Letters 
           numLetters={this.state.letters.length}
           letters={this.state.letters}
@@ -199,7 +181,9 @@ class AlphaSoup extends React.Component {
 
           addLetter={(letter) => this.addLetter(letter)} 
         />
+        
         <Chat />
+
       </div>
     );
   }

@@ -4,6 +4,9 @@ import Axios from "axios";
 
 class RoomSwitch extends React.Component {
 
+
+  // ------------------------------------ Socket.io ------------------------------------
+
   componentDidMount() {
     // records the room the socket is in
     clientSocket.on("recSocketRoom", (room) => {
@@ -14,6 +17,10 @@ class RoomSwitch extends React.Component {
   componentWillUnmount() {
     clientSocket.off("recSocketRoom");
   }
+
+
+
+  // ------------------------------------ Axios ------------------------------------
 
   // takes the room from socket and requests the data
   async makeSwitch(room) {
@@ -31,7 +38,19 @@ class RoomSwitch extends React.Component {
     }
   }
 
+  // adds a clone of the room from homelobbies to alphasoup
+  async addRoom(roomInfo) {
+    try {
+      // posts the data to the alphasoup database
+      await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
+      // by now, all the room info is now transferred to alphaSoup      } catch (error) {
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
+
+  
   // ------------------------------------ Form & Button Handling ------------------------------------
 
   // this is a testing function, will convert the homelobby data into alphasoup data
