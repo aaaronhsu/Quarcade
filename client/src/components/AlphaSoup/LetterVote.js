@@ -124,17 +124,21 @@ class LetterVote extends React.Component {
 
   // handles voting for next letter
   handleVoteSubmission = () => {
-    if (this.props.voted) {
+    if (this.state.votedForNextLetter) {
       // removes vote
       this.changeVote(-1);
 
-      this.changeVoteStatus(false);
+      this.setState({
+        votedForNextLetter: false
+      });
     }
     else {
       // adds vote
       this.changeVote(1);
 
-      this.changeVoteStatus(true);
+      this.setState({
+        votedForNextLetter: true
+      });
     }
   }
 

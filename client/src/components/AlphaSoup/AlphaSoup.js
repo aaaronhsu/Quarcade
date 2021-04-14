@@ -182,13 +182,7 @@ class AlphaSoup extends React.Component {
         />
 
         <LetterVote 
-          voted={this.state.votedForNextLetter}
-          votesForNextLetter={this.state.votesForNextLetter}
           numPlayers={this.state.playerData.length}
-
-
-          changeVote={(vote) => this.changeVote(vote)}
-          changeVoteStatus={(vote) => this.changeVoteStatus(vote)}
         />
 
         <Letters 
