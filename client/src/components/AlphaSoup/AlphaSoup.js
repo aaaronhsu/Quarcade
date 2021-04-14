@@ -114,8 +114,6 @@ class AlphaSoup extends React.Component {
 
   // adds a letter to the list of letters
   addLetter = (letter) => {
-
-    console.log(letter);
     let newLetters = [...this.state.letters];
     newLetters.push(letter);
 
