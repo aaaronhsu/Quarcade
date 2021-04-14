@@ -5,9 +5,7 @@ class PlayerData extends React.Component {
     super(props);
 
     this.state = {
-      wordsStealing: [
 
-      ],
     };
   }
 
@@ -26,8 +24,12 @@ class PlayerData extends React.Component {
               {
                 player.wordsOwned.map(word => (
                   <div>
-                    <li key={word.id}>{word.word} ({word.points})</li>
-                    {console.log(word.word)}
+                    {
+                      word.beingStolen ?
+                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points}) (being stolen)</li>
+                      :
+                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points})</li>
+                    }
                   </div>
                 ))
               }

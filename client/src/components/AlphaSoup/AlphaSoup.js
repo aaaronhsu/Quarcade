@@ -184,6 +184,8 @@ class AlphaSoup extends React.Component {
         
         <PlayerData
           playerData={this.state.playerData}
+
+          changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
         />
 
         <SubmitWord 
