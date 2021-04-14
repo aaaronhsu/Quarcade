@@ -5,7 +5,6 @@ import Axios from "axios";
 import SubmitWord from './SubmitWord.js';
 import Letters from './Letters.js';
 import LetterVote from './LetterVote.js';
-
 import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
 import RoomSwitch from './RoomSwitch.js';
