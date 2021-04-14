@@ -28,11 +28,6 @@ class AlphaSoup extends React.Component {
 
   componentDidMount() {
 
-    // records the room the socket is in
-    clientSocket.on("recSocketRoom", (room) => {
-      this.makeSwitch(room);
-    });
-
     // removes word from the list of letters
     clientSocket.on("recCreateWord", (word) => {
       this.removeLetters(word);
@@ -40,12 +35,11 @@ class AlphaSoup extends React.Component {
 
     // updates list of all users words
     clientSocket.on("recUpdateWords", (room) => {
-      this.retrieveWords(room);
+      this.updatePlayerData(room);
     });
   }
 
   componentWillUnmount() {
-    clientSocket.off("recSocketRoom");
     clientSocket.off("recCreateWord");
     clientSocket.off("recUpdateWords");
   }
@@ -55,7 +49,7 @@ class AlphaSoup extends React.Component {
   // ------------------------------------ Axios ------------------------------------
 
   // updates all playerData
-  async retrieveWords(room) {
+  async updatePlayerData(room) {
     try {
       await Axios.get(`http://localhost:5000/user/byRoom/${room}`).then(
         res => {
@@ -114,22 +108,6 @@ class AlphaSoup extends React.Component {
     }
   }
 
-  // takes the room from socket and requests the data
-  async makeSwitch(room) {
-    try {
-      await Axios.get(`http://localhost:5000/homeLobby/${room}`).then(
-        res => {
-          const roomInfo = res.data[0];
-          // logs the info of the room
-          // here we do axios.post roomInfo to the room 
-          this.addRoom(roomInfo);
-        }
-      )
-    } catch (error) {
-      console.log("Could not get that room");
-    }
-  }
-
   // adds a clone of the room from homelobbies to alphasoup
   async addRoom(roomInfo) {
     try {
@@ -139,21 +117,6 @@ class AlphaSoup extends React.Component {
     } catch (error) {
       console.log(error.message);
     }
-  }
-
-
-
-  // ------------------------------------ Form & Button Handling ------------------------------------
-
-  // this is a testing function, will convert the homelobby data into alphasoup data
-  handleSwitchRoom = () => {
-
-    // request the socket's room
-    clientSocket.emit("reqSocketRoom");
-
-    // requests player information to be retrieved
-    clientSocket.emit("reqUpdateWords");
-    
   }
 
 

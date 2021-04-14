@@ -4,6 +4,33 @@ import Axios from "axios";
 
 class RoomSwitch extends React.Component {
 
+  componentDidMount() {
+    // records the room the socket is in
+    clientSocket.on("recSocketRoom", (room) => {
+      this.makeSwitch(room);
+    });
+  }
+
+  componentWillUnmount() {
+    clientSocket.off("recSocketRoom");
+  }
+
+  // takes the room from socket and requests the data
+  async makeSwitch(room) {
+    try {
+      await Axios.get(`http://localhost:5000/homeLobby/${room}`).then(
+        res => {
+          const roomInfo = res.data[0];
+          // logs the info of the room
+          // here we do axios.post roomInfo to the room 
+          this.addRoom(roomInfo);
+        }
+      )
+    } catch (error) {
+      console.log("Could not get that room");
+    }
+  }
+
 
   // ------------------------------------ Form & Button Handling ------------------------------------
 
@@ -21,7 +48,7 @@ class RoomSwitch extends React.Component {
 
 
   // ------------------------------------ Render ------------------------------------
-  
+
   render() {
     return (
       <div>
