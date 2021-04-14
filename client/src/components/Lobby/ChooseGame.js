@@ -10,6 +10,10 @@ class ChooseGame extends React.Component {
     }
   }
 
+
+  
+  // ------------------------------------ Form & Button Handling ------------------------------------
+
   // handles changes in game selection
   handleChangeGameChoice = event => {
     this.setState({
@@ -26,6 +30,10 @@ class ChooseGame extends React.Component {
       votedGame: !this.state.votedGame,
     });
   }
+
+
+
+  // ------------------------------------ Render ------------------------------------
 
   // need to connect game selection with backend database
   render() {
