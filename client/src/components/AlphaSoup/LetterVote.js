@@ -46,7 +46,7 @@ class LetterVote extends React.Component {
     return (
       <div>
 
-        <h3>{this.props.voted} out of {this.props.numPlayers} have voted</h3>
+        <h3>{this.props.votesForNextLetter ? 1 : 0} out of {this.props.numPlayers} have voted</h3>
         {this.renderButtonVoteNextLetter()}
       </div>
     );
