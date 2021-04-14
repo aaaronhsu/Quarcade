@@ -7,6 +7,7 @@ import Letters from './Letters.js';
 import LetterVote from './LetterVote.js';
 
 import Chat from '../Chat/Chat.js';
+import PlayerData from './PlayerData.js';
 
 class AlphaSoup extends React.Component {
 
@@ -197,30 +198,6 @@ class AlphaSoup extends React.Component {
 
   // ------------------------------------ Render ------------------------------------
 
-  // renders the words that each player has, as well as the points
-  renderPlayerData = () => {
-    return (
-      <div>
-        {
-          this.state.playerData.map(player => (
-            <div key={player.id}>
-              <h3>{player.username} ({player.points}, #{player.place}):</h3>
-
-              <ul>
-              {
-                player.wordsOwned.map(word => (
-                  <li key={word.id}>{word.word} ({word.points})</li>
-                ))
-              }
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-      
-    );
-  }
-
 
   render() {
     return (
@@ -233,7 +210,10 @@ class AlphaSoup extends React.Component {
 
 
         <h2>These are the words each player has:</h2>
-        {this.renderPlayerData()}
+        
+        <PlayerData
+          playerData={this.state.playerData}
+        />
 
 
 
