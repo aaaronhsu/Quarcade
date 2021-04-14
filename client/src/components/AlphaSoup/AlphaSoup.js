@@ -28,8 +28,8 @@ class AlphaSoup extends React.Component {
   componentDidMount() {
 
     // removes word from the list of letters
-    clientSocket.on("recCreateWord", (word) => {
-      this.removeLetters(word);
+    clientSocket.on("recUpdateLetters", (newLetters) => {
+      this.updateLetters(newLetters);
     });
 
     // updates list of all users words
@@ -39,7 +39,7 @@ class AlphaSoup extends React.Component {
   }
 
   componentWillUnmount() {
-    clientSocket.off("recCreateWord");
+    clientSocket.off("recUpdateLetters");
     clientSocket.off("recUpdateWords");
   }
 
@@ -124,20 +124,8 @@ class AlphaSoup extends React.Component {
     });
   };
 
-  // helper function for removeLetters that removes the first occurence of a letter in a list
-  removeFirst = (src, element) => {
-    const index = src.indexOf(element);
-    if (index === -1) return src;
-    return [...src.slice(0, index), ...src.slice(index + 1)];
-  }
-
   // removes all letters in the word from the list of letters  
-  removeLetters = (word) => {
-    let newLetters = [...this.state.letters];
-
-    for (var i = 0; i < word.length; i++) {
-      newLetters = this.removeFirst(newLetters, word.charAt(i));
-    }
+  updateLetters = (newLetters) => {
 
     this.setState({
       letters: newLetters
@@ -191,7 +179,7 @@ class AlphaSoup extends React.Component {
         <SubmitWord 
           letters={this.state.letters}
           playerData={this.state.playerData}
-          
+
           removeLetters={(word) => this.removeLetters(word)}
         />
 

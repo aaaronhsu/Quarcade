@@ -160,11 +160,11 @@ module.exports = {
       });
 
       // tells all users to remove the letters of the given word from the list of letters
-      client.on("reqCreateWord", (word) => {
+      client.on("reqUpdateLetters", (lettersLeft) => {
         const roomList = Array.from(client.rooms);
 
         // emits the word to all users in the same room
-        io.to(roomList[1]).emit("recCreateWord", (word));
+        io.to(roomList[1]).emit("recUpdateLetters", (lettersLeft));
       })
 
       // returns a random letter to all clients connected
