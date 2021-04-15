@@ -92,21 +92,17 @@ class SubmitWord extends React.Component {
   // TODO request axios to remove words from state of players
   removeWords = (wordsBeingStolen) => {
     for (let i = 0; i < wordsBeingStolen.length; i++) {
-      console.log("the word", wordsBeingStolen[i][1], "will be removed from", wordsBeingStolen[i][0]);
 
       this.removeWord(wordsBeingStolen[i]);
     }
+
+    clientSocket.emit("reqUpdateWords");
   }
 
   async removeWord(word) {
+    console.log(word);
     try {
-      await Axios.put(`http://localhost:5000/user/removeWord/${word[0]}`, {word: word[1]}).then(
-        res => {
-          // console.log(res.data)
-          // tells all the other users to pull the current state
-          clientSocket.emit("reqUpdateWords");
-        }
-      )
+      await Axios.put(`http://localhost:5000/user/removeWord/${word[0]}`, {word: word[1]});
     } catch (error) {
       console.log(error.message);
     }
