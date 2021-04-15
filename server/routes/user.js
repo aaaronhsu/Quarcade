@@ -76,6 +76,21 @@ router.put("/:query", function (req, res, next) {
     })
     .catch(next);
 });
+
+// removes word from specified user
+router.put("/removeWord/:username", function (req, res, next) {
+  // console.log("made it to delete route");
+  var username = req.params.username;  
+  var word = req.body.word;
+  // console.log("word:", word);
+  User.findOneAndUpdate({ username: username }, 
+    { $pull: { wordsOwned: {word: word}}}) //means it will not return mulitple values
+    .then(function (user) {
+      res.send(user);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ DELETE Requests ------------------------------------
 
 //delete requests BY SOCKET

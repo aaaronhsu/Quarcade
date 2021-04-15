@@ -8,8 +8,6 @@ class SubmitWord extends React.Component {
     super(props);
     this.state = {
       word: "",
-
-      wordsBeingStolen: [],
     }
   }
 
@@ -95,6 +93,22 @@ class SubmitWord extends React.Component {
   removeWords = (wordsBeingStolen) => {
     for (let i = 0; i < wordsBeingStolen.length; i++) {
       console.log("the word", wordsBeingStolen[i][1], "will be removed from", wordsBeingStolen[i][0]);
+
+      this.removeWord(wordsBeingStolen[i]);
+    }
+  }
+
+  async removeWord(word) {
+    try {
+      await Axios.put(`http://localhost:5000/user/removeWord/${word[0]}`, {word: word[1]}).then(
+        res => {
+          // console.log(res.data)
+          // tells all the other users to pull the current state
+          clientSocket.emit("reqUpdateWords");
+        }
+      )
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
