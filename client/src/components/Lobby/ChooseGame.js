@@ -72,6 +72,8 @@ class ChooseGame extends React.Component {
     // to start
     clientSocket.on("recStart", (game) => {
       // console.log("received request to start");
+
+      //TOD0: make it wait a bit before changing rooms
       if (game === "AlphaSoup") {
         this.setState({readyAlphaSoup: true})
       }
