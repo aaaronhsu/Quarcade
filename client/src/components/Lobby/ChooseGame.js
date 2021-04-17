@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import ReadyButton from './ReadyButton.js';
 import Axios from 'axios';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 import clientSocket from "../../ClientSocket.js";
+
+// right now ready button is not being used at all
+import ReadyButton from './ReadyButton.js';
 
 class ChooseGame extends React.Component {
   constructor(props) {
@@ -11,7 +14,9 @@ class ChooseGame extends React.Component {
       votesAlphaSoup: 0,
       votesCodeNames: 0,
       gameVoted: "", // this is the game that the player currently has their vote for
-      roomCode: "" // should get the roomcode at the beginning to request
+      roomCode: "", // should get the roomcode at the beginning to request
+      readyAlphaSoup: false, // whether all players have votes for the same thing yet
+      readyCodeNames: false
     }
   }
 
@@ -25,7 +30,7 @@ class ChooseGame extends React.Component {
       this.setState({
         roomCode: room
       })
-      console.log(this.state.roomCode);
+      // console.log(this.state.roomCode);
     })
 
     clientSocket.on("recAddVoteAlphaSoup", () => {
@@ -66,9 +71,13 @@ class ChooseGame extends React.Component {
 
     // to start
     clientSocket.on("recStart", (game) => {
-      console.log("received request to start");
-      // TODO: backend should pass through the game that's being played also
-      alert("game starting: " + game);
+      // console.log("received request to start");
+      if (game === "AlphaSoup") {
+        this.setState({readyAlphaSoup: true})
+      }
+      if (game === "CodeNames") {
+        this.setState({readyCodeNames: true})
+      }
     })
 
   }
@@ -123,12 +132,12 @@ class ChooseGame extends React.Component {
       await Axios.get(`http://localhost:5000/user/byRoom/${this.state.roomCode}`).then(
         res => {
           const playerCount = res.data.length;
-          console.log(playerCount);
-          console.log(votes);
+          // console.log(playerCount);
+          // console.log(votes);
           if (playerCount === votes) {
             // ask to start game
-            console.log("emitted because " + votes + "=" + playerCount)
-            console.log("game");
+            // console.log("emitted because " + votes + "=" + playerCount)
+            // console.log("game");
             clientSocket.emit("reqStart", game);
           }
            
@@ -150,11 +159,7 @@ class ChooseGame extends React.Component {
         <h1>Games! (click one to vote)</h1>
         <h2 onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup})</h2>
         <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames})</h2>
-        <br></br>
-        <ReadyButton
-          key={this.state.votedGame}
-          votedGame={this.state.votedGame}
-        />
+        {this.state.readyAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
       </div>
     );
   }
