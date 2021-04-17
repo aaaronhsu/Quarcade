@@ -95,12 +95,20 @@ module.exports = {
 
       // emits a message to increase everyone's vote state for alphaSoup
       client.on("reqAddVoteAlphaSoup", () => {
-        client.emit("recAddVoteAlphaSoup");
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recAddVoteAlphaSoup");
       })
 
       // emits a message to increase everyone's vote state for codeNames
       client.on("reqAddVoteCodeNames", () => {
-        client.emit("recAddVoteCodeNames");
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recAddVoteCodeNames");
       })
 
       // ------------------------------------ Update Requests ------------------------------------

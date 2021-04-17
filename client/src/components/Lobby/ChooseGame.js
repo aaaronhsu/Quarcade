@@ -46,6 +46,7 @@ class ChooseGame extends React.Component {
   handleVoteCodeNames = (event) => {
     event.preventDefault();
     //alert("chose codeNames");
+    // see above
     clientSocket.emit("reqAddVoteCodeNames");
   }
 
