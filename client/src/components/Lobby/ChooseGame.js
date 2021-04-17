@@ -9,7 +9,7 @@ class ChooseGame extends React.Component {
     this.state = {
       votesAlphaSoup: 0,
       votesCodeNames: 0,
-      gameVoted: "" // this is the game that the player currently has their vote for
+      gameVoted: "", // this is the game that the player currently has their vote for
     }
   }
 
@@ -18,19 +18,39 @@ class ChooseGame extends React.Component {
   componentDidMount() {
     clientSocket.on("recAddVoteAlphaSoup", () => {
       const newVoteNum = this.state.votesAlphaSoup + 1;
-      this.setState({votesAlphaSoup: newVoteNum});
+      this.setState({
+        votesAlphaSoup: newVoteNum,
+      });
     });
 
     clientSocket.on("recAddVoteCodeNames", () => {
       const newVoteNum = this.state.votesCodeNames + 1;
-      this.setState({votesCodeNames: newVoteNum});
-    })
+      this.setState({
+        votesCodeNames: newVoteNum,
+      });
+    });
+
+    clientSocket.on("recRemoveVoteAlphaSoup", () => {
+      const newVoteNum = this.state.votesAlphaSoup - 1;
+      this.setState({
+        votesAlphaSoup: newVoteNum,
+      });
+    });
+
+    clientSocket.on("recRemoveVoteCodeNames", () => {
+      const newVoteNum = this.state.votesCodeNames - 1;
+      this.setState({
+        votesCodeNames: newVoteNum,
+      });
+    });
 
   }
 
   componentWillUnmount() {
     clientSocket.off("recAddVoteAlphaSoup");
     clientSocket.off("recAddVotesCodeNames");
+    clientSocket.off("recRemoveVotesAlphaSoup");
+    clientSocket.off("recRemoveVotesCodeNames");
   }
 
   
@@ -38,16 +58,35 @@ class ChooseGame extends React.Component {
 
   handleVoteAlphaSoup = (event) => {
     event.preventDefault();
-    // alert("chose alphaSoup");
-    // then there should be an if to check if already voted alpha
-    clientSocket.emit("reqAddVoteAlphaSoup");
+
+    // if you didn't already vote for alpha, increase votes
+    if (this.state.gameVoted === "AlphaSoup") {
+      // do nothing
+    } else {
+      // check if you are switching from CodeNames
+      if (this.state.gameVoted === "CodeNames") {
+        // remove a vote from CodeNames first
+        clientSocket.emit("reqRemoveVoteCodeNames");
+      }
+      clientSocket.emit("reqAddVoteAlphaSoup");
+      this.setState({gameVoted: "AlphaSoup"});
+    }
   }
 
   handleVoteCodeNames = (event) => {
     event.preventDefault();
-    //alert("chose codeNames");
-    // see above
-    clientSocket.emit("reqAddVoteCodeNames");
+    // if you didn't already vote for codenames incrase votes
+    if (this.state.gameVoted === "CodeNames") {
+      // do nothing
+    } else {
+      // check if you are switching from AlphaSoup
+      if (this.state.gameVoted === "AlphaSoup") {
+        // remove a vote from CodeNames first
+        clientSocket.emit("reqRemoveVoteAlphaSoup");
+      }
+      clientSocket.emit("reqAddVoteCodeNames");
+      this.setState({gameVoted: "CodeNames"});
+    }
   }
 
 

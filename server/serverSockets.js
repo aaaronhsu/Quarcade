@@ -111,6 +111,25 @@ module.exports = {
         io.to(roomList[1]).emit("recAddVoteCodeNames");
       })
 
+      // emits a message to decrease everyone's vote state for alphasoup
+      client.on("reqRemoveVoteAlphaSoup", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recRemoveVoteAlphaSoup");
+      })
+
+      // emits a message to decrease everyone's vote state for codenames
+      client.on("reqRemoveVoteCodeNames", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recRemoveVoteCodeNames");
+      })
+      
+
       // ------------------------------------ Update Requests ------------------------------------
 
       // removes a user from all rooms, except for personal room & adds socket to newRoom
