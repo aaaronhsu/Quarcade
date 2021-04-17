@@ -135,6 +135,12 @@ module.exports = {
 
         io.to(roomList[1]).emit("recStart", game);
       })
+
+      // frontend message to start alphasoup for all users in a room
+      client.on("reqStartAlphaSoup", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recStartAlphaSoup");
+      })
       
 
       // ------------------------------------ Update Requests ------------------------------------

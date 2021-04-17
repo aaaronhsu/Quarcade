@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import StartGameAlphaSoup from './StartGameAlphaSoup.js';
 
 import clientSocket from "../../ClientSocket.js";
 
@@ -16,7 +17,8 @@ class ChooseGame extends React.Component {
       gameVoted: "", // this is the game that the player currently has their vote for
       roomCode: "", // should get the roomcode at the beginning to request
       readyAlphaSoup: false, // whether all players have votes for the same thing yet
-      readyCodeNames: false
+      readyCodeNames: false,
+      startAlphaSoup: false // whether alphasoup should start or not
     }
   }
 
@@ -69,7 +71,7 @@ class ChooseGame extends React.Component {
       });
     });
 
-    // to start
+    // to get prepared to start (unanimous vote on a game)
     clientSocket.on("recStart", (game) => {
       // console.log("received request to start");
 
@@ -80,6 +82,11 @@ class ChooseGame extends React.Component {
       if (game === "CodeNames") {
         this.setState({readyCodeNames: true})
       }
+    })
+
+    // to start the alphaSoupGame
+    clientSocket.on("recStartAlphaSoup", () => {
+      this.setState({startAlphaSoup: true});
     })
 
   }
@@ -160,8 +167,10 @@ class ChooseGame extends React.Component {
       <div>
         <h1>Games! (click one to vote)</h1>
         <h2 onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup})</h2>
+        {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
         <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames})</h2>
-        {this.state.readyAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
+        {/*this.state.readyCodeNames ? (start codename component here) : null */}
+        {this.state.startAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
       </div>
     );
   }
