@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReadyButton from './ReadyButton.js';
+import Axios from 'axios';
 
 import clientSocket from "../../ClientSocket.js";
 
@@ -10,17 +11,32 @@ class ChooseGame extends React.Component {
       votesAlphaSoup: 0,
       votesCodeNames: 0,
       gameVoted: "", // this is the game that the player currently has their vote for
+      roomCode: "" // should get the roomcode at the beginning to request
     }
   }
 
   // ------------------------------------ Socket.io ------------------------------------
   
   componentDidMount() {
+    // when the component mounts, get the roomCode
+    clientSocket.once("reqSocketRoom");
+    // receive the room and change the state
+    clientSocket.on("recSocketRoom", (room) => {
+      this.setState({
+        roomCode: room
+      })
+      console.log(this.state.roomCode);
+    })
+
     clientSocket.on("recAddVoteAlphaSoup", () => {
       const newVoteNum = this.state.votesAlphaSoup + 1;
       this.setState({
         votesAlphaSoup: newVoteNum,
       });
+
+      // check if you are ready to start
+      // compare the votes in alphasoup to the people in the room
+      this.compareVoteCounts(this.state.votesAlphaSoup, "AlphaSoup");
     });
 
     clientSocket.on("recAddVoteCodeNames", () => {
@@ -28,6 +44,10 @@ class ChooseGame extends React.Component {
       this.setState({
         votesCodeNames: newVoteNum,
       });
+
+      // check if you are ready to start
+      // compare users in the roomCode to the votes in the state
+      this.compareVoteCounts(this.state.votesCodeNames, "CodeNames");
     });
 
     clientSocket.on("recRemoveVoteAlphaSoup", () => {
@@ -44,6 +64,13 @@ class ChooseGame extends React.Component {
       });
     });
 
+    // to start
+    clientSocket.on("recStart", (game) => {
+      console.log("received request to start");
+      // TODO: backend should pass through the game that's being played also
+      alert("game starting: " + game);
+    })
+
   }
 
   componentWillUnmount() {
@@ -51,6 +78,7 @@ class ChooseGame extends React.Component {
     clientSocket.off("recAddVotesCodeNames");
     clientSocket.off("recRemoveVotesAlphaSoup");
     clientSocket.off("recRemoveVotesCodeNames");
+    clientSocket.off("recStart");
   }
 
   
@@ -70,6 +98,7 @@ class ChooseGame extends React.Component {
       }
       clientSocket.emit("reqAddVoteAlphaSoup");
       this.setState({gameVoted: "AlphaSoup"});
+
     }
   }
 
@@ -89,6 +118,27 @@ class ChooseGame extends React.Component {
     }
   }
 
+  async compareVoteCounts(votes, game) {
+    try {
+      await Axios.get(`http://localhost:5000/user/byRoom/${this.state.roomCode}`).then(
+        res => {
+          const playerCount = res.data.length;
+          console.log(playerCount);
+          console.log(votes);
+          if (playerCount === votes) {
+            // ask to start game
+            console.log("emitted because " + votes + "=" + playerCount)
+            console.log("game");
+            clientSocket.emit("reqStart", game);
+          }
+           
+        }
+      )
+    } catch (error) {
+      console.log("could not get users by room");
+    }
+  }
+
 
 
   // ------------------------------------ Render ------------------------------------
@@ -100,7 +150,6 @@ class ChooseGame extends React.Component {
         <h1>Games! (click one to vote)</h1>
         <h2 onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup})</h2>
         <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames})</h2>
-        <br></br>
         <br></br>
         <ReadyButton
           key={this.state.votedGame}

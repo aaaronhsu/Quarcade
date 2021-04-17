@@ -128,6 +128,13 @@ module.exports = {
         // takes the non-unassigned room and emits
         io.to(roomList[1]).emit("recRemoveVoteCodeNames");
       })
+
+      // ask from frontend to see if it's time to start
+      client.on("reqStart", (game) => {
+        const roomList = Array.from(client.rooms);
+
+        io.to(roomList[1]).emit("recStart", game);
+      })
       
 
       // ------------------------------------ Update Requests ------------------------------------
