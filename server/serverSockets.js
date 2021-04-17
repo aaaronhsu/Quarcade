@@ -93,6 +93,16 @@ module.exports = {
         });
       });
 
+      // emits a message to increase everyone's vote state for alphaSoup
+      client.on("reqAddVoteAlphaSoup", () => {
+        client.emit("recAddVoteAlphaSoup");
+      })
+
+      // emits a message to increase everyone's vote state for codeNames
+      client.on("reqAddVoteCodeNames", () => {
+        client.emit("recAddVoteCodeNames");
+      })
+
       // ------------------------------------ Update Requests ------------------------------------
 
       // removes a user from all rooms, except for personal room & adds socket to newRoom
