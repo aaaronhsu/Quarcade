@@ -107,7 +107,10 @@ class ChooseGame extends React.Component {
 
     // if you didn't already vote for alpha, increase votes
     if (this.state.gameVoted === "AlphaSoup") {
-      // do nothing
+      // remove a vote
+      clientSocket.emit("reqRemoveVoteAlphaSoup");
+      // switch state back to no game voted
+      this.setState({gameVoted: ""});
     } else {
       // check if you are switching from CodeNames
       if (this.state.gameVoted === "CodeNames") {
@@ -124,7 +127,9 @@ class ChooseGame extends React.Component {
     event.preventDefault();
     // if you didn't already vote for codenames incrase votes
     if (this.state.gameVoted === "CodeNames") {
-      // do nothing
+      clientSocket.emit("reqRemoveVoteCodeNames");
+      // switch state back to no game voted
+      this.setState({gameVoted: ""});
     } else {
       // check if you are switching from AlphaSoup
       if (this.state.gameVoted === "AlphaSoup") {
