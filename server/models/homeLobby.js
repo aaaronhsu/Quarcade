@@ -26,7 +26,17 @@ const HomeLobbySchema = new Schema({
         required: true
       }
     }
-  ]
+  ],
+  votesAlphaSoup: {
+    type: Number,
+    required: true, 
+    default: 0
+  },
+  votesCodeNames: {
+    type: Number,
+    required: true, 
+    default: 0
+  }
 });
 
 //this saves the HomeLobby model in a homelobbys collection in mongo

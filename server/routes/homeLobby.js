@@ -58,6 +58,19 @@ router.put("/:query", function (req, res, next) {
     .catch(next);
 });
 
+// ------------------------------------ PATCH Requests ------------------------------------
+
+// increases the vote count for the number of votes in alpha soup
+router.patch("/addVoteAlpha/:roomCode", function (req, res, next) {
+  // query is the roomCode you want to patch the counter to
+  var roomCode = req.params.roomCode;
+  HomeLobby.findOneAndUpdate({roomCode: roomCode}, {votesAlphaSoup: req.body.votesAlphaSoup})
+    .then(function (alphaSoup) {
+      res.send(alphaSoup);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ DELETE Requests ------------------------------------
 
 //delete requests BY ROOMCODE- deletes an item and returns this deleted item

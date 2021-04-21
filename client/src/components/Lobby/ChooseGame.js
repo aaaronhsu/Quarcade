@@ -25,6 +25,10 @@ class ChooseGame extends React.Component {
   // ------------------------------------ Socket.io ------------------------------------
   
   componentDidMount() {
+    // TODO: When component mounts, get current votes in Alpha and Code
+    // PULL VOTES
+
+
     // when the component mounts, get the roomCode
     clientSocket.once("reqSocketRoom");
     // receive the room and change the state
@@ -40,6 +44,7 @@ class ChooseGame extends React.Component {
       this.setState({
         votesAlphaSoup: newVoteNum,
       });
+      // TODO: PUSH TO DATABASE
 
       // check if you are ready to start
       // compare the votes in alphasoup to the people in the room
@@ -51,6 +56,7 @@ class ChooseGame extends React.Component {
       this.setState({
         votesCodeNames: newVoteNum,
       });
+      // TODO: PUSH TO DATABASE
 
       // check if you are ready to start
       // compare users in the roomCode to the votes in the state
@@ -62,6 +68,7 @@ class ChooseGame extends React.Component {
       this.setState({
         votesAlphaSoup: newVoteNum,
       });
+      // TODO: REMOVE FROM DATABASE
     });
 
     clientSocket.on("recRemoveVoteCodeNames", () => {
@@ -69,6 +76,7 @@ class ChooseGame extends React.Component {
       this.setState({
         votesCodeNames: newVoteNum,
       });
+      // TODO: REMOVE FROM DATABASE
     });
 
     // to get prepared to start (unanimous vote on a game)
@@ -87,6 +95,7 @@ class ChooseGame extends React.Component {
     // to start the alphaSoupGame
     clientSocket.on("recStartAlphaSoup", () => {
       this.setState({startAlphaSoup: true});
+      // TODO: UPON THE STARTING OF ANY GAME, WIPE ALL THE VOTES
     })
 
   }
@@ -175,7 +184,6 @@ class ChooseGame extends React.Component {
         {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
         <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames})</h2>
         {/*this.state.readyCodeNames ? (start codename component here) : null */}
-        {this.state.startAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
       </div>
     );
   }
