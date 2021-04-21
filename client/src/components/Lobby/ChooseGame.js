@@ -71,6 +71,7 @@ class ChooseGame extends React.Component {
       this.setState({
         votesAlphaSoup: newVoteNum,
       });
+      this.comparePlayersAndVotes();
       
     });
 
@@ -79,6 +80,7 @@ class ChooseGame extends React.Component {
       this.setState({
         votesCodeNames: newVoteNum,
       });
+      this.comparePlayersAndVotes();
     });
 
     // to get prepared to start (unanimous vote on a game)
@@ -98,6 +100,7 @@ class ChooseGame extends React.Component {
     clientSocket.on("recStartAlphaSoup", () => {
       this.setState({startAlphaSoup: true});
       // TODO: UPON THE STARTING OF ANY GAME, WIPE ALL THE VOTES
+      this.clearVoteCounts();
     })
 
   }
@@ -245,6 +248,14 @@ class ChooseGame extends React.Component {
     }
   }
 
+  async clearVoteCounts() {
+    try {
+      await Axios.patch(`http://localhost:5000/homeLobby/wipeVotes/${this.state.roomCode}`, {votesAlphaSoup: 0, votesCodeNames: 0});
+    } catch (error) {
+      console.log("could not patch to set votes to 0");
+    }
+  }
+
 
   // ------------------------------------ Render ------------------------------------
 
@@ -257,6 +268,9 @@ class ChooseGame extends React.Component {
         {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
         <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</h2>
         {/*this.state.readyCodeNames ? (start codename component here) : null */}
+        {this.state.startAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
+        {/* EVENTUALLY SAME AS ABOVE FOR ALPHASOUP */}
+
       </div>
     );
   }

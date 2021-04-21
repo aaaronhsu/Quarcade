@@ -86,6 +86,18 @@ router.patch("/changeVotesCodeNames/:roomCode", function (req, res, next) {
     .catch(next);
 })
 
+// ------------- WIPE VOTE COUNTS SET TO 0 -------------
+
+// sets all the votes to 0 so when u come back to lobby no bugs
+router.patch("/wipeVotes/:roomCode", function(req, res, next) {
+  var roomCode = req.params.roomCode;
+  HomeLobby.findOneAndUpdate({roomCode: roomCode}, {votesAlphaSoup: req.body.votesAlphaSoup, votesCodeNames: req.body.votesCodeNames})
+    .then(function (alphaSoup) {
+      res.sent(alphaSoup);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ DELETE Requests ------------------------------------
 
 //delete requests BY ROOMCODE- deletes an item and returns this deleted item
