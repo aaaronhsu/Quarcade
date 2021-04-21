@@ -62,7 +62,7 @@ router.put("/:query", function (req, res, next) {
 
 // ------------- ALPHASOUP VOTE CHANGING -------------
 
-// increases the vote count for the number of votes in ALPHASOUP
+// changes the vote count for the number of votes in ALPHASOUP
 router.patch("/addVoteAlphaSoup/:roomCode", function (req, res, next) {
   // roomCode is the roomCode you want to patch the counter to
   var roomCode = req.params.roomCode;
@@ -75,7 +75,7 @@ router.patch("/addVoteAlphaSoup/:roomCode", function (req, res, next) {
 
 // ------------- CODENAMES VOTE CHANGING -------------
 
-// increases the vote count for the number of votes in CODENAMES
+// changes the vote count for the number of votes in CODENAMES
 router.patch("/addVoteCodeNames/:roomCode", function (req, res, next) {
   // roomCode is the roomCode you want to patch the counter to
   var roomCode = req.params.roomCode;
