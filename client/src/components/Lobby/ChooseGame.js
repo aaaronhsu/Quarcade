@@ -14,11 +14,15 @@ class ChooseGame extends React.Component {
     this.state = {
       votesAlphaSoup: 0,
       votesCodeNames: 0,
+
       gameVoted: "", // this is the game that the player currently has their vote for
       roomCode: "", // should get the roomcode at the beginning to request
+
       readyAlphaSoup: false, // whether all players have votes for the same thing yet
       readyCodeNames: false,
+
       startAlphaSoup: false, // whether alphasoup should start or not
+      // startCodeNames: false // for when we eventually implement codenames
 
       numPlayers: 0
     }
@@ -27,8 +31,7 @@ class ChooseGame extends React.Component {
   // ------------------------------------ Socket.io ------------------------------------
   
   componentDidMount() {
-    // ERROR- when a user joins, shd remove start game!!!! need to set state back to false
-    // ERROR 2- all sockets add to database, not just one so votes are too big
+    // ERROR- when a user leaves, they shd be deleted from the room but that's a later us problem
 
     // when the component mounts, get the roomCode
     clientSocket.once("reqSocketRoom");
@@ -128,7 +131,7 @@ class ChooseGame extends React.Component {
       if (this.state.gameVoted === "CodeNames") {
         // remove a vote from CodeNames first
         clientSocket.emit("reqRemoveVoteCodeNames");
-        // TODO: DATABASE CODENAMES
+        // removes a vote from codenames
         this.updateCodeNamesVotes(-1);
       }
       clientSocket.emit("reqAddVoteAlphaSoup");
@@ -183,6 +186,7 @@ class ChooseGame extends React.Component {
 
   async pullRoomVotes() {
     // console.log(this.state.roomCode);
+    console.log("pulled on comp did mount")
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${this.state.roomCode}`).then(
         res => {
@@ -191,7 +195,7 @@ class ChooseGame extends React.Component {
           const newCodeNamesVotes = roomGot.votesCodeNames;
           const numPlayers = roomGot.users.length;
 
-          console.log(roomGot.users);
+          console.log(roomGot.users.length);
 
           // new votes counts
           this.setState({
@@ -199,6 +203,9 @@ class ChooseGame extends React.Component {
             votesCodeNames: newCodeNamesVotes,
             numPlayers: numPlayers
           })
+
+          // once it's done reseting state, check if start buttons change
+          this.comparePlayersAndVotes();
 
         }
       )
@@ -210,10 +217,10 @@ class ChooseGame extends React.Component {
 
   async updateAlphaSoupVotes(change) {
     const newValue = this.state.votesAlphaSoup + change;
-    console.log(newValue);
+    // console.log(newValue);
     try {
       await Axios.patch(`http://localhost:5000/homeLobby/changeVotesAlphaSoup/${this.state.roomCode}`, {votesAlphaSoup: newValue}).then(
-        console.log("patched remove")
+        // console.log("patched remove")
       );
     } catch (error) {
       console.log("could not patch the values AlphaSoup");
@@ -229,6 +236,14 @@ class ChooseGame extends React.Component {
     }
   }
 
+  comparePlayersAndVotes = () => {
+    if (this.state.votesAlphaSoup < this.state.numPlayers) {
+      this.setState({readyAlphaSoup: false});
+    }
+    if (this.state.votesCodeNames < this.state.numPlayers) {
+      this.setState({readyCodenames: false});
+    }
+  }
 
 
   // ------------------------------------ Render ------------------------------------
