@@ -9,11 +9,7 @@ class RoomSwitch extends React.Component {
 
   componentDidMount() {
     // when the component mounts, request an auto switch
-    // clientSocket.once("reqSwitchToAlphaSoup");
-
-    
-
-
+    // IMPORTANT NOTICE ALL CODE READERS (aaron lol) THIS IS WHERE IT SWITCHES TO ALPHASOUP IN THE DATABASE
     this.handleSwitchRoom();
     // records the room the socket is in
     clientSocket.on("recSocketRoom", (room) => {
@@ -78,10 +74,8 @@ class RoomSwitch extends React.Component {
   render() {
     return (
       <div> 
-        <h3>For testing- this button switches room from homelobby to alphasoup</h3>
-        <button onClick={this.handleSwitchRoom}>
-          Switch to alphasoup room
-        </button><h1>Removed button, should auto switch</h1>
+        <h1>Automatically switches to database</h1>
+        <h3>Aaron, see the componentDidMount in RoomSwitch.js</h3>
       </div>
     );
   }
