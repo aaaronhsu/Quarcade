@@ -34,7 +34,7 @@ class ChooseGame extends React.Component {
       this.setState({
         roomCode: room
       })
-      // TODO: When component mounts, get current votes in Alpha and Code
+      // DONE: When component mounts, get current votes in Alpha and Code
       // PULL VOTES
       this.pullRoomVotes();
     })
@@ -45,6 +45,7 @@ class ChooseGame extends React.Component {
         votesAlphaSoup: newVoteNum,
       });
       // TODO: PUSH TO DATABASE
+      this.updateAlphaSoupVotes(1);
 
       // check if you are ready to start
       // compare the votes in alphasoup to the people in the room
@@ -189,6 +190,24 @@ class ChooseGame extends React.Component {
       // get info
     } catch (error) {
       console.log("could not get the current state of votes");
+    }
+  }
+
+  async updateAlphaSoupVotes(change) {
+    const newValue = this.state.votesAlphaSoup + change;
+    try {
+      await Axios.patch(`http://localhost:5000/changeVotesAlphaSoup/${this.state.roomCode}`, {votesAlphaSoup: newValue});
+    } catch (error) {
+      console.log("could not patch the values AlphaSoup");
+    }
+  }
+
+  async updateCodeNamesVotes(change) {
+    const newValue = this.state.votesCodeNames + change;
+    try {
+      await Axios.patch(`http://localhost:5000/changeVotesCodeNames/${this.state.roomCode}`, {votesCodeNames: newValue});
+    } catch (error) {
+      console.log("could not patch the values CodeNames");
     }
   }
 
