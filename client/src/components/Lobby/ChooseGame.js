@@ -25,8 +25,6 @@ class ChooseGame extends React.Component {
   // ------------------------------------ Socket.io ------------------------------------
   
   componentDidMount() {
-    // TODO: When component mounts, get current votes in Alpha and Code
-    // PULL VOTES
 
 
     // when the component mounts, get the roomCode
@@ -36,7 +34,9 @@ class ChooseGame extends React.Component {
       this.setState({
         roomCode: room
       })
-      // console.log(this.state.roomCode);
+      // TODO: When component mounts, get current votes in Alpha and Code
+      // PULL VOTES
+      this.pullRoomVotes();
     })
 
     clientSocket.on("recAddVoteAlphaSoup", () => {
@@ -168,6 +168,27 @@ class ChooseGame extends React.Component {
       )
     } catch (error) {
       console.log("could not get users by room");
+    }
+  }
+
+  async pullRoomVotes() {
+    try {
+      await Axios.get(`http://localhost:5000/${this.state.roomCode}`).then(
+        res => {
+          const roomGot = res.data[0];
+          const newAlphaSoupVotes = roomGot.votesAlphaSoup;
+          const newCodeNamesVotes = roomGot.votesCodeNames;
+          // new votes counts
+          this.setState({
+            votesAlphaSoup: newAlphaSoupVotes,
+            votesCodeNames: newCodeNamesVotes
+          })
+
+        }
+      )
+      // get info
+    } catch (error) {
+      console.log("could not get the current state of votes");
     }
   }
 
