@@ -33,7 +33,7 @@ class NameSwitch extends React.Component {
     try {
       await Axios.patch(`http://localhost:5000/user/name/${clientSocket.id}`, 
       {name: this.state.currentName}).then(
-        console.log("added new name")
+        // console.log("added new name")
       )
     } catch (error) {
       console.log("problem updating the name")

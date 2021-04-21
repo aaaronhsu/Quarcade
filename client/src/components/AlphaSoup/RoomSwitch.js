@@ -74,8 +74,6 @@ class RoomSwitch extends React.Component {
   render() {
     return (
       <div> 
-        <h1>Automatically switches to database</h1>
-        <h3>Aaron, see the componentDidMount in RoomSwitch.js</h3>
       </div>
     );
   }
