@@ -186,7 +186,7 @@ class ChooseGame extends React.Component {
 
   async pullRoomVotes() {
     // console.log(this.state.roomCode);
-    console.log("pulled on comp did mount")
+    // console.log("pulled on comp did mount")
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${this.state.roomCode}`).then(
         res => {
@@ -195,7 +195,7 @@ class ChooseGame extends React.Component {
           const newCodeNamesVotes = roomGot.votesCodeNames;
           const numPlayers = roomGot.users.length;
 
-          console.log(roomGot.users.length);
+          // console.log(roomGot.users.length);
 
           // new votes counts
           this.setState({
