@@ -32,7 +32,7 @@ module.exports = {
         // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
 
-        client.emit("recSocketRoom", roomList[roomList.length - 1]);
+        io.to(roomList[1]).emit("recSocketRoom", roomList[roomList.length - 1]);
       });
       
       // emits the username associated to a socket

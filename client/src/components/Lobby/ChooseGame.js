@@ -18,7 +18,9 @@ class ChooseGame extends React.Component {
       roomCode: "", // should get the roomcode at the beginning to request
       readyAlphaSoup: false, // whether all players have votes for the same thing yet
       readyCodeNames: false,
-      startAlphaSoup: false // whether alphasoup should start or not
+      startAlphaSoup: false, // whether alphasoup should start or not
+
+      numPlayers: 0
     }
   }
 
@@ -187,10 +189,15 @@ class ChooseGame extends React.Component {
           const roomGot = res.data[0];
           const newAlphaSoupVotes = roomGot.votesAlphaSoup;
           const newCodeNamesVotes = roomGot.votesCodeNames;
+          const numPlayers = roomGot.users.length;
+
+          console.log(roomGot.users);
+
           // new votes counts
           this.setState({
             votesAlphaSoup: newAlphaSoupVotes,
-            votesCodeNames: newCodeNamesVotes
+            votesCodeNames: newCodeNamesVotes,
+            numPlayers: numPlayers
           })
 
         }
@@ -231,9 +238,9 @@ class ChooseGame extends React.Component {
     return (
       <div>
         <h1>Games! (click one to vote)</h1>
-        <h2 onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup})</h2>
+        <h2 onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup} / {this.state.numPlayers})</h2>
         {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
-        <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames})</h2>
+        <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</h2>
         {/*this.state.readyCodeNames ? (start codename component here) : null */}
       </div>
     );

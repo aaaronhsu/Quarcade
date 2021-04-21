@@ -41,7 +41,6 @@ class JoinRoom extends React.Component {
             clientSocket.emit("reqUsersInRoom");
             clientSocket.emit("reqSocketRoom");
 
-
             // redirects user to lobby
             this.setState({
               redirectToLobby : true
