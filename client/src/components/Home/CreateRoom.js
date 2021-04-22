@@ -17,6 +17,7 @@ class CreateRoom extends React.Component {
       username: this.nameGeneration()
     };
 
+    // changes the client's username to a random animal
     clientSocket.emit("changeUsername", this.state.username);
   }
 
@@ -48,8 +49,6 @@ class CreateRoom extends React.Component {
 
   async addUserToRoom(roomCode) {
     try {
-
-      console.log("create", this.state.username);
       await Axios.post("http://localhost:5000/user", { roomCode: roomCode, name: this.state.username, socket: clientSocket.id});
     } catch (error) {
       console.log("There was an error adding the user to the room homelobbies room");
@@ -739,8 +738,6 @@ class CreateRoom extends React.Component {
     ];
 
     var name = names[Math.floor(Math.random() * names.length)];
-
-    console.log(name);
 
     return name;
   }
