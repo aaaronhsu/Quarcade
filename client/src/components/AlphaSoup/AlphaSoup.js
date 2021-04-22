@@ -86,15 +86,15 @@ class AlphaSoup extends React.Component {
             playerData.push(player);
           }
 
-          // sorts the players by how many points they have
-          playerData.sort(function (a, b) {
-            return b.points - a.points;
-          });
+          // // sorts the players by how many points they have
+          // playerData.sort(function (a, b) {
+          //   return b.points - a.points;
+          // });
 
-          // assigns every player a place attribute, indicating what their ranking is relative to the other players
-          for (var i = 0; i < playerData.length; i++) {
-            playerData[i].place = i + 1;
-          }
+          // // assigns every player a place attribute, indicating what their ranking is relative to the other players
+          // for (var i = 0; i < playerData.length; i++) {
+          //   playerData[i].place = i + 1;
+          // }
 
           // update old playerData with new playerData
           this.setState({

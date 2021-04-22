@@ -198,7 +198,7 @@ class ChooseGame extends React.Component {
           const newCodeNamesVotes = roomGot.votesCodeNames;
           const numPlayers = roomGot.users.length;
 
-          // console.log(roomGot.users.length);
+          console.log(roomGot.users.length);
 
           // new votes counts
           this.setState({

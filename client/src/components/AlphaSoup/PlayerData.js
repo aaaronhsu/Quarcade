@@ -18,7 +18,7 @@ class PlayerData extends React.Component {
         {
           this.props.playerData.map(player => (
             <div key={player.id}>
-              <h3>{player.username} ({player.points}, #{player.place}):</h3>
+              <h3>{player.username} ({player.points} pts):</h3>
 
               <ul>
               {
