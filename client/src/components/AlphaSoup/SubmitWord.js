@@ -161,8 +161,11 @@ class SubmitWord extends React.Component {
 
   // this only checks if the word is able to be made with the letters currently in the list
   checkValidWord = word => {
+
     // words with less than 3 letters are not allowed
-    if (word.length < 3) return [[-1], []];
+    if (word.length < 3) {
+      return [[-1], []];
+    }
 
     let lettersFromWord = [];
 
@@ -172,6 +175,11 @@ class SubmitWord extends React.Component {
 
     // available letters from stolen words
     let lettersFromStolenWords = this.fetchLettersFromStolenWords();
+
+    // you cannot make a new word using only the letters from a single stolen word
+    if (lettersFromStolenWords[1].length === 1 && (lettersFromStolenWords[0].length === word.length)) {
+      return [[-1], []];
+    }
     
     // available letters from community
     let lettersFromPool = [...this.props.letters];
@@ -188,7 +196,10 @@ class SubmitWord extends React.Component {
 
       lettersFromPool = this.removeFirst(lettersFromPool, lettersFromWord[i]);
 
-      if (lettersFromPool.length === 1 && lettersFromPool[0] === -1) return [[-1], []];
+      // there are not enough letters to make this word
+      if (lettersFromPool.length === 1 && lettersFromPool[0] === -1) {
+        return [[-1], []];
+      }
     }
 
     return [lettersFromPool, lettersFromStolenWords[1]];
