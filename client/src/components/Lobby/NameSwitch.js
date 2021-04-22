@@ -17,7 +17,7 @@ class NameSwitch extends React.Component {
 
   componentDidMount() {
     if (this.state.currentID === clientSocket.id) {
-      const toDisplay = this.state.displayName + "(me)";
+      const toDisplay = this.state.displayName + " (me)";
       this.setState({displayName: toDisplay});
     }
   }
