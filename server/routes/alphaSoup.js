@@ -50,6 +50,26 @@ router.patch("/:query", function (req, res, next) {
     .catch(next);
 })
 
+// changes the amount of letters that start on the board
+router.patch("/changeStartLetters/:roomCode", function (req, res, next) {
+  var roomCode = req.params.roomCode;
+  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {startLetters: req.params.startLetters})
+    .then(function (alphaSoup) {
+      res.send(alphaSoup);
+    })
+    .catch(next);
+})
+
+// sets the amount of letters left
+router.patch("/setLettersLeft/:roomCode", function (req, res, next) {
+  var roomCode = req.params.roomCode;
+  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {lettersLeft: req.params.lettersLeft})
+    .then(function (alphaSoup) {
+      res.send(alphaSoup);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ DELETE Requests ------------------------------------
 
 //delete requests BY ROOMCODE- deletes an item and returns this deleted item

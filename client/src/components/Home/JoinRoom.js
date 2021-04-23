@@ -32,23 +32,30 @@ class JoinRoom extends React.Component {
           // joins the room if it exists
           if (matches.length > 0) {
 
-            // adds user to the room in the database
-            Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {socket: clientSocket.id } });
+            // 
+            const userNum = res.data[0].users.length;
+            if (userNum < 6) {
+              // adds user to the room in the database
+              Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {socket: clientSocket.id } });
 
-            // add user to the user collection
-            Axios.post("http://localhost:5000/user", {roomCode: roomCode, name: this.state.username, socket: clientSocket.id});
+              // add user to the user collection
+              Axios.post("http://localhost:5000/user", {roomCode: roomCode, name: this.state.username, socket: clientSocket.id});
 
-            // adds user to socket room
-            clientSocket.emit("moveRoom", roomCode);
+              // adds user to socket room
+              clientSocket.emit("moveRoom", roomCode);
 
-            // handles update of the players in the room
-            clientSocket.emit("reqUsersInRoom");
-            clientSocket.emit("reqSocketRoom");
+              // handles update of the players in the room
+              clientSocket.emit("reqUsersInRoom");
+              clientSocket.emit("reqSocketRoom");
 
-            // redirects user to lobby
-            this.setState({
-              redirectToLobby : true
-            });
+              // redirects user to lobby
+              this.setState({
+                redirectToLobby : true
+              });
+            } else {
+              alert("there are already 6 players in this room");
+            }
+  
 
           } else {
             alert("This room does not exist");
