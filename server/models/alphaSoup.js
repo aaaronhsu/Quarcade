@@ -31,6 +31,15 @@ const AlphaSoupSchema = new Schema({
     type: Number,
     required: true, 
     default: 0
+  }, 
+  startLetters: {
+    type: Number, 
+    required: true,
+    default: 4
+  }, 
+  lettersLeft: {
+    type: Number, 
+    required: true
   }
 });
 
