@@ -32,7 +32,7 @@ class ChooseGame extends React.Component {
     // ERROR- when a user leaves, they shd be deleted from the room but that's a later us problem
 
     // when the component mounts, get the roomCode
-    clientSocket.once("reqSocketRoom");
+    clientSocket.emit("reqSocketRoom");
     // receive the room and change the state
     clientSocket.on("recSocketRoom", (room) => {
       this.setState({

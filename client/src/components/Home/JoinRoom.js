@@ -32,8 +32,9 @@ class JoinRoom extends React.Component {
           // joins the room if it exists
           if (matches.length > 0) {
 
-            // 
+            // number of players in the room
             const userNum = res.data[0].users.length;
+
             if (userNum < 6) {
               // adds user to the room in the database
               Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {socket: clientSocket.id } });
