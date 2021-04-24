@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import RoomSwitch from './RoomSwitch.js';
 
 import clientSocket from "../../ClientSocket.js"; 
 
 class StartGameAlphaSoup extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      roomSwitch: false
+    }
   }
 
 
@@ -13,8 +17,14 @@ class StartGameAlphaSoup extends React.Component {
   // ------------------------------------ Form & Button Handling ------------------------------------
   
   handleStartAlphaSoup = () => {
+    console.log("started game");
+    // switches the room TODO
+    this.setState({
+      roomSwitch: true
+    })
+
     // emit message for all to start alphaSoup
-    clientSocket.emit("reqStartAlphaSoup");
+    clientSocket.emit("reqStartAlphaSoup");    
   }
 
   // ------------------------------------ Render ------------------------------------
@@ -23,6 +33,7 @@ class StartGameAlphaSoup extends React.Component {
     return (
       <div>
         <button onClick={this.handleStartAlphaSoup}>Start Game</button>
+        {this.state.roomSwitch ? (<RoomSwitch />) : null}
       </div>
     );
   }

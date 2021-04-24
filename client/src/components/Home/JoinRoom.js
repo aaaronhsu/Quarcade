@@ -55,8 +55,6 @@ class JoinRoom extends React.Component {
             } else {
               alert("there are already 6 players in this room");
             }
-  
-
           } else {
             alert("This room does not exist");
           }

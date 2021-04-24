@@ -5,8 +5,6 @@ import StartGameAlphaSoup from './StartGameAlphaSoup.js';
 
 import clientSocket from "../../ClientSocket.js";
 
-// right now ready button is not being used at all
-import ReadyButton from './ReadyButton.js';
 
 class ChooseGame extends React.Component {
   constructor(props) {
@@ -99,7 +97,7 @@ class ChooseGame extends React.Component {
     // to start the alphaSoupGame
     clientSocket.on("recStartAlphaSoup", () => {
       this.setState({startAlphaSoup: true});
-      // TODO: UPON THE STARTING OF ANY GAME, WIPE ALL THE VOTES
+      // UPON THE STARTING OF ANY GAME, WIPE ALL THE VOTES
       this.clearVoteCounts();
     })
 
@@ -147,7 +145,7 @@ class ChooseGame extends React.Component {
 
   handleVoteCodeNames = (event) => {
     event.preventDefault();
-    // if you didn't already vote for codenames incrase votes
+    // if you didn't already vote for codenames increase votes
     if (this.state.gameVoted === "CodeNames") {
       clientSocket.emit("reqRemoveVoteCodeNames");
       // switch state back to no game voted
@@ -198,7 +196,7 @@ class ChooseGame extends React.Component {
           const newCodeNamesVotes = roomGot.votesCodeNames;
           const numPlayers = roomGot.users.length;
 
-          console.log(roomGot.users.length);
+          // console.log(roomGot.users.length);
 
           // new votes counts
           this.setState({

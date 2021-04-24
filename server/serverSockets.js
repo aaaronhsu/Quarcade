@@ -34,6 +34,16 @@ module.exports = {
 
         io.to(roomList[1]).emit("recSocketRoom", roomList[roomList.length - 1]);
       });
+
+      // emits the rooms the client is connected to ONLY FOR DATABASE STUFF
+      // should only send to the person emitting the message
+      client.on("reqSocketRoomDatabaseSwitch", () => {
+        // console.log("made it to backend");
+        // retrieves list of rooms the client is connected to
+        const roomList = Array.from(client.rooms);
+        // console.log("my room", roomList[1]);
+        io.to(client.id).emit("recSocketRoomDatabaseSwitch", roomList[1]);
+      });
       
       // emits the username associated to a socket
       client.on("reqSocketUsername", () => {
@@ -69,6 +79,7 @@ module.exports = {
 
       // emits a message that contains a list of the sockets currently in the room as the user
       client.on("reqSocketsInRoom", () => {
+        // console.log("made it to backend socket");
         let room;
 
         // retrieves list of rooms the client is connected to

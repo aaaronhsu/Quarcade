@@ -27,7 +27,7 @@ const AlphaSoupSchema = new Schema({
       }
     }
   ],
-  votes: {
+  votes: { // for a new letter
     type: Number,
     required: true, 
     default: 0

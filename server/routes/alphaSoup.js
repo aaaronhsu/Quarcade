@@ -37,9 +37,10 @@ router.get("/:query", function (req, res, next) {
     .catch(next);
 });
 
+
 // ------------------------------------ PATCH Requests ------------------------------------
 
-// this function allows you to change the new word votes of an alphasoup room
+// this function allows you to change the new letter votes of an alphasoup room
 router.patch("/:query", function (req, res, next) {
   // query is the roomCode you want to patch the counter to
   var query = req.params.query;
