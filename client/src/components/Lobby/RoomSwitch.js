@@ -54,11 +54,17 @@ class RoomSwitch extends React.Component {
 
   // adds a clone of the room from homelobbies to alphasoup
   async addRoom(roomInfo) {
+    // TODO: change the amount of letters left
+    // TODO: change the amount of letters that begin on board IF players are greater than 4
+    const userNum = roomInfo.users.length;
+    const lettersLeft = userNum * 15;
+     
+
     if (this.state.timesRun <= 1) {
       try {
         // posts the data to the alphasoup database
-        await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users, lettersLeft: 10});
-        // by now, all the room info is now transferred to alphaSoup      } catch (error) {
+        await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users, lettersLeft: lettersLeft});
+        
       } catch (error) {
         console.log(error.message);
       }
