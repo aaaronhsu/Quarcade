@@ -58,12 +58,15 @@ class RoomSwitch extends React.Component {
     // TODO: change the amount of letters that begin on board IF players are greater than 4
     const userNum = roomInfo.users.length;
     const lettersLeft = userNum * 15;
-     
+    var startLetters = 4;
+    if (userNum > 4) {
+      startLetters = userNum;
+    }
 
     if (this.state.timesRun <= 1) {
       try {
         // posts the data to the alphasoup database
-        await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users, lettersLeft: lettersLeft});
+        await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users, startLetters: startLetters, lettersLeft: lettersLeft});
         
       } catch (error) {
         console.log(error.message);
