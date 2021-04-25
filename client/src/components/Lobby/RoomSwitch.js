@@ -3,13 +3,26 @@ import clientSocket from '../../ClientSocket.js';
 import Axios from "axios";
 
 class RoomSwitch extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      timesRun: 0
+    };
+  }
 
 
   // ------------------------------------ Socket.io ------------------------------------
 
   componentDidMount() {
+    // console.log("roomswitch component mounted");
+    // when the component mounts, request an auto switch
+    // IMPORTANT NOTICE ALL CODE READERS (aaron lol) THIS IS WHERE IT SWITCHES TO ALPHASOUP IN THE DATABASE
     // records the room the socket is in
-    clientSocket.on("recSocketRoom", (room) => {
+    clientSocket.emit("reqSocketRoomDatabaseSwitch");
+    clientSocket.on("recSocketRoomDatabaseSwitch", (room) => {
+      this.setState({timesRun: this.state.timesRun + 1});
+      // console.log(room);
       this.makeSwitch(room);
     });
   }
@@ -24,6 +37,7 @@ class RoomSwitch extends React.Component {
 
   // takes the room from socket and requests the data
   async makeSwitch(room) {
+    // console.log("made it to the actual switch");
     try {
       await Axios.get(`http://localhost:5000/homeLobby/${room}`).then(
         res => {
@@ -40,41 +54,38 @@ class RoomSwitch extends React.Component {
 
   // adds a clone of the room from homelobbies to alphasoup
   async addRoom(roomInfo) {
-    try {
-      // posts the data to the alphasoup database
-      await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users});
-      // by now, all the room info is now transferred to alphaSoup      } catch (error) {
-    } catch (error) {
-      console.log(error.message);
+    // change the amount of letters left
+    const userNum = roomInfo.users.length;
+    const lettersLeft = userNum * 15;
+    // change the amount of letters that begin on board IF players are greater than 4
+    var startLetters = 4;
+    if (userNum > 4) {
+      startLetters = userNum;
     }
+    if (this.state.timesRun <= 1) {
+      try {
+        // posts the data to the alphasoup database
+        await Axios.post(`http://localhost:5000/alphaSoup`, { roomCode: roomInfo.roomCode, users: roomInfo.users, startLetters: startLetters, lettersLeft: lettersLeft});
+        
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else {
+      // do nothing
+    }
+    
   }
 
 
   
   // ------------------------------------ Form & Button Handling ------------------------------------
 
-  // this is a testing function, will convert the homelobby data into alphasoup data
-  handleSwitchRoom = () => {
-
-    // request the socket's room
-    clientSocket.emit("reqSocketRoom");
-
-    // requests player information to be retrieved
-    clientSocket.emit("reqUpdateWords");
-    
-  }
-
-
 
   // ------------------------------------ Render ------------------------------------
 
   render() {
     return (
-      <div>
-        <h3>For testing- this button switches room from homelobby to alphasoup</h3>
-        <button onClick={this.handleSwitchRoom}>
-          Switch to alphasoup room
-        </button>
+      <div> 
       </div>
     );
   }

@@ -17,7 +17,7 @@ class NameSwitch extends React.Component {
 
   componentDidMount() {
     if (this.state.currentID === clientSocket.id) {
-      const toDisplay = this.state.displayName + "(me)";
+      const toDisplay = this.state.displayName + " (me)";
       this.setState({displayName: toDisplay});
     }
   }
@@ -33,7 +33,7 @@ class NameSwitch extends React.Component {
     try {
       await Axios.patch(`http://localhost:5000/user/name/${clientSocket.id}`, 
       {name: this.state.currentName}).then(
-        console.log("added new name")
+        // console.log("added new name")
       )
     } catch (error) {
       console.log("problem updating the name")
@@ -62,10 +62,6 @@ class NameSwitch extends React.Component {
 
     // adds to the database, for later games
     this.addName();
-
-    // ERROR: something here isn't working
-    // I think it's that the changeUsername in the backend
-    // doesn't actually work
 
     // causes the backend to change client.username
     clientSocket.emit("changeUsername", this.state.currentName);

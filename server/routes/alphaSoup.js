@@ -37,13 +37,34 @@ router.get("/:query", function (req, res, next) {
     .catch(next);
 });
 
+
 // ------------------------------------ PATCH Requests ------------------------------------
 
-// this function allows you to change the new word votes of an alphasoup room
+// this function allows you to change the new letter votes of an alphasoup room
 router.patch("/:query", function (req, res, next) {
   // query is the roomCode you want to patch the counter to
   var query = req.params.query;
   AlphaSoup.findOneAndUpdate({roomCode: query}, {votes: req.body.votes})
+    .then(function (alphaSoup) {
+      res.send(alphaSoup);
+    })
+    .catch(next);
+})
+
+// changes the amount of letters that start on the board
+router.patch("/changeStartLetters/:roomCode", function (req, res, next) {
+  var roomCode = req.params.roomCode;
+  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {startLetters: req.params.startLetters})
+    .then(function (alphaSoup) {
+      res.send(alphaSoup);
+    })
+    .catch(next);
+})
+
+// sets the amount of letters left
+router.patch("/setLettersLeft/:roomCode", function (req, res, next) {
+  var roomCode = req.params.roomCode;
+  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {lettersLeft: req.params.lettersLeft})
     .then(function (alphaSoup) {
       res.send(alphaSoup);
     })

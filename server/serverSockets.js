@@ -32,7 +32,17 @@ module.exports = {
         // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
 
-        client.emit("recSocketRoom", roomList[roomList.length - 1]);
+        io.to(roomList[1]).emit("recSocketRoom", roomList[roomList.length - 1]);
+      });
+
+      // emits the rooms the client is connected to ONLY FOR DATABASE STUFF
+      // should only send to the person emitting the message
+      client.on("reqSocketRoomDatabaseSwitch", () => {
+        // console.log("made it to backend");
+        // retrieves list of rooms the client is connected to
+        const roomList = Array.from(client.rooms);
+        // console.log("my room", roomList[1]);
+        io.to(client.id).emit("recSocketRoomDatabaseSwitch", roomList[1]);
       });
       
       // emits the username associated to a socket
@@ -69,6 +79,7 @@ module.exports = {
 
       // emits a message that contains a list of the sockets currently in the room as the user
       client.on("reqSocketsInRoom", () => {
+        // console.log("made it to backend socket");
         let room;
 
         // retrieves list of rooms the client is connected to
@@ -92,6 +103,56 @@ module.exports = {
           io.sockets.sockets.get(client).emit("recSocketsInRoom", ret);
         });
       });
+
+      // emits a message to increase everyone's vote state for alphaSoup
+      client.on("reqAddVoteAlphaSoup", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recAddVoteAlphaSoup");
+      })
+
+      // emits a message to increase everyone's vote state for codeNames
+      client.on("reqAddVoteCodeNames", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recAddVoteCodeNames");
+      })
+
+      // emits a message to decrease everyone's vote state for alphasoup
+      client.on("reqRemoveVoteAlphaSoup", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recRemoveVoteAlphaSoup");
+      })
+
+      // emits a message to decrease everyone's vote state for codenames
+      client.on("reqRemoveVoteCodeNames", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recRemoveVoteCodeNames");
+      })
+
+      // ask from frontend to see if it's time to start
+      client.on("reqStart", (game) => {
+        const roomList = Array.from(client.rooms);
+
+        io.to(roomList[1]).emit("recStart", game);
+      })
+
+      // frontend message to start alphasoup for all users in a room
+      client.on("reqStartAlphaSoup", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recStartAlphaSoup");
+      })
+      
 
       // ------------------------------------ Update Requests ------------------------------------
 

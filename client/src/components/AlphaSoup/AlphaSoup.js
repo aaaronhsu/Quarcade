@@ -7,7 +7,6 @@ import Letters from './Letters.js';
 import LetterVote from './LetterVote.js';
 import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
-import RoomSwitch from './RoomSwitch.js';
 
 class AlphaSoup extends React.Component {
 
@@ -26,6 +25,8 @@ class AlphaSoup extends React.Component {
   // ------------------------------------ Socket.io ------------------------------------
 
   componentDidMount() {
+    // requests initial player information to be retrieved
+    clientSocket.emit("reqUpdateWords");
 
     // removes word from the list of letters
     clientSocket.on("recUpdateLetters", (newLetters) => {
@@ -84,16 +85,6 @@ class AlphaSoup extends React.Component {
 
             // push the player object to the list of players
             playerData.push(player);
-          }
-
-          // sorts the players by how many points they have
-          playerData.sort(function (a, b) {
-            return b.points - a.points;
-          });
-
-          // assigns every player a place attribute, indicating what their ranking is relative to the other players
-          for (var i = 0; i < playerData.length; i++) {
-            playerData[i].place = i + 1;
           }
 
           // update old playerData with new playerData
@@ -165,8 +156,6 @@ class AlphaSoup extends React.Component {
   render() {
     return (
       <div>
-
-        <RoomSwitch />
         
         <PlayerData
           playerData={this.state.playerData}
