@@ -1,0 +1,46 @@
+import Axios from 'axios'
+npm install axios
+
+Axios.___("http://localhost:5000/homeLobby/___/___/roomCode")
+Axios.___(`http://localhost:5000/homeLobby/${roomCode}`)
+
+POST
+Axios.post(jflakdsjfadlkjf, {name: ella}).then()
+  .catch(error) {
+    console.log(error.message)
+  }
+
+Users:
+- bob
+- joe
+- ella
+
+GET
+Axios.get(jfaklsdfjalskfjadsklj/ella)
+  .then(
+    res => {
+      const retData = res.data[0]
+      const userName = retData.name
+      const wordsOwnedNum = retData.wordsOwned.length
+    }
+  )
+  .catch----
+
+PATCH- modified existing element
+Axios.patch(faslkjadslkjfklasfja, {roomCode: variable}).then(
+  OLD ONE
+)
+
+PUT- adds an element to an existing array
+Axios.put(fjdsasjflasjdfk, {wordsOwned: {name: variableName, points: variableNum}}).then(
+  fakfjkldsa
+)
+.catch(error) {
+  console.log00dafioadjflk
+}
+
+
+
+
+
+

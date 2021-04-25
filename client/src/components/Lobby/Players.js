@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NameSwitch from './NameSwitch.js'
 
 import clientSocket from "../../ClientSocket.js";
 
@@ -12,10 +13,13 @@ class Players extends React.Component {
     };
   }
 
+
+
+  // ------------------------------------ Socket.io ------------------------------------
+  
   componentDidMount() {
     clientSocket.on("recUsersInRoom", (players) => {
       this.setState({players: players});
-
     });
 
     clientSocket.on("recSocketRoom", (room) => {
@@ -23,14 +27,27 @@ class Players extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    clientSocket.off("recUsersInRoom");
+    clientSocket.off("recSocketRoom");
+  }
+
+
+
+
+  // ------------------------------------ Render ------------------------------------
+  
   render() {
     return (
       <div>
-        <h1>List of Players in {this.state.room}:</h1>
+        <h1>List of Players in {this.state.room}: (click your name to change it)</h1>
 
         {
           this.state.players.map(player => (
-            <h1>{player}</h1>
+            <NameSwitch
+              key={player}
+              player={player}
+            />
           ))
         }
 

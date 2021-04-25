@@ -19,31 +19,24 @@ const HomeLobbySchema = new Schema({
     required: true,
     default: Date.now
   },
-
   users: [
     {
-      name: {
-        type: String,
-        required: true
-      },
       socket: {
         type: String,
         required: true
       }
     }
   ],
-  chatMessages: [
-    {
-      message: {
-        type: String,
-        required: true
-      },
-      sender: {
-        type: String,
-        required: true
-      }
-    }
-  ]
+  votesAlphaSoup: {
+    type: Number,
+    required: true, 
+    default: 0
+  },
+  votesCodeNames: {
+    type: Number,
+    required: true, 
+    default: 0
+  }
 });
 
 //this saves the HomeLobby model in a homelobbys collection in mongo

@@ -33,19 +33,10 @@ class App extends React.Component {
     });
   }
 
-  handleClick() {
-    this.setState(state => ({
-      isToggleOn: !state.isToggleOn
-    }));
-  }
-
   render() {
     return (
       <div>
-        <h1>Quarcade</h1>
-        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-        <button onClick={() => this.handleClick()}>Log {this.state.isToggleOn ? "On" : "Out"}</button>
-        <br />
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>        
         <Router>
           <Switch>
             <NavBar />

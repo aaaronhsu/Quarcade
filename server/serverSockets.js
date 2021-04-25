@@ -32,14 +32,22 @@ module.exports = {
         // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
 
-        client.emit("recSocketRoom", roomList[roomList.length - 1]);
+        io.to(roomList[1]).emit("recSocketRoom", roomList[roomList.length - 1]);
+      });
+
+      // emits the rooms the client is connected to ONLY FOR DATABASE STUFF
+      // should only send to the person emitting the message
+      client.on("reqSocketRoomDatabaseSwitch", () => {
+        // console.log("made it to backend");
+        // retrieves list of rooms the client is connected to
+        const roomList = Array.from(client.rooms);
+        // console.log("my room", roomList[1]);
+        io.to(client.id).emit("recSocketRoomDatabaseSwitch", roomList[1]);
       });
       
-      // emits the username associated to a client
+      // emits the username associated to a socket
       client.on("reqSocketUsername", () => {
-        let username = client.username;
-
-        client.emit("recSocketUsername", username);
+        client.emit("recSocketUsername", client.username);
 
       });
 
@@ -58,9 +66,9 @@ module.exports = {
 
         const ret = [];
 
-        // converts the client ids to socket objects
+        // converts the client ids to socket objects and retrieves username
         clients.forEach(client => {
-          ret.push(io.sockets.sockets.get(client).username);
+          ret.push([io.sockets.sockets.get(client).username, io.sockets.sockets.get(client).id]);
         });
 
         // updates player list for all players in the room
@@ -71,6 +79,7 @@ module.exports = {
 
       // emits a message that contains a list of the sockets currently in the room as the user
       client.on("reqSocketsInRoom", () => {
+        // console.log("made it to backend socket");
         let room;
 
         // retrieves list of rooms the client is connected to
@@ -95,7 +104,55 @@ module.exports = {
         });
       });
 
+      // emits a message to increase everyone's vote state for alphaSoup
+      client.on("reqAddVoteAlphaSoup", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
 
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recAddVoteAlphaSoup");
+      })
+
+      // emits a message to increase everyone's vote state for codeNames
+      client.on("reqAddVoteCodeNames", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recAddVoteCodeNames");
+      })
+
+      // emits a message to decrease everyone's vote state for alphasoup
+      client.on("reqRemoveVoteAlphaSoup", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recRemoveVoteAlphaSoup");
+      })
+
+      // emits a message to decrease everyone's vote state for codenames
+      client.on("reqRemoveVoteCodeNames", () => {
+        // all the rooms the client is in
+        const roomList = Array.from(client.rooms);
+
+        // takes the non-unassigned room and emits
+        io.to(roomList[1]).emit("recRemoveVoteCodeNames");
+      })
+
+      // ask from frontend to see if it's time to start
+      client.on("reqStart", (game) => {
+        const roomList = Array.from(client.rooms);
+
+        io.to(roomList[1]).emit("recStart", game);
+      })
+
+      // frontend message to start alphasoup for all users in a room
+      client.on("reqStartAlphaSoup", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recStartAlphaSoup");
+      })
+      
 
       // ------------------------------------ Update Requests ------------------------------------
 
@@ -110,6 +167,7 @@ module.exports = {
 
       // changes a client's username
       client.on("changeUsername", (username) => {
+        // console.log("server side change user");
         client.username = username;
       });
 
@@ -142,19 +200,69 @@ module.exports = {
 
       // ------------------------------------ AlphaSoup ------------------------------------
 
-      // checks if a word is valid and returns point value, returns -1 if the word isn't in the dictionary
-      client.on("reqPointValue", (word) => {
+      // calculates point value of a word
+      client.on("reqSubmitWord", (word) => {
+        
         const dictionary = require("./dictionary.js");
 
-        if (word in dictionary.dictionary) {
-          client.emit("recPointValue", dictionary.dictionary[word]);
+        let points = 0;
+        
+        for (var i = 0; i < word.length; i++) {
+          points += dictionary.pointList[word.charAt(i)];
         }
-        else {
-          client.emit("recPointValue", -1);
-        }
+
+        let data = {
+          word: word,
+          points: points
+        };
+
+        // requests word to be put to the database
+        client.emit("recSubmitWord", data);
+      });
+
+      // tells all users to remove the letters of the given word from the list of letters
+      client.on("reqUpdateLetters", (lettersLeft) => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the word to all users in the same room
+        io.to(roomList[1]).emit("recUpdateLetters", (lettersLeft));
+      })
+
+      // returns a random letter to all clients connected
+      client.on("reqNewLetter", () => {
+        const dictionary = require("./dictionary.js");
+        const roomList = Array.from(client.rooms);
+        
+        let newLetter = dictionary.letterList[Math.floor(Math.random() * dictionary.letterList.length)];
+
+        io.to(roomList[1]).emit("recNewLetter", newLetter);
+        // client.emit("recNewLetter", newLetter);
+      });
+
+      // tells all users in room to get current words
+      client.on("reqUpdateWords", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recUpdateWords", (roomList[1]));
 
       });
 
+      // tells all users in room to get current number of votes for next letter
+      client.on("reqUpdateNextLetterVote", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recUpdateNextLetterVote", (roomList[1]));
+      });
+
+      // tells all users in room to reset the number of votes for the next letter
+      client.on("reqResetVotesForNextLetter", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recResetVotesForNextLetter", (roomList[1]));
+      })
     });
 
   }

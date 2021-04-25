@@ -21,28 +21,26 @@ const AlphaSoupSchema = new Schema({
   },
   users: [
     {
-      name: {
-        type: String,
-        required: true
-      },
       socket: {
         type: String,
         required: true
-      },
-      wordsOwned: [
-        {
-          word: {
-            type: String,
-            required: true
-          },
-          points: {
-            type: Number,
-            required: true
-          }
-        }
-      ]
+      }
     }
-  ]
+  ],
+  votes: { // for a new letter
+    type: Number,
+    required: true, 
+    default: 0
+  }, 
+  startLetters: {
+    type: Number, 
+    required: true,
+    default: 4
+  }, 
+  lettersLeft: {
+    type: Number, 
+    required: true
+  }
 });
 
 //this saves the AlphaSoup model in a alphasoups collection in mongo

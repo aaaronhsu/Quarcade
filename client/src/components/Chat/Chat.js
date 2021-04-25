@@ -5,36 +5,32 @@ import clientSocket from "../../ClientSocket.js";
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      messages: [
-        {
-          user: "",
-          words: ""
-        }
-      ],
-      message: "",
-      myRoom: "",
-      myName: ""
+      visible: false,
+      messages: [],
+
+      message: "",      
     };
   }
 
   componentDidMount() {
+    // appends message to list of messages
     clientSocket.on("recMessage", ({ message, user }) => {
-      let cMessages = [...this.state.messages];
+      let messages = [...this.state.messages];
 
-      const tempUser = user + ": ";
+      messages.push({ username: user, message: message });
 
-      cMessages.push({ user: tempUser, words: message });
-
-      this.setState({ messages: cMessages });
-    });
-
-    clientSocket.on("recSocketRoom", (room) => {
-      console.log(room);
+      this.setState({ messages: messages });
     });
   }
 
-  handleChange = event => {
+  componentWillUnmount() {
+    clientSocket.off("recMessage");
+  }
+
+  // updates the message state
+  handleChangeMessage = event => {
     const message = event.target.value;
 
     this.setState({
@@ -42,11 +38,13 @@ class Chat extends React.Component {
     });
   };
 
-  handleSubmit = event => {
+  // requests message to be created
+  handleSubmitMessage = event => {
     event.preventDefault();
 
     clientSocket.emit("sendMessage", this.state.message);
 
+    // resets message state
     this.setState({ message: "" });
   };
 
@@ -54,37 +52,46 @@ class Chat extends React.Component {
     clientSocket.emit("reqSocketRoom");
   };
 
-  checkRoomButton = () => {
-    return (
-      <button onClick={() => this.checkRoom()}>
-        Click this to check the room the user is in (prints to server console)
-      </button>
-    );
-  };
+  openChat = () => {
+    this.setState({visible: true});
+  }
 
+  closeChat = () => {
+    this.setState({visible: false});
+  }
+ 
   render() {
     return (
       <div>
-        <h1>Chat!</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Send Message:
-            <input name="message" type="text" value={this.state.message} onChange={this.handleChange} />
-          </label>
-          {/* <input type="submit" value="Submit" /> */}
-        </form>
-        <h3>See Messages Below:</h3>
-        <div>
-          {this.state.messages.map(message => (
-            <small>
-              {message.user}
-              {message.words}
-              <br></br>
-            </small>
-          ))}
-        </div>
+        {
+          this.state.visible ?
+          <div>
+            <button onClick={this.closeChat}>Hide Chat</button>
 
-        {this.checkRoomButton()}
+            <h1>Chat!</h1>
+            <form onSubmit={this.handleSubmitMessage}>
+              <label>
+               Send Message:
+               <input name="message" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
+              </label>
+            </form>
+
+            <h3>See Messages Below:</h3>
+            <div>
+              {
+                this.state.messages.map(message => (
+                  <small>
+                    {message.username}: {message.message}
+                    <br></br>
+                  </small>
+                ))
+              }
+            </div>
+
+          </div>
+          :
+          <button onClick={this.openChat}>Show Chat</button>
+        }
       </div>
     );
   }

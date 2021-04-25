@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ChooseGame from './ChooseGame.js'
 import Players from './Players.js';
-import ReadyButton from './ReadyButton.js';
+import Chat from '../Chat/Chat.js';
 
 class Lobby extends React.Component {
   render() {
@@ -9,6 +9,7 @@ class Lobby extends React.Component {
       <div>
         <ChooseGame />
         <Players />
+        <Chat />
       </div>
     )}
 }
