@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 class NavBar extends React.Component {
   render() {
@@ -7,20 +8,17 @@ class NavBar extends React.Component {
       <div>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">
+              Quarcade
+            </Link>
           </li>
-          <li>
-            <Link to="/lobby">Lobby</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/chat">Chat</Link>
-          </li>
-          <li>
-            <Link to="/alphasoup">AlphaSoup</Link>
-          </li>
+          {this.props.location.pathname != "/" ?
+            null:
+            <li>
+              <Link to="/about">
+                About
+              </Link>
+            </li>}
         </ul>
       </div>
     );
