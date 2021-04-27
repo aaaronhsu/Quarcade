@@ -24,6 +24,10 @@ const HomeLobbySchema = new Schema({
       socket: {
         type: String,
         required: true
+      },
+      name: {
+        type: String, 
+        required: true
       }
     }
   ],

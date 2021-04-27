@@ -37,7 +37,7 @@ class JoinRoom extends React.Component {
 
             if (userNum < 6) {
               // adds user to the room in the database
-              Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {socket: clientSocket.id } });
+              Axios.put(`http://localhost:5000/homeLobby/${roomCode}`, { users: {socket: clientSocket.id, name: this.state.username } });
 
               // add user to the user collection
               Axios.post("http://localhost:5000/user", {roomCode: roomCode, name: this.state.username, socket: clientSocket.id});

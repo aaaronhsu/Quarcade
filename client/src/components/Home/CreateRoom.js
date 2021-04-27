@@ -28,7 +28,7 @@ class CreateRoom extends React.Component {
   // post request to create new room
   async createRoom(roomCode) {
     try {
-      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: {socket: clientSocket.id } }); 
+      await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: {socket: clientSocket.id, name: this.state.username } }); 
 
       // adds user to socket room
       clientSocket.emit("moveRoom", (roomCode));

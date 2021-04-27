@@ -48,8 +48,9 @@ router.get("/:query", function (req, res, next) {
 router.put("/:query", function (req, res, next) {
   var query = req.params.query;
   var socket = req.body.users.socket;
+  var name = req.body.users.name;
 
-  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: {socket: socket } } })
+  HomeLobby.findOneAndUpdate({ roomCode: query }, { $push: { users: {socket: socket, name: name } } })
     .then(function () {
       HomeLobby.find({ roomCode: query }).then(function (homelobby) {
         res.send(homelobby);
