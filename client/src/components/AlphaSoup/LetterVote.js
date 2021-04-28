@@ -71,6 +71,19 @@ class LetterVote extends React.Component {
           // all players will have voted
           if (votes + vote == this.props.numPlayers) {
 
+            // GAME END HERE!!!!!!!!!!!!!!!!
+            // THE GAME ENDS HERE
+            // THIS IS VERY IMPORTANT
+            // SO IT REQUIRES A LOT OF COMMENTS
+            if (this.props.lettersLeft === 0) {
+              // end the game
+
+              // show final scores
+              // delete all user data
+              // remove alphasoup room
+              // return all users to lobby screen
+            }
+
             // reset the vote count in the database
             this.patchVotes(roomCode, 0);
             
