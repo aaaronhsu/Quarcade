@@ -136,8 +136,9 @@ class AlphaSoup extends React.Component {
   // updates the number of letters left in the room
   async updateLettersLeft(change) {
     try {
-      // posts the data to the alphasoup database
+      // patches the data to the alphasoup database
 
+      console.log("got here");
       await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.state.roomCode}`, { lettersLeft: this.state.lettersLeft - change });
       
     } catch (error) {
