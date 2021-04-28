@@ -71,14 +71,30 @@ class LetterVote extends React.Component {
           // all players will have voted
           if (votes + vote == this.props.numPlayers) {
 
+            // GAME END HERE!!!!!!!!!!!!!!!!
+            // THE GAME ENDS HERE
+            // THIS IS VERY IMPORTANT
+            // SO IT REQUIRES A LOT OF COMMENTS
+            if (this.props.lettersLeft === 0) {
+              // end the game
+
+              // show final scores
+              // delete all user data
+              // remove alphasoup room
+              // return all users to lobby screen
+            }
+
             // reset the vote count in the database
             this.patchVotes(roomCode, 0);
-
+            
             // requests new letter
             clientSocket.emit("reqNewLetter");
-
+            
             // requests all users to reset their vote states
             clientSocket.emit("reqResetVotesForNextLetter");
+            
+            
+            this.props.updateLettersLeft(1); // reduces the number of letters left in the database
           }
           else {
             this.setState({
@@ -163,13 +179,38 @@ class LetterVote extends React.Component {
         {
           this.props.voted ?
 
-          <button onClick={() => this.handleVoteSubmission()}>
-            Press this to remove your vote for the next letter
-          </button>
+          (
+            this.props.lettersLeft === 0 ? 
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to remove your vote for the next letter
+              </button>
+            )
+            :
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to remove your vote to end the game
+              </button>
+            )
+
+          )
           :
-          <button onClick={() => this.handleVoteSubmission()}>
-            Press this to add your vote for the next letter
-          </button>
+          (
+            this.props.lettersLeft === 0 ? 
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to add your vote for the next letter
+              </button>
+            )
+            :
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to add your vote to end the game
+              </button>
+            )
+
+          )
+
         }
       </div>
     );

@@ -73,6 +73,8 @@ class RoomSwitch extends React.Component {
     } else {
       // do nothing
     }
+
+    clientSocket.emit("reqLettersLeft");
     
   }
 
