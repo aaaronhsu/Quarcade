@@ -262,7 +262,16 @@ module.exports = {
 
         // emits the payload to all sockets with the same room
         io.to(roomList[1]).emit("recResetVotesForNextLetter", (roomList[1]));
-      })
+      });
+
+      client.on("reqLettersLeft", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recLettersLeft", (roomList[1]));
+      });
+
+
     });
 
   }
