@@ -179,13 +179,38 @@ class LetterVote extends React.Component {
         {
           this.props.voted ?
 
-          <button onClick={() => this.handleVoteSubmission()}>
-            Press this to remove your vote for the next letter
-          </button>
+          (
+            this.props.lettersLeft === 0 ? 
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to remove your vote for the next letter
+              </button>
+            )
+            :
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to remove your vote to end the game
+              </button>
+            )
+
+          )
           :
-          <button onClick={() => this.handleVoteSubmission()}>
-            Press this to add your vote for the next letter
-          </button>
+          (
+            this.props.lettersLeft === 0 ? 
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to add your vote for the next letter
+              </button>
+            )
+            :
+            (
+              <button onClick={() => this.handleVoteSubmission()}>
+                Press this to add your vote to end the game
+              </button>
+            )
+
+          )
+
         }
       </div>
     );
