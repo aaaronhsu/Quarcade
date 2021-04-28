@@ -61,19 +61,15 @@ class AlphaSoup extends React.Component {
   // update the number of letters left in the room
   async retrieveLettersLeft(room) {
     try {
-      await Axios.get(`http://localhost:5000/alphaSoup`).then(
+      await Axios.get(`http://localhost:5000/alphaSoup/${room}`).then(
         res => {
+          console.log("retrieving the letters left in the rooom")
 
           // loops through every room to find the room that matches the roomcode
-          for (var i = 0; i < res.data.length; i++) {
-
-            // found room
-            if (room === res.data[i].roomCode) {
-              this.setState({
-                lettersLeft: res.data[i].lettersLeft
-              });
-            }
-          }
+          this.setState({
+            lettersLeft: res.data[0].lettersLeft
+          });
+    
         }
       );
     }
