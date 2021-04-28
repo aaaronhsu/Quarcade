@@ -73,12 +73,15 @@ class LetterVote extends React.Component {
 
             // reset the vote count in the database
             this.patchVotes(roomCode, 0);
-
+            
             // requests new letter
             clientSocket.emit("reqNewLetter");
-
+            
             // requests all users to reset their vote states
             clientSocket.emit("reqResetVotesForNextLetter");
+            
+            
+            this.props.updateLettersLeft(1); // reduces the number of letters left in the database
           }
           else {
             this.setState({

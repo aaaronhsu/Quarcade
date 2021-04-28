@@ -70,7 +70,7 @@ class AlphaSoup extends React.Component {
             // found room
             if (room === res.data[i].roomCode) {
               this.setState({
-                lettersLeft: res.data[i].startLetters
+                lettersLeft: res.data[i].lettersLeft
               });
             }
           }
@@ -133,15 +133,19 @@ class AlphaSoup extends React.Component {
     }
   }
 
-  
-  async updateLettersLeft() {
+  // updates the number of letters left in the room
+  async updateLettersLeft(change) {
     try {
       // posts the data to the alphasoup database
-      await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.state.roomCode}`, { lettersLeft: this.state.lettersLeft - 1 });
+
+      await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.state.roomCode}`, { lettersLeft: this.state.lettersLeft - change });
       
     } catch (error) {
-      console.log(error.message);
+      console.log("failed to reduce the number of letters in the room");
     }
+
+
+    clientSocket.emit("reqLettersLeft");
   }
 
 
@@ -149,16 +153,14 @@ class AlphaSoup extends React.Component {
 
   // adds a letter to the list of letters
   addLetter = (letter) => {
-    // this.updateLettersLeft(); // reduces the number of letters left in the database
-
+    
     let newLetters = [...this.state.letters];
     newLetters.push(letter);
-
+    
     this.setState({
       letters: newLetters
     });
-
-    clientSocket.emit("reqUpdateLetters");
+  
   };
 
   // removes all letters in the word from the list of letters  
@@ -223,6 +225,8 @@ class AlphaSoup extends React.Component {
         <LetterVote 
           numPlayers={this.state.playerData.length}
           lettersLeft={this.state.lettersLeft}
+
+          updateLettersLeft={(change) => this.updateLettersLeft(change)}
         />
 
         <Letters 
