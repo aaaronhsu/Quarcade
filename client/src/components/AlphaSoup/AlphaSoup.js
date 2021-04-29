@@ -19,6 +19,10 @@ class AlphaSoup extends React.Component {
 
       lettersLeft: -1,
       roomCode: 'not set yet',
+
+
+
+      gameEnd: false,
     }
   }
 
@@ -47,11 +51,19 @@ class AlphaSoup extends React.Component {
 
       this.retrieveLettersLeft(room);
     });
+
+    clientSocket.on("alphasoupEnd", () => {
+      this.setState({
+        gameEnd: true
+      });
+    });
   }
 
   componentWillUnmount() {
     clientSocket.off("recUpdateLetters");
     clientSocket.off("recUpdateWords");
+    clientSocket.off("recLettersLeft");
+    clientSocket.off("alphasoupEnd");
   }
 
 
