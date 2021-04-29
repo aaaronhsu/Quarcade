@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
 import Axios from 'axios';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+
 
 class EndScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      returnToLobby: false
+    }
+  }
 
   returnToLobbyScreen = () => {
     // TODO
@@ -10,9 +18,12 @@ class EndScreen extends React.Component {
     this.wipeWordsOwned();
     
     // wipe the room from the database
+    this.deleteAlphaSoupRoom();
+
     // return the user to Lobby.js
   };
 
+  // deletes all the data from the wordsOwned array in users
   async wipeWordsOwned() {
     try {
       // wipe the wordcount array by socketid
@@ -20,6 +31,15 @@ class EndScreen extends React.Component {
 
     } catch (error) {
       console.log("could not wipe the user wordsOwned data");
+    }
+  }
+
+  // removes the alphaSoup version of the room from the database
+  async deleteAlphaSoupRoom() {
+    try {
+      await Axios.delete(`http://localhost:5000/alphaSoup/${this.props.roomCode}`);
+    } catch (error) {
+      console.log("could not delete the room");
     }
   }
 
@@ -47,6 +67,9 @@ class EndScreen extends React.Component {
         <button onClick={() => this.returnToLobbyScreen()}>
           Return to Lobby
         </button>
+
+        {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
+
       </div>
     );
   }

@@ -232,6 +232,8 @@ class AlphaSoup extends React.Component {
           (
             <EndScreen
               playerData={this.state.playerData}
+              
+              roomCode={this.state.roomCode}
             />
           )
           :
