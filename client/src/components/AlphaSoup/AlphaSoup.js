@@ -266,6 +266,7 @@ class AlphaSoup extends React.Component {
       
       
                 addLetter={(letter) => this.addLetter(letter)} 
+                updateLettersLeft={(change) => this.updateLettersLeft(change)} // purely for debug purposes
               />
       
               <Chat />

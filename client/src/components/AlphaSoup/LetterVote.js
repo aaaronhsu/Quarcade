@@ -76,9 +76,7 @@ class LetterVote extends React.Component {
             // THIS IS VERY IMPORTANT
             // SO IT REQUIRES A LOT OF COMMENTS
             if (this.props.lettersLeft === 0) {
-              // end the game
-              clientSocket.emit("reqAlphaSoupEnd");
-              // show final scores
+              clientSocket.emit("reqAlphaSoupEnd"); // show final scores
               // delete all user data
               // remove alphasoup room
               // return all users to lobby screen
@@ -180,7 +178,7 @@ class LetterVote extends React.Component {
           this.props.voted ?
 
           (
-            this.props.lettersLeft === 0 ? 
+            this.props.lettersLeft !== 0 ? 
             (
               <button onClick={() => this.handleVoteSubmission()}>
                 Press this to remove your vote for the next letter
@@ -196,7 +194,7 @@ class LetterVote extends React.Component {
           )
           :
           (
-            this.props.lettersLeft === 0 ? 
+            this.props.lettersLeft !== 0 ? 
             (
               <button onClick={() => this.handleVoteSubmission()}>
                 Press this to add your vote for the next letter
