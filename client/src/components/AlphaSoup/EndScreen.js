@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
 
 class EndScreen extends React.Component {
+
+  returnToLobbyScreen = () => {
+    // TODO
+    // wipe the user from the database
+    // wipe the room from the database
+    // return the user to Lobby.js
+  };
+
   render() {
     return (
       <div>
@@ -22,6 +30,10 @@ class EndScreen extends React.Component {
             </div>
           ))
         }
+
+        <button onClick={() => this.returnToLobbyScreen()}>
+          Return to Lobby
+        </button>
       </div>
     );
   }
