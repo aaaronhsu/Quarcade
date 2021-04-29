@@ -175,7 +175,7 @@ class LetterVote extends React.Component {
     return (
       <div>
         {
-          this.props.voted ?
+          this.state.votedForNextLetter ?
 
           (
             this.props.lettersLeft !== 0 ? 
