@@ -57,6 +57,8 @@ class Letters extends React.Component {
     this.setState({
       numLettersDEBUG: event.target.value
     });
+
+    this.props.updateLettersLeft(1);
   }
 
 

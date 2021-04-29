@@ -54,9 +54,19 @@ class AlphaSoup extends React.Component {
     });
 
     clientSocket.on("recAlphaSoupEnd", () => {
+      let copyOfPlayerData = [...this.state.playerData];
+
+      copyOfPlayerData.sort((a, b) => (a.points > b.points) ? 1 : -1);
+
+      for (let i = 0; i < copyOfPlayerData.length; i++) {
+        copyOfPlayerData[i].rank = i + 1;
+      }
+
       this.setState({
-        gameEnd: true
+        gameEnd: true,
+        playerData: copyOfPlayerData
       });
+
     });
   }
 
