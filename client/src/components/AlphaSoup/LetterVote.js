@@ -77,7 +77,7 @@ class LetterVote extends React.Component {
             // SO IT REQUIRES A LOT OF COMMENTS
             if (this.props.lettersLeft === 0) {
               // end the game
-              alert("THE GAME ENDS HERE!!! only the player that made the last vote is getting this message, but a message will be emitted to all users in room via sockets");
+              clientSocket.emit("reqAlphaSoupEnd");
               // show final scores
               // delete all user data
               // remove alphasoup room

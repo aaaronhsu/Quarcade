@@ -7,6 +7,7 @@ import Letters from './Letters.js';
 import LetterVote from './LetterVote.js';
 import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
+import EndScreen from './EndScreen.js';
 
 class AlphaSoup extends React.Component {
 
@@ -52,7 +53,7 @@ class AlphaSoup extends React.Component {
       this.retrieveLettersLeft(room);
     });
 
-    clientSocket.on("alphasoupEnd", () => {
+    clientSocket.on("recAlphaSoupEnd", () => {
       this.setState({
         gameEnd: true
       });
@@ -63,7 +64,7 @@ class AlphaSoup extends React.Component {
     clientSocket.off("recUpdateLetters");
     clientSocket.off("recUpdateWords");
     clientSocket.off("recLettersLeft");
-    clientSocket.off("alphasoupEnd");
+    clientSocket.off("recAlphaSoupEnd");
   }
 
 
@@ -215,38 +216,54 @@ class AlphaSoup extends React.Component {
   render() {
     return (
       <div>
+        {
+          this.state.gameEnd ?
 
-        LETTERS LEFT: {this.state.lettersLeft}
-        
-        <PlayerData
-          playerData={this.state.playerData}
+          (
+            <EndScreen
+              playerData={this.state.playerData}
+            />
+          )
+          :
+          ( 
+            <div>
 
-          changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
-        />
+              LETTERS LEFT: {this.state.lettersLeft}
+              
+              <PlayerData
+                playerData={this.state.playerData}
+      
+                changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
+              />
+      
+              <SubmitWord 
+                letters={this.state.letters}
+                playerData={this.state.playerData}
+      
+                removeLetters={(word) => this.removeLetters(word)}
+              />
+      
+              <LetterVote 
+                numPlayers={this.state.playerData.length}
+                lettersLeft={this.state.lettersLeft}
+      
+                updateLettersLeft={(change) => this.updateLettersLeft(change)}
+              />
+      
+              <Letters 
+                numLetters={this.state.letters.length}
+                letters={this.state.letters}
+      
+      
+                addLetter={(letter) => this.addLetter(letter)} 
+              />
+      
+              <Chat />
 
-        <SubmitWord 
-          letters={this.state.letters}
-          playerData={this.state.playerData}
+            </div>
+          )
 
-          removeLetters={(word) => this.removeLetters(word)}
-        />
-
-        <LetterVote 
-          numPlayers={this.state.playerData.length}
-          lettersLeft={this.state.lettersLeft}
-
-          updateLettersLeft={(change) => this.updateLettersLeft(change)}
-        />
-
-        <Letters 
-          numLetters={this.state.letters.length}
-          letters={this.state.letters}
-
-
-          addLetter={(letter) => this.addLetter(letter)} 
-        />
-
-        <Chat />
+        }
 
       </div>
     );
