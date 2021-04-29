@@ -80,7 +80,7 @@ router.patch("/setLettersLeft/:roomCode", function (req, res, next) {
 //this removes a room from a specific game
 router.delete("/:query", function (req, res, next) {
   var query = req.params.query;
-  AlphaSoup.findOneAndDelete({ roomCode: query })
+  AlphaSoup.deleteMany({ roomCode: query })
     .then(function (alphaSoup) {
       res.send(alphaSoup);
     })

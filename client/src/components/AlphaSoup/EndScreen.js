@@ -21,6 +21,7 @@ class EndScreen extends React.Component {
     this.deleteAlphaSoupRoom();
 
     // return the user to Lobby.js
+    this.setState({returnToLobby: true});
   };
 
   // deletes all the data from the wordsOwned array in users
