@@ -8,12 +8,33 @@ class EndScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      playersVotedToPlayAgain: 0,
+      votedToPlayAgain: false,
+      playAgainButton: true,
       returnToLobby: false
     }
   }
 
+  componentDidMount() {
+    clientSocket.on("userLeftEndScreen", () => {
+      this.setState({
+        playAgainButton: false
+      });
+    });
+
+    clientSocket.on("reqReplayAlphaSoup", (vote) => {
+      this.setState({
+        playersVotedToPlayAgain: this.state.playersVotedToPlayAgain + vote
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    clientSocket.off("userLeftEndScreen");
+    clientSocket.off("reqReplayAlphaSoup");
+  }
+
   returnToLobbyScreen = () => {
-    // TODO
     // wipe the user from the database
     this.wipeWordsOwned();
     
@@ -44,6 +65,28 @@ class EndScreen extends React.Component {
     }
   }
 
+  votePlayAgain = () => {
+
+    // user is voting to play again
+    if (!this.state.votedToPlayAgain) {
+
+      // time to play again!
+      if (this.state.playersVotedToPlayAgain == this.props.playerData.length) {
+        console.log("time to play again"); 
+      }
+      else {
+        clientSocket.emit("reqReplayAlphaSoup", (1));
+      }
+    }
+    else {
+      clientSocket.emit("reqReplayAlphaSoup", (-1));
+    }
+
+    this.setState({
+      votedToPlayAgain: !this.state.votedToPlayAgain
+    });
+  };
+
   render() {
     return (
       <div>
@@ -68,6 +111,24 @@ class EndScreen extends React.Component {
         <button onClick={() => this.returnToLobbyScreen()}>
           Return to Lobby
         </button>
+
+        {
+          this.state.playAgainButton ?
+
+          (
+            this.state.votedToPlayAgain ?
+
+            <button onClick={() => this.votePlayAgain()}>
+              Remove vote to play again
+            </button>
+            :
+            <button onClick={() => this.votePlayAgain()}>
+              Vote to play again!
+            </button>
+          )
+          :
+          null
+        }
 
         {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
 
