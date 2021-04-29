@@ -75,7 +75,7 @@ class LetterVote extends React.Component {
             // THE GAME ENDS HERE
             // THIS IS VERY IMPORTANT
             // SO IT REQUIRES A LOT OF COMMENTS
-            if (this.props.lettersLeft === 0) {
+            if (this.props.lettersLeft <= 0) {
               clientSocket.emit("reqAlphaSoupEnd"); // show final scores
               // delete all user data
               // remove alphasoup room
