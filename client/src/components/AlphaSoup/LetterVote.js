@@ -70,6 +70,9 @@ class LetterVote extends React.Component {
 
           // all players will have voted
           if (votes + vote == this.props.numPlayers) {
+            
+            // reset the vote count in the database
+            this.patchVotes(roomCode, 0);
 
             // GAME END HERE!!!!!!!!!!!!!!!!
             // THE GAME ENDS HERE
@@ -77,13 +80,9 @@ class LetterVote extends React.Component {
             // SO IT REQUIRES A LOT OF COMMENTS
             if (this.props.lettersLeft <= 0) {
               clientSocket.emit("reqAlphaSoupEnd"); // show final scores
-              // delete all user data
-              // remove alphasoup room
-              // return all users to lobby screen
+              
+              return;
             }
-
-            // reset the vote count in the database
-            this.patchVotes(roomCode, 0);
             
             // requests new letter
             clientSocket.emit("reqNewLetter");
