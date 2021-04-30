@@ -310,6 +310,17 @@ module.exports = {
         io.to(roomList[1]).emit("recReplayAlphaSoup", (vote));
       })
 
+      client.on("reqVoteValidWord", (wordData) => {
+        const roomList = Array.from(client.rooms);
+
+        let data = {
+          player: wordData.player,
+          word: wordData.word
+        };
+
+        io.to(roomList[1].emit("recVoteValidWord", (data)));
+      });
+
 
     });
 

@@ -139,11 +139,15 @@ class AlphaSoup extends React.Component {
                 word: retrievedPlayerData[i].wordsOwned[j].word,
                 points: retrievedPlayerData[i].wordsOwned[j].points,
                 valid: retrievedPlayerData[i].wordsOwned[j].valid,
+                votesToValidate: -1, // how many more votes are needed to validate the word
                 beingStolen: false
               };
 
               if (wordData.valid) {
                 player.points += retrievedPlayerData[i].wordsOwned[j].points;
+              }
+              else {
+                wordData.votesToValidate = retrievedPlayerData.length - 1; // all players must validate
               }
 
 
