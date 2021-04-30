@@ -38,7 +38,7 @@ class EndScreen extends React.Component {
   returnToLobbyScreen = () => {
 
     clientSocket.emit("reqUserLeftEndScreen");
-    
+
     // wipe the user from the database
     this.wipeWordsOwned();
     
@@ -78,9 +78,8 @@ class EndScreen extends React.Component {
       if (this.state.playersVotedToPlayAgain + 1 == this.props.playerData.length) {
         console.log("time to play again"); 
       }
-      else {
-        clientSocket.emit("reqReplayAlphaSoup", (1));
-      }
+      
+      clientSocket.emit("reqReplayAlphaSoup", (1));
     }
     else {
       clientSocket.emit("reqReplayAlphaSoup", (-1));
@@ -91,52 +90,66 @@ class EndScreen extends React.Component {
     });
   };
 
+  renderPlayerStandings = () => {
+    return (
+      this.props.playerData.map(player => (
+        <div key={player.id}>
+          <h3>#{player.rank}: {player.username} ({player.points} pts):</h3>
+
+          <ul>
+          {
+            player.wordsOwned.map(word => (
+              <div>
+                <li key={word.id}>{word.word} ({word.points})</li>
+              </div>
+            ))
+          }
+          </ul>
+        </div>
+      ))
+    );
+  }
+
+  renderLobbyButton = () => {
+    return (
+      <button onClick={() => this.returnToLobbyScreen()}>
+        Return to Lobby
+      </button>
+    );
+  }
+
+  renderPlayAgainButton = () => {
+    return (
+      this.state.playAgainButton ?
+
+      <div>
+        {
+          this.state.votedToPlayAgain ?
+
+          <button onClick={() => this.votePlayAgain()}>
+            Remove vote to play again
+          </button>
+          :
+          <button onClick={() => this.votePlayAgain()}>
+            Vote to play again!
+          </button>
+        }
+
+        <h3>{this.state.playersVotedToPlayAgain}/{this.props.playerData.length} players have voted to play again</h3>
+      </div>
+      :
+      null
+    );
+  }
+
   render() {
     return (
       <div>
-        {
-          this.props.playerData.map(player => (
-            <div key={player.id}>
-              <h3>#{player.rank}: {player.username} ({player.points} pts):</h3>
+        {this.renderPlayerStandings()}
 
-              <ul>
-              {
-                player.wordsOwned.map(word => (
-                  <div>
-                    <li key={word.id}>{word.word} ({word.points})</li>
-                  </div>
-                ))
-              }
-              </ul>
-            </div>
-          ))
-        }
+        {this.renderLobbyButton()}
 
-        <button onClick={() => this.returnToLobbyScreen()}>
-          Return to Lobby
-        </button>
-
-        {
-          this.state.playAgainButton ?
-
-          <div>
-            {
-              this.state.votedToPlayAgain ?
-
-              <button onClick={() => this.votePlayAgain()}>
-                Remove vote to play again
-              </button>
-              :
-              <button onClick={() => this.votePlayAgain()}>
-                Vote to play again!
-              </button>
-            }
-
-            <h3>{this.state.playersVotedToPlayAgain}/{this.props.playerData.length} players have voted to play again</h3>
-          </div>
-          :
-          null
-        }
+        {this.renderPlayAgainButton()}
 
         {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
 
