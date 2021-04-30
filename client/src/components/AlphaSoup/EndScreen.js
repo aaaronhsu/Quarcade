@@ -75,7 +75,10 @@ class EndScreen extends React.Component {
   async resetLettersLeft(players) {
     console.log("player number" + players);
     try {
-      await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.props.roomCode}`, {lettersLeft: players * 15});
+      await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.props.roomCode}`, {lettersLeft: players * 15}).then(
+        // wipe the wordsOwned array from all the users
+        clientSocket.emit("reqWipeWordsOwned")
+      );
     } catch (error) {
       console.log("could not repatch to alphasoup")
     }
@@ -92,8 +95,7 @@ class EndScreen extends React.Component {
         console.log("time to play again"); 
         // wipe the alphasoup database- the only thing that needs to change is the letters left
         this.resetLettersLeft(this.props.playerData.length);
-        // wipe the wordsOwned array from all the users
-        clientSocket.emit("reqWipeWordsOwned");
+        
       }
       
       clientSocket.emit("reqReplayAlphaSoup", (1));
