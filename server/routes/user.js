@@ -60,6 +60,17 @@ router.patch("/name/:query", function (req, res, next) {
     .catch(next);
 })
 
+// this function clears the word count array for when the game finishes
+router.patch("/clear/:socket", function (req, res, next) {
+  // for the specific socket
+  var socket = req.params.socket;
+  User.findOneAndUpdate({socket: socket}, {$set: {wordsOwned: []}})
+    .then(function (user) {
+      res.send(user);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ PUT Requests ------------------------------------
 
 // adds a word based on socket id

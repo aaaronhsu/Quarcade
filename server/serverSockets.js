@@ -152,6 +152,18 @@ module.exports = {
         const roomList = Array.from(client.rooms);
         io.to(roomList[1]).emit("recStartAlphaSoup");
       })
+
+      // tells all the people in the room to wipe their words count array bc the game is restarting
+      client.on("reqWipeWordsOwned", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recWipeWordsOwned");
+      })
+
+      // tells them all to switch back to playing version of alpha
+      client.on("reqSwitchBackToAlphaGamePage", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recSwitchBackToAlphaGamePage");
+      })
       
 
       // ------------------------------------ Update Requests ------------------------------------
@@ -264,12 +276,37 @@ module.exports = {
         io.to(roomList[1]).emit("recResetVotesForNextLetter", (roomList[1]));
       });
 
+      // requests users to retrieve how many letters are left
       client.on("reqLettersLeft", () => {
         const roomList = Array.from(client.rooms);
 
         // emits the payload to all sockets with the same room
         io.to(roomList[1]).emit("recLettersLeft", (roomList[1]));
       });
+
+      // requests all users in the room to go to the end screen
+      client.on("reqAlphaSoupEnd", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recAlphaSoupEnd", (roomList[1]));
+      });
+
+      // tells all users that are in the end screen that someone returned to the lobby
+      client.on("reqUserLeftEndScreen", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recUserLeftEndScreen");
+      })
+
+      // handles voting for alphasoup
+      client.on("reqReplayAlphaSoup", (vote) => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recReplayAlphaSoup", (vote));
+      })
 
 
     });

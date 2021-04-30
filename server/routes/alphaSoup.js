@@ -54,7 +54,8 @@ router.patch("/:query", function (req, res, next) {
 // changes the amount of letters that start on the board
 router.patch("/changeStartLetters/:roomCode", function (req, res, next) {
   var roomCode = req.params.roomCode;
-  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {startLetters: req.params.startLetters})
+  var newVal = req.body.startLetters;
+  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {startLetters: newVal})
     .then(function (alphaSoup) {
       res.send(alphaSoup);
     })
@@ -64,7 +65,9 @@ router.patch("/changeStartLetters/:roomCode", function (req, res, next) {
 // sets the amount of letters left
 router.patch("/setLettersLeft/:roomCode", function (req, res, next) {
   var roomCode = req.params.roomCode;
-  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {lettersLeft: req.params.lettersLeft})
+  var newVal = req.body.lettersLeft;
+  // console.log(newVal);
+  AlphaSoup.findOneAndUpdate({roomCode: roomCode}, {lettersLeft: newVal})
     .then(function (alphaSoup) {
       res.send(alphaSoup);
     })
@@ -77,7 +80,7 @@ router.patch("/setLettersLeft/:roomCode", function (req, res, next) {
 //this removes a room from a specific game
 router.delete("/:query", function (req, res, next) {
   var query = req.params.query;
-  AlphaSoup.findOneAndDelete({ roomCode: query })
+  AlphaSoup.deleteMany({ roomCode: query })
     .then(function (alphaSoup) {
       res.send(alphaSoup);
     })

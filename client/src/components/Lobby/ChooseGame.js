@@ -267,7 +267,7 @@ class ChooseGame extends React.Component {
         <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</h2>
         {/*this.state.readyCodeNames ? (start codename component here) : null */}
         {this.state.startAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
-        {/* EVENTUALLY SAME AS ABOVE FOR ALPHASOUP */}
+        {/* EVENTUALLY SAME AS ABOVE FOR CODENAMES */}
 
       </div>
     );

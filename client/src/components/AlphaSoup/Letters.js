@@ -43,6 +43,7 @@ class Letters extends React.Component {
 
     for (var i = 0; i < this.state.numLettersDEBUG; i++) {
       this.requestNewLetter();
+      this.props.updateLettersLeft(this.state.numLettersDEBUG);
     }
 
     this.setState({
@@ -57,6 +58,7 @@ class Letters extends React.Component {
     this.setState({
       numLettersDEBUG: event.target.value
     });
+
   }
 
 

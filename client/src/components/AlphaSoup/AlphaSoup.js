@@ -7,6 +7,7 @@ import Letters from './Letters.js';
 import LetterVote from './LetterVote.js';
 import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
+import EndScreen from './EndScreen.js';
 
 class AlphaSoup extends React.Component {
 
@@ -19,6 +20,10 @@ class AlphaSoup extends React.Component {
 
       lettersLeft: -1,
       roomCode: 'not set yet',
+
+
+
+      gameEnd: false,
     }
   }
 
@@ -47,11 +52,41 @@ class AlphaSoup extends React.Component {
 
       this.retrieveLettersLeft(room);
     });
+
+    clientSocket.on("recAlphaSoupEnd", () => {
+      let copyOfPlayerData = [...this.state.playerData];
+
+      copyOfPlayerData.sort((a, b) => (a.points < b.points) ? 1 : -1);
+
+      for (let i = 0; i < copyOfPlayerData.length; i++) {
+        copyOfPlayerData[i].rank = i + 1;
+      }
+
+      this.setState({
+        gameEnd: true,
+        playerData: copyOfPlayerData
+      });
+
+    });
+
+    clientSocket.on("recSwitchBackToAlphaGamePage", () => {
+      console.log("words have hopefully been wiped");
+      this.setState({
+        gameEnd: false,
+        letters: [],
+        playerData: []
+      });
+      this.updatePlayerData(this.state.roomCode);
+      this.retrieveLettersLeft(this.state.roomCode);
+    })
   }
 
   componentWillUnmount() {
     clientSocket.off("recUpdateLetters");
     clientSocket.off("recUpdateWords");
+    clientSocket.off("recLettersLeft");
+    clientSocket.off("recAlphaSoupEnd");
+    clientSocket.off("recSwitchBackToAlphaGamePage");
   }
 
 
@@ -61,19 +96,15 @@ class AlphaSoup extends React.Component {
   // update the number of letters left in the room
   async retrieveLettersLeft(room) {
     try {
-      await Axios.get(`http://localhost:5000/alphaSoup`).then(
+      await Axios.get(`http://localhost:5000/alphaSoup/${room}`).then(
         res => {
+          console.log("retrieving the letters left in the rooom")
 
           // loops through every room to find the room that matches the roomcode
-          for (var i = 0; i < res.data.length; i++) {
-
-            // found room
-            if (room === res.data[i].roomCode) {
-              this.setState({
-                lettersLeft: res.data[i].lettersLeft
-              });
-            }
-          }
+          this.setState({
+            lettersLeft: res.data[0].lettersLeft
+          });
+    
         }
       );
     }
@@ -84,6 +115,7 @@ class AlphaSoup extends React.Component {
 
   // updates all playerData
   async updatePlayerData(room) {
+    // console.log("got to updating player data");
     try {
       await Axios.get(`http://localhost:5000/user/byRoom/${room}`).then(
         res => {
@@ -125,6 +157,8 @@ class AlphaSoup extends React.Component {
           this.setState({
             playerData: playerData
           });
+
+          console.log(playerData);
         }
       );
     }
@@ -136,8 +170,9 @@ class AlphaSoup extends React.Component {
   // updates the number of letters left in the room
   async updateLettersLeft(change) {
     try {
-      // posts the data to the alphasoup database
+      // patches the data to the alphasoup database
 
+      // console.log("got here");
       await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.state.roomCode}`, { lettersLeft: this.state.lettersLeft - change });
       
     } catch (error) {
@@ -206,38 +241,57 @@ class AlphaSoup extends React.Component {
   render() {
     return (
       <div>
+        {
+          this.state.gameEnd ?
 
-        LETTERS LEFT: {this.state.lettersLeft}
-        
-        <PlayerData
-          playerData={this.state.playerData}
+          (
+            <EndScreen
+              playerData={this.state.playerData}
+              
+              roomCode={this.state.roomCode}
+            />
+          )
+          :
+          ( 
+            <div>
 
-          changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
-        />
+              LETTERS LEFT: {this.state.lettersLeft}
+              
+              <PlayerData
+                playerData={this.state.playerData}
+      
+                changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
+              />
+      
+              <SubmitWord 
+                letters={this.state.letters}
+                playerData={this.state.playerData}
+      
+                removeLetters={(word) => this.removeLetters(word)}
+              />
+      
+              <LetterVote 
+                numPlayers={this.state.playerData.length}
+                lettersLeft={this.state.lettersLeft}
+      
+                updateLettersLeft={(change) => this.updateLettersLeft(change)}
+              />
+      
+              <Letters 
+                numLetters={this.state.letters.length}
+                letters={this.state.letters}
+      
+      
+                addLetter={(letter) => this.addLetter(letter)} 
+                updateLettersLeft={(change) => this.updateLettersLeft(change)} // purely for debug purposes
+              />
+      
+              <Chat />
 
-        <SubmitWord 
-          letters={this.state.letters}
-          playerData={this.state.playerData}
+            </div>
+          )
 
-          removeLetters={(word) => this.removeLetters(word)}
-        />
-
-        <LetterVote 
-          numPlayers={this.state.playerData.length}
-          lettersLeft={this.state.lettersLeft}
-
-          updateLettersLeft={(change) => this.updateLettersLeft(change)}
-        />
-
-        <Letters 
-          numLetters={this.state.letters.length}
-          letters={this.state.letters}
-
-
-          addLetter={(letter) => this.addLetter(letter)} 
-        />
-
-        <Chat />
+        }
 
       </div>
     );
