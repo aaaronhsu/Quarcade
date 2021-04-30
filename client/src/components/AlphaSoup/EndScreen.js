@@ -73,6 +73,9 @@ class EndScreen extends React.Component {
       // time to play again!
       if (this.state.playersVotedToPlayAgain + 1 == this.props.playerData.length) {
         console.log("time to play again"); 
+        // wipe the alphasoup database- the only thing that needs to change is the letters left
+        this.resetLettersLeft(this.props.playerData.length);
+        // route to alphaSoup
       }
       
       clientSocket.emit("reqReplayAlphaSoup", (1));
@@ -85,6 +88,15 @@ class EndScreen extends React.Component {
       votedToPlayAgain: !this.state.votedToPlayAgain
     });
   };
+
+  async resetLettersLeft(players) {
+    console.log("player number" + players);
+    try {
+      await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.props.roomCode}`, {lettersLeft: players * 15});
+    } catch (error) {
+      console.log("could not repatch to alphasoup")
+    }
+  }
 
   handleReturnToLobbyScreen = () => {
 
