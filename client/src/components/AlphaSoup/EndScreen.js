@@ -15,6 +15,10 @@ class EndScreen extends React.Component {
     }
   }
 
+
+
+  // ------------------------------------ Socket.io ------------------------------------
+
   componentDidMount() {
     clientSocket.on("recUserLeftEndScreen", () => {
       this.setState({
@@ -35,19 +39,9 @@ class EndScreen extends React.Component {
     clientSocket.off("recReplayAlphaSoup");
   }
 
-  returnToLobbyScreen = () => {
 
-    clientSocket.emit("reqUserLeftEndScreen");
 
-    // wipe the user from the database
-    this.wipeWordsOwned();
-    
-    // wipe the room from the database
-    this.deleteAlphaSoupRoom();
-
-    // return the user to Lobby.js
-    this.setState({returnToLobby: true});
-  };
+  // ------------------------------------ Axios ------------------------------------
 
   // deletes all the data from the wordsOwned array in users
   async wipeWordsOwned() {
@@ -69,8 +63,11 @@ class EndScreen extends React.Component {
     }
   }
 
-  votePlayAgain = () => {
 
+
+  // ------------------------------------ Form & Button Handling ------------------------------------
+
+  handleVotePlayAgain = () => {
     // user is voting to play again
     if (!this.state.votedToPlayAgain) {
 
@@ -89,6 +86,24 @@ class EndScreen extends React.Component {
       votedToPlayAgain: !this.state.votedToPlayAgain
     });
   };
+
+  handleReturnToLobbyScreen = () => {
+
+    clientSocket.emit("reqUserLeftEndScreen");
+
+    // wipe the user from the database
+    this.wipeWordsOwned();
+    
+    // wipe the room from the database
+    this.deleteAlphaSoupRoom();
+
+    // return the user to Lobby.js
+    this.setState({returnToLobby: true});
+  };
+
+
+
+  // ------------------------------------ Render ------------------------------------
 
   renderPlayerStandings = () => {
     return (
@@ -112,7 +127,7 @@ class EndScreen extends React.Component {
 
   renderLobbyButton = () => {
     return (
-      <button onClick={() => this.returnToLobbyScreen()}>
+      <button onClick={() => this.handleReturnToLobbyScreen()}>
         Return to Lobby
       </button>
     );
@@ -126,11 +141,11 @@ class EndScreen extends React.Component {
         {
           this.state.votedToPlayAgain ?
 
-          <button onClick={() => this.votePlayAgain()}>
+          <button onClick={() => this.handleVotePlayAgain()}>
             Remove vote to play again
           </button>
           :
-          <button onClick={() => this.votePlayAgain()}>
+          <button onClick={() => this.handleVotePlayAgain()}>
             Vote to play again!
           </button>
         }
