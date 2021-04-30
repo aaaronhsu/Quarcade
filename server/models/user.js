@@ -25,6 +25,10 @@ const UserSchema = new Schema({
       points: {
         type: Number,
         required: true
+      },
+      valid: {
+        type: Boolean,
+        required: true
       }
     }
   ]

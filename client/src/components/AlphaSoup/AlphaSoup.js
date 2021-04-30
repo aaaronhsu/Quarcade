@@ -78,7 +78,7 @@ class AlphaSoup extends React.Component {
       });
       this.updatePlayerData(this.state.roomCode);
       this.retrieveLettersLeft(this.state.roomCode);
-    })
+    });
   }
 
   componentWillUnmount() {
@@ -98,8 +98,6 @@ class AlphaSoup extends React.Component {
     try {
       await Axios.get(`http://localhost:5000/alphaSoup/${room}`).then(
         res => {
-          console.log("retrieving the letters left in the rooom")
-
           // loops through every room to find the room that matches the roomcode
           this.setState({
             lettersLeft: res.data[0].lettersLeft
@@ -140,10 +138,20 @@ class AlphaSoup extends React.Component {
               let wordData = {
                 word: retrievedPlayerData[i].wordsOwned[j].word,
                 points: retrievedPlayerData[i].wordsOwned[j].points,
+                valid: retrievedPlayerData[i].wordsOwned[j].valid,
+                votesToValidate: -1, // how many more votes are needed to validate the word
+                votedToValidate: true, // be default, the word should be valid
                 beingStolen: false
               };
 
-              player.points += retrievedPlayerData[i].wordsOwned[j].points;
+              if (wordData.valid) {
+                player.points += retrievedPlayerData[i].wordsOwned[j].points;
+              }
+              else {
+                wordData.votesToValidate = retrievedPlayerData.length; // all players must validate
+                wordData.votedToValidate = false; // this player has not voted to validate yet
+              }
+
 
               // push the word object to the list of words for the player
               player.wordsOwned.push(wordData);
@@ -158,7 +166,6 @@ class AlphaSoup extends React.Component {
             playerData: playerData
           });
 
-          console.log(playerData);
         }
       );
     }
@@ -234,6 +241,58 @@ class AlphaSoup extends React.Component {
     });
   }
 
+  voteValidWord = (username, word) => {
+    let copyOfPlayerData = [...this.state.playerData];
+
+    for (let i = 0; i < copyOfPlayerData.length; i++) {
+      if (copyOfPlayerData[i].username === username) {
+        for (let j = 0; j < copyOfPlayerData[i].wordsOwned.length; j++) {
+          if (!copyOfPlayerData[i].wordsOwned[j].valid) {
+            // reduces the number of votes needed to validate the word
+            copyOfPlayerData[i].wordsOwned[j].votesToValidate--;
+
+            // there are enough votes to make it valid
+            if (copyOfPlayerData[i].wordsOwned[j].votesToValidate <= 0) {
+              copyOfPlayerData[i].wordsOwned[j].valid = true; // the word is marked as valid so it renders properly
+
+              copyOfPlayerData[i].points += copyOfPlayerData[i].wordsOwned[j].points; // add the points to the user's total points
+
+              // Axios request that updates the validity of a player's specified word
+              this.validateWord(word);
+
+            }
+          }
+        }
+      }
+    }
+    this.setState({
+      playerData: copyOfPlayerData
+    });
+  }
+
+  async validateWord(word) {
+    try {
+      await Axios.patch(`http://localhost:5000/user/updateWordValidity/${clientSocket.id}/${word}`, {valid: true});
+    } catch (error) {
+      console.log("did not validate word correctly")
+    }
+  }
+
+  changeVoteValidWordStatus = (username, word) => {
+    let copyOfPlayerData = [...this.state.playerData];
+
+    for (let i = 0; i < copyOfPlayerData.length; i++) {
+      if (copyOfPlayerData[i].username === username) {
+        for (let j = 0; j < copyOfPlayerData[i].wordsOwned.length; j++) {
+          if (!copyOfPlayerData[i].wordsOwned[j].valid) {
+            // player has now voted
+            copyOfPlayerData[i].wordsOwned[j].votedToValidate = true;
+          }
+        }
+      }
+    }
+  }
+
 
 
   // ------------------------------------ Render ------------------------------------
@@ -261,6 +320,8 @@ class AlphaSoup extends React.Component {
                 playerData={this.state.playerData}
       
                 changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
+                voteValidWord={(player, word) => this.voteValidWord(player, word)}
+                changeVoteValidWordStatus={(player, word) => this.changeVoteValidWordStatus(player, word)}
               />
       
               <SubmitWord 

@@ -213,23 +213,25 @@ module.exports = {
       // ------------------------------------ AlphaSoup ------------------------------------
 
       // calculates point value of a word
-      client.on("reqSubmitWord", (word) => {
+      client.on("reqSubmitWord", (data) => {
         
         const dictionary = require("./dictionary.js");
 
         let points = 0;
         
-        for (var i = 0; i < word.length; i++) {
-          points += dictionary.pointList[word.charAt(i)];
+        for (var i = 0; i < data.word.length; i++) {
+          points += dictionary.pointList[data.word.charAt(i)];
         }
 
-        let data = {
-          word: word,
-          points: points
+        let payload = {
+          word: data.word,
+          points: points,
+          valid: data.valid
         };
 
+
         // requests word to be put to the database
-        client.emit("recSubmitWord", data);
+        client.emit("recSubmitWord", payload);
       });
 
       // tells all users to remove the letters of the given word from the list of letters
@@ -307,6 +309,17 @@ module.exports = {
         // emits the payload to all sockets with the same room
         io.to(roomList[1]).emit("recReplayAlphaSoup", (vote));
       })
+
+      client.on("reqVoteValidWord", (wordData) => {
+        const roomList = Array.from(client.rooms);
+
+        let data = {
+          username: wordData.username,
+          word: wordData.word
+        };
+
+        io.to(roomList[1]).emit("recVoteValidWord", (data));
+      });
 
 
     });
