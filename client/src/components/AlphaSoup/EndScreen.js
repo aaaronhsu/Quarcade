@@ -33,7 +33,7 @@ class EndScreen extends React.Component {
     });
 
     clientSocket.on("recWipeWordsOwned", () => {
-      this.wipeWordsOwned();
+      this.wipeWordsOwned("alphaSoupAgain");
     })
   }
 
@@ -48,12 +48,23 @@ class EndScreen extends React.Component {
   // ------------------------------------ Axios ------------------------------------
 
   // deletes all the data from the wordsOwned array in users
-  async wipeWordsOwned() {
+
+  // TODO- add parameter to wipe words owned (wipe to lobby or wipe to alpha)
+
+  // YES HERE!
+  async wipeWordsOwned(place) {
     try {
       // wipe the wordcount array by socketid
       await Axios.patch(`http://localhost:5000/user/clear/${clientSocket.id}`).then(
+        req => {
+          // if lobby, DO NOT request switch, else, do
+          if (place === "lobby") {
+            // do not emit anything
+          } else {
+            clientSocket.emit("reqSwitchBackToAlphaGamePage")
+          }
         // switch back to other alphaSoup page
-        clientSocket.emit("reqSwitchBackToAlphaGamePage")
+        }
       );
 
     } catch (error) {
@@ -71,7 +82,7 @@ class EndScreen extends React.Component {
     }
   }
 
-  // resets the letters in the alphasoup database 
+  // resets the letters in the alphasoup database (only happens if you play again)
   async resetLettersLeft(players) {
     console.log("player number" + players);
     try {
@@ -95,7 +106,6 @@ class EndScreen extends React.Component {
         console.log("time to play again"); 
         // wipe the alphasoup database- the only thing that needs to change is the letters left
         this.resetLettersLeft(this.props.playerData.length);
-        
       }
       
       clientSocket.emit("reqReplayAlphaSoup", (1));
@@ -115,7 +125,7 @@ class EndScreen extends React.Component {
     clientSocket.emit("reqUsersInRoom");
 
     // wipe the user from the database
-    this.wipeWordsOwned();
+    this.wipeWordsOwned("lobby");
     
     // wipe the room from the database
     this.deleteAlphaSoupRoom();
