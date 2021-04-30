@@ -167,6 +167,8 @@ class SubmitWord extends React.Component {
       return [[-1], []];
     }
 
+    // IMPLEMENT CHECK IF WORD IS A VALID WORD OR NOT
+
     let lettersFromWord = [];
 
     for (let i = 0; i < word.length; i++) {

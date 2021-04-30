@@ -109,6 +109,7 @@ class EndScreen extends React.Component {
   handleReturnToLobbyScreen = () => {
 
     clientSocket.emit("reqUserLeftEndScreen");
+    clientSocket.emit("reqUsersInRoom");
 
     // wipe the user from the database
     this.wipeWordsOwned();
