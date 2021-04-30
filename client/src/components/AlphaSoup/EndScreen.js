@@ -12,7 +12,6 @@ class EndScreen extends React.Component {
       votedToPlayAgain: false,
       playAgainButton: true,
       returnToLobby: false, 
-      returnToAlphaSoup: false
     }
   }
 
@@ -92,8 +91,8 @@ class EndScreen extends React.Component {
         // wipe the wordsOwned array from all the users
         clientSocket.emit("reqWipeWordsOwned");
 
-        // route to alphaSoup
-        this.setState({returnToAlphaSoup: true});
+        // switch back to other alphaSoup page
+        clientSocket.emit("reqSwitchBackToAlphaGamePage");
       }
       
       clientSocket.emit("reqReplayAlphaSoup", (1));
@@ -187,7 +186,6 @@ class EndScreen extends React.Component {
         {this.renderPlayAgainButton()}
 
         {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
-        {this.state.returnToAlphaSoup ? (<Redirect to="/alphasoup" />): null}
 
       </div>
     );

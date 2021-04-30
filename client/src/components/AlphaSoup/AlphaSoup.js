@@ -68,6 +68,11 @@ class AlphaSoup extends React.Component {
       });
 
     });
+
+    clientSocket.on("recSwitchBackToAlphaGamePage", () => {
+      console.log("got here");
+      this.setState({gameEnd: false});
+    })
   }
 
   componentWillUnmount() {

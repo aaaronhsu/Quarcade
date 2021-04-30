@@ -158,6 +158,12 @@ module.exports = {
         const roomList = Array.from(client.rooms);
         io.to(roomList[1]).emit("recWipeWordsOwned");
       })
+
+      // tells them all to switch back to playing version of alpha
+      client.on("reqSwitchBackToAlphaGamePage", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recSwitchBackToAlphaGamePage");
+      })
       
 
       // ------------------------------------ Update Requests ------------------------------------
