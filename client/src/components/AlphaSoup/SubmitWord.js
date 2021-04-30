@@ -1280,7 +1280,6 @@ wordList.add("came");
 wordList.add("supply");
 wordList.add("nothing");
 wordList.add("certain");
-wordList.add("usr");
 wordList.add("executive");
 wordList.add("running");
 wordList.add("lower");
