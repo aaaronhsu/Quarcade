@@ -278,6 +278,20 @@ module.exports = {
         io.to(roomList[1]).emit("recAlphaSoupEnd", (roomList[1]));
       });
 
+      client.on("reqUserLeftEndScreen", () => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recUserLeftEndScreen");
+      })
+
+      client.on("reqReplayAlphaSoup", (vote) => {
+        const roomList = Array.from(client.rooms);
+
+        // emits the payload to all sockets with the same room
+        io.to(roomList[1]).emit("recReplayAlphaSoup", (vote));
+      })
+
 
     });
 

@@ -16,13 +16,14 @@ class EndScreen extends React.Component {
   }
 
   componentDidMount() {
-    clientSocket.on("userLeftEndScreen", () => {
+    clientSocket.on("recUserLeftEndScreen", () => {
       this.setState({
         playAgainButton: false
       });
     });
 
-    clientSocket.on("reqReplayAlphaSoup", (vote) => {
+    clientSocket.on("recReplayAlphaSoup", (vote) => {
+      console.log(vote)
       this.setState({
         playersVotedToPlayAgain: this.state.playersVotedToPlayAgain + vote
       });
@@ -31,10 +32,13 @@ class EndScreen extends React.Component {
 
   componentWillUnmount() {
     clientSocket.off("userLeftEndScreen");
-    clientSocket.off("reqReplayAlphaSoup");
+    clientSocket.off("recReplayAlphaSoup");
   }
 
   returnToLobbyScreen = () => {
+
+    clientSocket.emit("reqUserLeftEndScreen");
+    
     // wipe the user from the database
     this.wipeWordsOwned();
     
@@ -71,7 +75,7 @@ class EndScreen extends React.Component {
     if (!this.state.votedToPlayAgain) {
 
       // time to play again!
-      if (this.state.playersVotedToPlayAgain == this.props.playerData.length) {
+      if (this.state.playersVotedToPlayAgain + 1 == this.props.playerData.length) {
         console.log("time to play again"); 
       }
       else {
@@ -115,17 +119,21 @@ class EndScreen extends React.Component {
         {
           this.state.playAgainButton ?
 
-          (
-            this.state.votedToPlayAgain ?
+          <div>
+            {
+              this.state.votedToPlayAgain ?
 
-            <button onClick={() => this.votePlayAgain()}>
-              Remove vote to play again
-            </button>
-            :
-            <button onClick={() => this.votePlayAgain()}>
-              Vote to play again!
-            </button>
-          )
+              <button onClick={() => this.votePlayAgain()}>
+                Remove vote to play again
+              </button>
+              :
+              <button onClick={() => this.votePlayAgain()}>
+                Vote to play again!
+              </button>
+            }
+
+            <h3>{this.state.playersVotedToPlayAgain}/{this.props.playerData.length} players have voted to play again</h3>
+          </div>
           :
           null
         }
