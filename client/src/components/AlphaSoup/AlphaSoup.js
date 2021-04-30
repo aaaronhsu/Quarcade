@@ -256,15 +256,26 @@ class AlphaSoup extends React.Component {
               copyOfPlayerData[i].wordsOwned[j].valid = true; // the word is marked as valid so it renders properly
 
               copyOfPlayerData[i].points += copyOfPlayerData[i].wordsOwned[j].points; // add the points to the user's total points
+
+              // Axios request that updates the validity of a player's specified word
+              this.validateWord(word);
+
             }
           }
         }
       }
     }
-
     this.setState({
       playerData: copyOfPlayerData
     });
+  }
+
+  async validateWord(word) {
+    try {
+      await Axios.patch(`http://localhost:5000/user/updateWordValidity/${clientSocket.id}/${word}`, {valid: true});
+    } catch (error) {
+      console.log("did not validate word correctly")
+    }
   }
 
   changeVoteValidWordStatus = (username, word) => {

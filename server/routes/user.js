@@ -71,6 +71,21 @@ router.patch("/clear/:socket", function (req, res, next) {
     .catch(next);
 })
 
+// updates the word, by it's socket id and given the right word
+router.patch("/updateWordValidity/:socket/:word", function (req, res, next) {
+  // var roomCode = req.params.roomCode;
+  // var username = req.params.username;
+  var socket = req.params.socket;
+  var word = req.params.word;
+  User.findOneAndUpdate({socket: socket, "wordsOwned.word": word}, {$set: {"wordsOwned.$.valid": req.body.valid}})
+    .then(function (user) {
+      // console.log("completed");
+      // console.log(user);
+      res.send(user);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ PUT Requests ------------------------------------
 
 // adds a word based on socket id
