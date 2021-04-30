@@ -78,8 +78,9 @@ router.put("/:query", function (req, res, next) {
   var query = req.params.query;
   var word = req.body.wordsOwned.word;
   var points = req.body.wordsOwned.points;
+  var valid = req.body.wordsOwned.valid;
 
-  User.findOneAndUpdate({ socket: query }, { $push: { wordsOwned: {word: word, points: points } } })
+  User.findOneAndUpdate({ socket: query }, { $push: { wordsOwned: {word: word, points: points, valid: valid } } })
     .then(function () {
       User.find({ socket: query }).then(function (user) {
         res.send(user);

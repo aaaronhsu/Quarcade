@@ -140,8 +140,10 @@ class AlphaSoup extends React.Component {
               let wordData = {
                 word: retrievedPlayerData[i].wordsOwned[j].word,
                 points: retrievedPlayerData[i].wordsOwned[j].points,
+                valid: retrievedPlayerData[i].wordsOwned[j].valid,
                 beingStolen: false
               };
+              console.log(wordData);
 
               player.points += retrievedPlayerData[i].wordsOwned[j].points;
 

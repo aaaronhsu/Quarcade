@@ -26,9 +26,9 @@ class PlayerData extends React.Component {
                   <div>
                     {
                       word.beingStolen ?
-                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points}) (being stolen)</li>
+                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points}, {word.valid ? "valid" : "invalid"}) (being stolen)</li>
                       :
-                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points})</li>
+                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points}, {word.valid ? "valid" : "invalid"})</li>
                     }
                   </div>
                 ))
