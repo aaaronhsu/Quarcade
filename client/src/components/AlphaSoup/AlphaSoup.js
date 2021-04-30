@@ -147,7 +147,7 @@ class AlphaSoup extends React.Component {
                 player.points += retrievedPlayerData[i].wordsOwned[j].points;
               }
               else {
-                wordData.votesToValidate = retrievedPlayerData.length - 1; // all players must validate
+                wordData.votesToValidate = retrievedPlayerData.length; // all players must validate
               }
 
 
@@ -239,17 +239,21 @@ class AlphaSoup extends React.Component {
     });
   }
 
-  voteValidWord = (player, word) => {
+  voteValidWord = (username, word) => {
     let copyOfPlayerData = [...this.state.playerData];
 
     for (let i = 0; i < copyOfPlayerData.length; i++) {
-      if (copyOfPlayerData[pd].username === player) {
-        for (let j = 0; j < copyOfPlayerData[pd].wordsOwned.length; j++) {
-          if (!copyOfPlayerData[pd].wordsOwned[j].valid) {
-            copyOfPlayerData[pd].wordsOwned[j].votesToValidate--;
+      if (copyOfPlayerData[i].username === username) {
+        for (let j = 0; j < copyOfPlayerData[i].wordsOwned.length; j++) {
+          if (!copyOfPlayerData[i].wordsOwned[j].valid) {
+            // reduces the number of votes needed to validate the word
+            copyOfPlayerData[i].wordsOwned[j].votesToValidate--;
 
-            if (copyOfPlayerData[pd].wordsOwned[j].votesToValidate <= 0) {
-              copyOfPlayerData[pd].wordsOwned[j].valid = true;
+            // there are enough votes to make it valid
+            if (copyOfPlayerData[i].wordsOwned[j].votesToValidate <= 0) {
+              copyOfPlayerData[i].wordsOwned[j].valid = true; // the word is marked as valid so it renders properly
+
+              copyOfPlayerData[i].points += copyOfPlayerData[i].wordsOwned[j].points; // add the points to the user's total points
             }
           }
         }
@@ -288,6 +292,7 @@ class AlphaSoup extends React.Component {
                 playerData={this.state.playerData}
       
                 changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
+                voteValidWord={(player, word) => this.voteValidWord(player, word)}
               />
       
               <SubmitWord 

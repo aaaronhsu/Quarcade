@@ -314,11 +314,11 @@ module.exports = {
         const roomList = Array.from(client.rooms);
 
         let data = {
-          player: wordData.player,
+          username: wordData.username,
           word: wordData.word
         };
 
-        io.to(roomList[1].emit("recVoteValidWord", (data)));
+        io.to(roomList[1]).emit("recVoteValidWord", (data));
       });
 
 
