@@ -98,8 +98,6 @@ class AlphaSoup extends React.Component {
     try {
       await Axios.get(`http://localhost:5000/alphaSoup/${room}`).then(
         res => {
-          console.log("retrieving the letters left in the rooom")
-
           // loops through every room to find the room that matches the roomcode
           this.setState({
             lettersLeft: res.data[0].lettersLeft
@@ -143,7 +141,6 @@ class AlphaSoup extends React.Component {
                 valid: retrievedPlayerData[i].wordsOwned[j].valid,
                 beingStolen: false
               };
-              console.log(wordData);
 
               player.points += retrievedPlayerData[i].wordsOwned[j].points;
 
@@ -160,7 +157,6 @@ class AlphaSoup extends React.Component {
             playerData: playerData
           });
 
-          console.log(playerData);
         }
       );
     }

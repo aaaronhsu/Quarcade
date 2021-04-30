@@ -214,8 +214,6 @@ module.exports = {
 
       // calculates point value of a word
       client.on("reqSubmitWord", (data) => {
-
-        console.log(data.word)
         
         const dictionary = require("./dictionary.js");
 

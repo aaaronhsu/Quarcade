@@ -17,7 +17,6 @@ class SubmitWord extends React.Component {
     // receives word submission after calculating points
     clientSocket.on("recSubmitWord", ({ word: word, points: points, valid: valid }) => {
       // add word to database
-      console.log(word, points, valid);
       this.addWord(word, points, valid);
     })
   }
