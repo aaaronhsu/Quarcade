@@ -50,7 +50,16 @@ class PlayerData extends React.Component {
                     {
                       word.votedToValidate ?
 
-                      null
+                      <div>
+                        {
+                          word.valid ?
+                          null
+                          :
+                          <p>
+                            {word.votesToValidate}/{this.props.playerData.length} players have voted to validate this word
+                          </p>
+                        }
+                      </div>
                       :
                       <button onClick={(username, wd) => this.voteValidWord(player.username, word.word)}>
                         Press this to vote to validate the word
