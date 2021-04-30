@@ -11,7 +11,8 @@ class EndScreen extends React.Component {
       playersVotedToPlayAgain: 0,
       votedToPlayAgain: false,
       playAgainButton: true,
-      returnToLobby: false
+      returnToLobby: false, 
+      returnToAlphaSoup: false
     }
   }
 
@@ -31,11 +32,16 @@ class EndScreen extends React.Component {
         playersVotedToPlayAgain: this.state.playersVotedToPlayAgain + vote
       });
     });
+
+    clientSocket.on("recWipeWordsOwned", () => {
+      this.wipeWordsOwned();
+    })
   }
 
   componentWillUnmount() {
     clientSocket.off("userLeftEndScreen");
     clientSocket.off("recReplayAlphaSoup");
+    clientSocket.off("recWipeWordsOwned");
   }
 
 
@@ -62,7 +68,15 @@ class EndScreen extends React.Component {
     }
   }
 
-
+  // resets the letters in the alphasoup database 
+  async resetLettersLeft(players) {
+    console.log("player number" + players);
+    try {
+      await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.props.roomCode}`, {lettersLeft: players * 15});
+    } catch (error) {
+      console.log("could not repatch to alphasoup")
+    }
+  }
 
   // ------------------------------------ Form & Button Handling ------------------------------------
 
@@ -75,7 +89,11 @@ class EndScreen extends React.Component {
         console.log("time to play again"); 
         // wipe the alphasoup database- the only thing that needs to change is the letters left
         this.resetLettersLeft(this.props.playerData.length);
+        // wipe the wordsOwned array from all the users
+        clientSocket.emit("reqWipeWordsOwned");
+
         // route to alphaSoup
+        this.setState({returnToAlphaSoup: true});
       }
       
       clientSocket.emit("reqReplayAlphaSoup", (1));
@@ -88,15 +106,6 @@ class EndScreen extends React.Component {
       votedToPlayAgain: !this.state.votedToPlayAgain
     });
   };
-
-  async resetLettersLeft(players) {
-    console.log("player number" + players);
-    try {
-      await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.props.roomCode}`, {lettersLeft: players * 15});
-    } catch (error) {
-      console.log("could not repatch to alphasoup")
-    }
-  }
 
   handleReturnToLobbyScreen = () => {
 
@@ -178,6 +187,7 @@ class EndScreen extends React.Component {
         {this.renderPlayAgainButton()}
 
         {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
+        {this.state.returnToAlphaSoup ? (<Redirect to="/alphasoup" />): null}
 
       </div>
     );

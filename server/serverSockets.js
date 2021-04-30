@@ -152,6 +152,12 @@ module.exports = {
         const roomList = Array.from(client.rooms);
         io.to(roomList[1]).emit("recStartAlphaSoup");
       })
+
+      // tells all the people in the room to wipe their words count array bc the game is restarting
+      client.on("reqWipeWordsOwned", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recWipeWordsOwned");
+      })
       
 
       // ------------------------------------ Update Requests ------------------------------------
