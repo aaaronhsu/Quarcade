@@ -140,6 +140,7 @@ class AlphaSoup extends React.Component {
                 points: retrievedPlayerData[i].wordsOwned[j].points,
                 valid: retrievedPlayerData[i].wordsOwned[j].valid,
                 votesToValidate: -1, // how many more votes are needed to validate the word
+                votedToValidate: true, // be default, the word should be valid
                 beingStolen: false
               };
 
@@ -148,6 +149,7 @@ class AlphaSoup extends React.Component {
               }
               else {
                 wordData.votesToValidate = retrievedPlayerData.length; // all players must validate
+                wordData.votedToValidate = false; // this player has not voted to validate yet
               }
 
 
@@ -265,6 +267,21 @@ class AlphaSoup extends React.Component {
     });
   }
 
+  changeVoteValidWordStatus = (username, word) => {
+    let copyOfPlayerData = [...this.state.playerData];
+
+    for (let i = 0; i < copyOfPlayerData.length; i++) {
+      if (copyOfPlayerData[i].username === username) {
+        for (let j = 0; j < copyOfPlayerData[i].wordsOwned.length; j++) {
+          if (!copyOfPlayerData[i].wordsOwned[j].valid) {
+            // player has now voted
+            copyOfPlayerData[i].wordsOwned[j].votedToValidate = true;
+          }
+        }
+      }
+    }
+  }
+
 
 
   // ------------------------------------ Render ------------------------------------
@@ -293,6 +310,7 @@ class AlphaSoup extends React.Component {
       
                 changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
                 voteValidWord={(player, word) => this.voteValidWord(player, word)}
+                changeVoteValidWordStatus={(player, word) => this.changeVoteValidWordStatus(player, word)}
               />
       
               <SubmitWord 

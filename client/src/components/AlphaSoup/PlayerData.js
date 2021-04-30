@@ -27,6 +27,8 @@ class PlayerData extends React.Component {
       word: wd
     };
 
+    this.props.changeVoteValidWordStatus(username, wd);
+
     clientSocket.emit("reqVoteValidWord", (data));
   }
 
@@ -45,9 +47,15 @@ class PlayerData extends React.Component {
               {
                 player.wordsOwned.map(word => (
                   <div>
-                    <button onClick={(username, wd) => this.voteValidWord(player.username, word.word)}>
-                      Press this to vote to validate the word
-                    </button>
+                    {
+                      word.votedToValidate ?
+
+                      null
+                      :
+                      <button onClick={(username, wd) => this.voteValidWord(player.username, word.word)}>
+                        Press this to vote to validate the word
+                      </button>
+                    }
 
                     {
                       word.beingStolen ?
