@@ -27,7 +27,6 @@ class EndScreen extends React.Component {
     });
 
     clientSocket.on("recReplayAlphaSoup", (vote) => {
-      console.log(vote)
       this.setState({
         playersVotedToPlayAgain: this.state.playersVotedToPlayAgain + vote
       });
