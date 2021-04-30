@@ -78,7 +78,7 @@ class AlphaSoup extends React.Component {
       });
       this.updatePlayerData(this.state.roomCode);
       this.retrieveLettersLeft(this.state.roomCode);
-    })
+    });
   }
 
   componentWillUnmount() {
@@ -236,6 +236,28 @@ class AlphaSoup extends React.Component {
 
     this.setState({
       playerData: copyPlayerData
+    });
+  }
+
+  voteValidWord = (player, word) => {
+    let copyOfPlayerData = [...this.state.playerData];
+
+    for (let i = 0; i < copyOfPlayerData.length; i++) {
+      if (copyOfPlayerData[pd].username === player) {
+        for (let j = 0; j < copyOfPlayerData[pd].wordsOwned.length; j++) {
+          if (!copyOfPlayerData[pd].wordsOwned[j].valid) {
+            copyOfPlayerData[pd].wordsOwned[j].votesToValidate--;
+
+            if (copyOfPlayerData[pd].wordsOwned[j].votesToValidate <= 0) {
+              copyOfPlayerData[pd].wordsOwned[j].valid = true;
+            }
+          }
+        }
+      }
+    }
+
+    this.setState({
+      playerData: copyOfPlayerData
     });
   }
 
