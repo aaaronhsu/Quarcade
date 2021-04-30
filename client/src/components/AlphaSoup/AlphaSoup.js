@@ -70,7 +70,7 @@ class AlphaSoup extends React.Component {
     });
 
     clientSocket.on("recSwitchBackToAlphaGamePage", () => {
-      // console.log("got here");
+      console.log("words have hopefully been wiped");
       this.setState({
         gameEnd: false,
         letters: [],
@@ -157,6 +157,8 @@ class AlphaSoup extends React.Component {
           this.setState({
             playerData: playerData
           });
+
+          console.log(playerData);
         }
       );
     }
