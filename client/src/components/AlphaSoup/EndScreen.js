@@ -51,11 +51,15 @@ class EndScreen extends React.Component {
   async wipeWordsOwned() {
     try {
       // wipe the wordcount array by socketid
-      await Axios.patch(`http://localhost:5000/user/clear/${clientSocket.id}`);
+      await Axios.patch(`http://localhost:5000/user/clear/${clientSocket.id}`).then(
+        // switch back to other alphaSoup page
+        clientSocket.emit("reqSwitchBackToAlphaGamePage")
+      );
 
     } catch (error) {
       console.log("could not wipe the user wordsOwned data");
     }
+    
   }
 
   // removes the alphaSoup version of the room from the database
@@ -90,9 +94,6 @@ class EndScreen extends React.Component {
         this.resetLettersLeft(this.props.playerData.length);
         // wipe the wordsOwned array from all the users
         clientSocket.emit("reqWipeWordsOwned");
-
-        // switch back to other alphaSoup page
-        clientSocket.emit("reqSwitchBackToAlphaGamePage");
       }
       
       clientSocket.emit("reqReplayAlphaSoup", (1));
