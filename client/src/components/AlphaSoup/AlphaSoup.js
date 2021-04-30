@@ -70,8 +70,14 @@ class AlphaSoup extends React.Component {
     });
 
     clientSocket.on("recSwitchBackToAlphaGamePage", () => {
-      console.log("got here");
-      this.setState({gameEnd: false});
+      // console.log("got here");
+      this.setState({
+        gameEnd: false,
+        letters: [],
+        playerData: []
+      });
+      this.updatePlayerData(this.state.roomCode);
+      this.retrieveLettersLeft(this.state.roomCode);
     })
   }
 
@@ -80,6 +86,7 @@ class AlphaSoup extends React.Component {
     clientSocket.off("recUpdateWords");
     clientSocket.off("recLettersLeft");
     clientSocket.off("recAlphaSoupEnd");
+    clientSocket.off("recSwitchBackToAlphaGamePage");
   }
 
 
@@ -108,6 +115,7 @@ class AlphaSoup extends React.Component {
 
   // updates all playerData
   async updatePlayerData(room) {
+    // console.log("got to updating player data");
     try {
       await Axios.get(`http://localhost:5000/user/byRoom/${room}`).then(
         res => {
@@ -162,7 +170,7 @@ class AlphaSoup extends React.Component {
     try {
       // patches the data to the alphasoup database
 
-      console.log("got here");
+      // console.log("got here");
       await Axios.patch(`http://localhost:5000/alphaSoup/setLettersLeft/${this.state.roomCode}`, { lettersLeft: this.state.lettersLeft - change });
       
     } catch (error) {
