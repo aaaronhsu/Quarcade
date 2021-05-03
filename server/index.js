@@ -17,6 +17,12 @@ app.use(bodyParser.json());
 //app.use(express.json()); //lets server accept json stuff
 app.use(cors()); //some trust able thingy that I don't get
 
+// FOR HEROKU
+app.use(express.static('client/build'));
+
+// to look nicer
+app.get('/', (req, res) => {res.send('Backend is running')})
+
 //connect to the routes--> if you go to localhost:5000/homeLobby you can get all the data that's been posted
 const homeLobbyRouter = require("./routes/homeLobby");
 app.use("/homeLobby", homeLobbyRouter);
@@ -37,6 +43,7 @@ app.use(function (err, req, res, next) {
 
 //connecting sockets
 const socket = require("./serverSockets.js");
+const router = require("./routes/user");
 socket.init(server);
 
 const port = 8000;

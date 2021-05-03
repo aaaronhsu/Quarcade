@@ -1,0 +1,33 @@
+{
+  "name": "quarcade",
+  "version": "1.0.0",
+  "description": "Google Mentorship Project",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "socket.io-client": "^4.0.1",
+    "socket.io": "^4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": "cd server && node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chicknmilk/Quarcade.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chicknmilk/Quarcade/issues"
+  },
+  "homepage": "https://github.com/chicknmilk/Quarcade#readme"
+}
