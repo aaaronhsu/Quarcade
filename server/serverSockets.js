@@ -32,12 +32,12 @@ module.exports = {
         // update the amount of words left
         AlphaSoup.findOne({roomCode: myRoom})
           .then(function (alphaSoup) {
-            console.log("alphaSoup");
+            // console.log("alphaSoup");
             var lettersLeft = alphaSoup.lettersLeft;
-            console.log(lettersLeft);
+            // console.log(lettersLeft);
             var numUsers = alphaSoup.users.length;
             lettersLeft = (1 / (numUsers)) * lettersLeft;
-            console.log(lettersLeft);
+            // console.log(lettersLeft);
             AlphaSoup.findOneAndUpdate({roomCode: myRoom}, {lettersLeft: lettersLeft})
               .then(function (alphaSoup){
                 console.log("updated letters left");
