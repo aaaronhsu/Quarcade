@@ -1,5 +1,8 @@
 const socketio = require("socket.io"); 
 const User = require("./models/user");
+const HomeLobby = require('./models/homeLobby');
+const AlphaSoup = require('./models/alphaSoup');
+
 
 // io.sockets.sockets.get(client) gets socket from id (client)
 
@@ -12,25 +15,50 @@ module.exports = {
       }
     });
 
+    let myRoom = "";
+
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", client => {
       // ------------------------------------ Initial Requests ------------------------------------
       // adds user to the "unassigned" room
       client.join("unassigned");
+      myRoom = "unassigned";
 
       // initializes client to have a username field
       client.username = client.id;
 
       
       client.on("disconnect", () => {
+        const rooms = Array.from(client.rooms);
+        // console.log(rooms);
         // delete user from the user database
         User.findOneAndDelete({socket: client.id})
           .then(function(user) {
             console.log("deleted user");
+            //console.log(user);
           })
         // delete user from homelobby
+        HomeLobby.findOneAndUpdate({roomCode: myRoom},
+          {$pull: {users: {socket: client.id}}})
+          .then(function (homeLobby) {
+            console.log("deleted user from homelobby array")
+            //console.log(homeLobby.users.length);
+            if (homeLobby.users.length <= 1) {
+              HomeLobby.findOneAndDelete({roomCode: myRoom})
+                .then(function(homeLobby) {
+                  // console.log(homeLobby);
+                  // console.log("last user gone");
+                })
+            }
+          })
 
         // delete user from alpha
+        AlphaSoup.findOneAndUpdate({roomCode: myRoom},
+          {$pull: {users: {socket: client.id}}})
+          .then(function (alphaSoup) {
+            console.log("deleted user from alpha array")
+            console.log(alphaSoup)
+          })
       });
 
       // ------------------------------------ Utility Requests ------------------------------------
@@ -39,7 +67,7 @@ module.exports = {
       client.on("reqSocketRoom", () => {
         // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
-
+        // console.log(roomList[1]);
         io.to(roomList[1]).emit("recSocketRoom", roomList[roomList.length - 1]);
       });
 
@@ -183,6 +211,7 @@ module.exports = {
         });
     
         client.join(newRoom);
+        myRoom = newRoom;
       });
 
       // changes a client's username
