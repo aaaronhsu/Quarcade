@@ -29,7 +29,23 @@ module.exports = {
 
       
       client.on("disconnect", () => {
-        const rooms = Array.from(client.rooms);
+        // update the amount of words left
+        AlphaSoup.findOne({roomCode: myRoom})
+          .then(function (alphaSoup) {
+            console.log("alphaSoup");
+            var lettersLeft = alphaSoup.lettersLeft;
+            console.log(lettersLeft);
+            var numUsers = alphaSoup.users.length;
+            lettersLeft = (1 / (numUsers)) * lettersLeft;
+            console.log(lettersLeft);
+            AlphaSoup.findOneAndUpdate({roomCode: myRoom}, {lettersLeft: lettersLeft})
+              .then(function (alphaSoup){
+                console.log("updated letters left");
+              }) 
+
+          })
+
+        
         // console.log(rooms);
         // delete user from the user database
         User.findOneAndDelete({socket: client.id})
