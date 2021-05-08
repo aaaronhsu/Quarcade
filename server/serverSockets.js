@@ -1,4 +1,5 @@
-const socketio = require("socket.io");
+const socketio = require("socket.io"); 
+const User = require("./models/user");
 
 // io.sockets.sockets.get(client) gets socket from id (client)
 
