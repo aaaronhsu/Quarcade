@@ -1,5 +1,8 @@
 const socketio = require("socket.io"); 
 const User = require("./models/user");
+const HomeLobby = require('./models/homeLobby');
+const AlphaSoup = require('./models/alphaSoup');
+
 
 // io.sockets.sockets.get(client) gets socket from id (client)
 
@@ -12,18 +15,82 @@ module.exports = {
       }
     });
 
+    let myRoom = "";
+
     // when a user connects to the server, this detects the socket connection and adds the socket id to a list
     io.on("connection", client => {
       // ------------------------------------ Initial Requests ------------------------------------
       // adds user to the "unassigned" room
       client.join("unassigned");
+      myRoom = "unassigned";
 
       // initializes client to have a username field
       client.username = client.id;
 
       
       client.on("disconnect", () => {
+        // update the amount of words left
+        AlphaSoup.findOne({roomCode: myRoom})
+          .then(function (alphaSoup) {
+            // console.log("alphaSoup");
+            var lettersLeft = alphaSoup.lettersLeft;
+            // console.log(lettersLeft);
+            var numUsers = alphaSoup.users.length;
+            lettersLeft = (1 / (numUsers)) * lettersLeft;
+            // console.log(lettersLeft);
+            AlphaSoup.findOneAndUpdate({roomCode: myRoom}, {lettersLeft: lettersLeft})
+              .then(function (alphaSoup){
+                console.log("updated letters left");
+              }) 
 
+          })
+
+        
+        // console.log(rooms);
+        // delete user from the user database
+        User.findOneAndDelete({socket: client.id})
+          .then(function(user) {
+            console.log("deleted user");
+            //console.log(user);
+          })
+        // delete user from homelobby
+        HomeLobby.findOneAndUpdate({roomCode: myRoom},
+          {$pull: {users: {socket: client.id}}})
+          .then(function (homeLobby) {
+            console.log("deleted user from homelobby array")
+            //console.log(homeLobby.users.length);
+            if (homeLobby.users.length <= 1) {
+              HomeLobby.findOneAndDelete({roomCode: myRoom})
+                .then(function(homeLobby) {
+                  // console.log(homeLobby);
+                  // console.log("last user gone");
+                })
+            }
+          })
+
+        // delete user from alpha
+        AlphaSoup.findOneAndUpdate({roomCode: myRoom},
+          {$pull: {users: {socket: client.id}}})
+          .then(function (alphaSoup) {
+            console.log("deleted user from alphaSoup array")
+            //console.log(homeLobby.users.length);
+            if (alphaSoup.users.length <= 1) {
+              AlphaSoup.findOneAndDelete({roomCode: myRoom})
+                .then(function(homeLobby) {
+                  // console.log(homeLobby);
+                  // console.log("last user gone");
+                })
+            }
+          })
+
+        // emit to all other users in a room to update the lobby screen
+        io.to(myRoom).emit("clientDisconnected");
+
+        // emit to all other people in the alphaSoup game to repull the state
+        io.to(myRoom).emit("clientDisconnectedAlphaSoup", myRoom);
+
+        // emit to all other poepl in the alphaSoup game to repull letters left
+        io.to(myRoom).emit("clientDisconnectedLettersLeft", myRoom);
       });
 
       // ------------------------------------ Utility Requests ------------------------------------
@@ -32,7 +99,7 @@ module.exports = {
       client.on("reqSocketRoom", () => {
         // retrieves list of rooms the client is connected to
         const roomList = Array.from(client.rooms);
-
+        // console.log(roomList[1]);
         io.to(roomList[1]).emit("recSocketRoom", roomList[roomList.length - 1]);
       });
 
@@ -176,6 +243,7 @@ module.exports = {
         });
     
         client.join(newRoom);
+        myRoom = newRoom;
       });
 
       // changes a client's username

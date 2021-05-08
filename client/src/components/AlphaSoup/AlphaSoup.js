@@ -45,6 +45,11 @@ class AlphaSoup extends React.Component {
       this.updatePlayerData(room);
     });
 
+    // updates the player data when someone leaves
+    clientSocket.on("clientDisconnectedAlphaSoup", (room) => {
+      this.updatePlayerData(room);
+    })
+
     clientSocket.on("recLettersLeft", (room) => {
       this.setState({
         roomCode: room
@@ -79,6 +84,10 @@ class AlphaSoup extends React.Component {
       this.updatePlayerData(this.state.roomCode);
       this.retrieveLettersLeft(this.state.roomCode);
     });
+
+    clientSocket.on("clientDisconnectedLettersLeft", (myRoom) => {
+      this.retrieveLettersLeft(myRoom);
+    })
   }
 
   componentWillUnmount() {
@@ -87,6 +96,8 @@ class AlphaSoup extends React.Component {
     clientSocket.off("recLettersLeft");
     clientSocket.off("recAlphaSoupEnd");
     clientSocket.off("recSwitchBackToAlphaGamePage");
+    clientSocket.off("clientDisconnectedLettersLeft");
+    clientSocket.off("clientDisconnectedAlphaSoup");
   }
 
 
@@ -98,7 +109,7 @@ class AlphaSoup extends React.Component {
     try {
       await Axios.get(`http://localhost:5000/alphaSoup/${room}`).then(
         res => {
-          // loops through every room to find the room that matches the roomcode
+          // set the state to the new letters left count
           this.setState({
             lettersLeft: res.data[0].lettersLeft
           });

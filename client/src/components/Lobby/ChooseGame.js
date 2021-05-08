@@ -42,6 +42,11 @@ class ChooseGame extends React.Component {
       this.pullRoomVotes();
     })
 
+    // once any socket disconnects, repull room votes
+    clientSocket.on("clientDisconnected", () => {
+      this.pullRoomVotes();
+    })
+
     clientSocket.on("recAddVoteAlphaSoup", () => {
       const newVoteNum = this.state.votesAlphaSoup + 1;
       this.setState({
@@ -111,6 +116,7 @@ class ChooseGame extends React.Component {
     clientSocket.off("recRemoveVotesCodeNames");
     clientSocket.off("recStart");
     clientSocket.off("recStartAlphaSoup");
+    clientSocket.off("clientDisconnected");
 
   }
 
