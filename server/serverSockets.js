@@ -56,8 +56,15 @@ module.exports = {
         AlphaSoup.findOneAndUpdate({roomCode: myRoom},
           {$pull: {users: {socket: client.id}}})
           .then(function (alphaSoup) {
-            console.log("deleted user from alpha array")
-            console.log(alphaSoup)
+            console.log("deleted user from alphaSoup array")
+            //console.log(homeLobby.users.length);
+            if (alphaSoup.users.length <= 1) {
+              AlphaSoup.findOneAndDelete({roomCode: myRoom})
+                .then(function(homeLobby) {
+                  // console.log(homeLobby);
+                  // console.log("last user gone");
+                })
+            }
           })
       });
 
