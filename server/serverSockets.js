@@ -86,8 +86,11 @@ module.exports = {
         // emit to all other users in a room to update the lobby screen
         io.to(myRoom).emit("clientDisconnected");
 
-        // TO DO: emit to all other people in the alphaSoup game to repull the state
+        // emit to all other people in the alphaSoup game to repull the state
         io.to(myRoom).emit("clientDisconnectedAlphaSoup", myRoom);
+
+        // emit to all other poepl in the alphaSoup game to repull letters left
+        io.to(myRoom).emit("clientDisconnectedLettersLeft", myRoom);
       });
 
       // ------------------------------------ Utility Requests ------------------------------------

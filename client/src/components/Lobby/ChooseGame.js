@@ -116,6 +116,7 @@ class ChooseGame extends React.Component {
     clientSocket.off("recRemoveVotesCodeNames");
     clientSocket.off("recStart");
     clientSocket.off("recStartAlphaSoup");
+    clientSocket.off("clientDisconnected");
 
   }
 
