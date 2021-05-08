@@ -45,6 +45,11 @@ class AlphaSoup extends React.Component {
       this.updatePlayerData(room);
     });
 
+    // updates the player data when someone leaves
+    clientSocket.on("clientDisconnectedAlphaSoup", (room) => {
+      this.updatePlayerData(room);
+    })
+
     clientSocket.on("recLettersLeft", (room) => {
       this.setState({
         roomCode: room
