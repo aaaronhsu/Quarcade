@@ -66,6 +66,9 @@ module.exports = {
                 })
             }
           })
+
+          // emit to all other users in a room
+          io.to(myRoom).emit("clientDisconnected");
       });
 
       // ------------------------------------ Utility Requests ------------------------------------
