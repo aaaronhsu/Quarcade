@@ -23,7 +23,14 @@ module.exports = {
 
       
       client.on("disconnect", () => {
+        // delete user from the user database
+        User.findOneAndDelete({socket: client.id})
+          .then(function(user) {
+            console.log("deleted user");
+          })
+        // delete user from homelobby
 
+        // delete user from alpha
       });
 
       // ------------------------------------ Utility Requests ------------------------------------
