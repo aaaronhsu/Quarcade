@@ -67,6 +67,12 @@ module.exports = {
                 })
             }
           })
+        
+        // set votes alphaSoup and codenames back to 0
+        HomeLobby.findOneAndUpdate({roomCode: myRoom}, {votesAlphaSoup: 0, votesCodeNames: 0})
+          .then(function (homLobby) {
+            console.log("reset database votes")
+          })
 
         // delete user from alpha
         AlphaSoup.findOneAndUpdate({roomCode: myRoom},
@@ -82,7 +88,7 @@ module.exports = {
                 })
             }
           })
-
+          
         // emit to all other users in a room to update the lobby screen
         io.to(myRoom).emit("clientDisconnected");
 

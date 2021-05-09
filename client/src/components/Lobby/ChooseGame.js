@@ -29,7 +29,6 @@ class ChooseGame extends React.Component {
   // ------------------------------------ Socket.io ------------------------------------
   
   componentDidMount() {
-    // ERROR- when a user leaves, they shd be deleted from the room but that's a later us problem
 
     // when the component mounts, get the roomCode
     clientSocket.emit("reqSocketRoom");
@@ -44,6 +43,16 @@ class ChooseGame extends React.Component {
 
     // once any socket disconnects, repull room votes
     clientSocket.on("clientDisconnected", () => {
+      clientSocket.emit("reqUsersInRoom");
+      // wipe the whole state lol
+      this.setState({
+        votesAlphaSoup: 0,
+        votesCodeNames: 0,
+        gameVoted: "",
+        readyAlphaSoup: false,
+        readyCodeNames: false,
+        startAlphaSoup: false
+      })
       this.pullRoomVotes();
     })
 
