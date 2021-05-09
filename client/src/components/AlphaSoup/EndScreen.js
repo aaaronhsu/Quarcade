@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
 import Axios from 'axios';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 
 class EndScreen extends React.Component {

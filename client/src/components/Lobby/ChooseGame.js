@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import StartGameAlphaSoup from './StartGameAlphaSoup.js';
 
 import clientSocket from "../../ClientSocket.js";

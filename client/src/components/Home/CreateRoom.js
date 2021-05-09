@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useRef, renderComponent } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 class CreateRoom extends React.Component {
 
