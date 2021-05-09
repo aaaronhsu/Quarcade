@@ -1,12 +1,40 @@
+#!/usr/bin/env nodejs
+
+let http = require('http');
+let fs = require('fs');
+
+let handleRequest = (request, response) => {
+    response.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    fs.readFile('../build/index.html', null, function (error, data) {
+        if (error) {
+            response.writeHead(404);
+            respone.write('Whoops! File not found!');
+        } else {
+            response.write(data);
+        }
+        response.end();
+    });
+};
+
+
+const server = http.createServer(handleRequest);
+
+server.listen(8080);
+
+console.log('Server running at http://localhost:8080/');
+
+
+
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const http = require("http");
 const socketio = require("socket.io");
 
 const app = express();
-const server = http.createServer(app);
 
 //for connection string
 require("dotenv").config();
@@ -14,14 +42,9 @@ require("dotenv").config();
 //converts frontend data to readable json
 app.use(bodyParser.json());
 
-//app.use(express.json()); //lets server accept json stuff
+app.use(express.json()); //lets server accept json stuff
 app.use(cors()); //some trust able thingy that I don't get
 
-// FOR HEROKU
-app.use(express.static('client/build'));
-
-// to look nicer
-app.get('/', (req, res) => {res.send('Backend is running')})
 
 //connect to the routes--> if you go to localhost:5000/homeLobby you can get all the data that's been posted
 const homeLobbyRouter = require("./routes/homeLobby");
@@ -40,6 +63,9 @@ app.use(function (err, req, res, next) {
   //console.log(err);
   res.status(400).send({ error: err.message });
 });
+
+
+
 
 //connecting sockets
 const socket = require("./serverSockets.js");
