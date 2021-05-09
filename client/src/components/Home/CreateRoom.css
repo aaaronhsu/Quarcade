@@ -1,0 +1,15 @@
+
+
+form {
+  text-align: center;
+}
+
+.create-room {
+  text-align: center;
+  color: white;
+}
+
+.clickable {
+  color: #57C6D7;
+  cursor: pointer;
+}

@@ -3,6 +3,8 @@ import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
 import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
+import './CreateRoom.css';
+
 class CreateRoom extends React.Component {
 
   constructor(props) {
@@ -114,12 +116,12 @@ class CreateRoom extends React.Component {
   render() {
     return (
       <div>
-        <h2 onClick={this.handleShowCreateRoom}>or, create a room</h2>
+        <h2 class="create-room" onClick={this.handleShowCreateRoom}>or, <span className="clickable">create a room</span></h2>
         {this.state.createRoom ? (
           <form onSubmit={this.handleSubmitCreateRoom}>
-            <label>
+            <label class="create-room">
               Enter a roomcode to create a room:
-              <input name="code" type="text" value={this.state.roomCode} onChange={this.handleChangeCreateRoom} />
+              <input placeholder="Enter a Room Code" name="code" type="text" value={this.state.roomCode} onChange={this.handleChangeCreateRoom} />
             </label>
           </form>
         ) : null}
