@@ -1,14 +1,16 @@
 .home-body {
   position: absolute;
   width: 80%;
-  margin-top: 10%;
-  margin-left: 10%;
-  margin-right: 10%;
+
+  top: 35%;
+  left: 10%;
+
 }
 
 .home-content {
   height: 100%;
-  width: 50%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .home-header {
