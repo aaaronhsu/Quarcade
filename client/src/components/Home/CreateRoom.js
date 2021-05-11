@@ -116,7 +116,7 @@ class CreateRoom extends React.Component {
   render() {
     return (
       <div>
-        <h2 class="create-room" onClick={this.handleShowCreateRoom}>or, <span className="clickable">create a room</span></h2>
+        <h2 class="create-room">or, <span className="clickable" onClick={this.handleShowCreateRoom}>create a room</span></h2>
         {this.state.createRoom ? (
           <form onSubmit={this.handleSubmitCreateRoom}>
             <label class="create-room">
