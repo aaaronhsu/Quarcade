@@ -1,0 +1,17 @@
+.home-body {
+  position: absolute;
+  width: 80%;
+
+  top: 30%;
+  left: 10%;
+
+}
+
+.home-content {
+  height: 100%;
+}
+
+.home-header {
+  font-size: 100px;
+  color: white;
+}
