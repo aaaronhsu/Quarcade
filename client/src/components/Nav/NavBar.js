@@ -9,16 +9,16 @@ class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <ul>
-          <li>
-            <Link to="/">
+        <ul class="nav-ul">
+          <li class="nav-li">
+            <Link class="nav-li" to="/">
               Quarcade
             </Link>
           </li>
           {window.location.pathname != "/" ?
             null:
-            <li>
-              <Link className="floatRight" to="/about">
+            <li class="nav-li">
+              <Link class="floatRight nav-li" to="/about">
                 About
               </Link>
             </li>}

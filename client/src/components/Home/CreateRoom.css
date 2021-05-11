@@ -12,4 +12,10 @@ form {
 .clickable {
   color: #57C6D7;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.clickable:hover {
+  color: #FFCB05;
+  transition: 0.2s;
 }
