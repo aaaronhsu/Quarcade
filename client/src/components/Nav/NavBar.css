@@ -11,7 +11,7 @@
 
 .nav-li {
   display: block;
-  color: #c4c4c4;
+  color: #dddddd;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -24,12 +24,4 @@
   transition: 0.2s;
 }
 
-/* Change the link color to #111 (black) on hover */
-.nav-li a:hover {
-  background-color: #111;
-}
-
-.floatRight {
-  float: right;
-}
 

@@ -18,7 +18,7 @@ class NavBar extends React.Component {
           {window.location.pathname != "/" ?
             null:
             <li class="nav-li">
-              <Link class="floatRight nav-li" to="/about">
+              <Link class="nav-li" to="/about">
                 About
               </Link>
             </li>}
