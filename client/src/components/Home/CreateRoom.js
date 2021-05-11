@@ -120,8 +120,7 @@ class CreateRoom extends React.Component {
         {this.state.createRoom ? (
           <form onSubmit={this.handleSubmitCreateRoom}>
             <label class="create-room">
-              Enter a roomcode to create a room:
-              <input placeholder="Enter a Room Code" name="code" type="text" value={this.state.roomCode} onChange={this.handleChangeCreateRoom} />
+              <input class="room-form-input" placeholder="Enter a Room Code" name="code" type="text" value={this.state.roomCode} onChange={this.handleChangeCreateRoom} />
             </label>
           </form>
         ) : null}

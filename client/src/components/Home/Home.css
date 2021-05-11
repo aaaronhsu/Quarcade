@@ -2,18 +2,16 @@
   position: absolute;
   width: 80%;
 
-  top: 35%;
+  top: 30%;
   left: 10%;
 
 }
 
 .home-content {
   height: 100%;
-  margin-left: 10%;
-  margin-right: 10%;
 }
 
 .home-header {
-  font-size: 72px;
+  font-size: 100px;
   color: white;
 }
