@@ -104,7 +104,7 @@ class JoinRoom extends React.Component {
           Have a Room Code?
         </h2>
         <form class="submit-room" onSubmit={this.handleSubmitJoinRoom}>
-          <input placeholder="Enter a Room Code..." name="roomCode" type="text" value={this.state.roomCode} onChange={this.handleChangeJoinRoom} />
+          <input placeholder="Join a Room..." name="roomCode" type="text" value={this.state.roomCode} onChange={this.handleChangeJoinRoom} />
         </form>
         {this.state.redirectToLobby ? (<Redirect to="/lobby" />) : null}
       </div>
