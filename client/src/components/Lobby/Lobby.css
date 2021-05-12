@@ -1,3 +1,7 @@
+.lobby {
+  height: 100%;
+}
+
 .lobby-container {
   display: flex;
 }
@@ -6,6 +10,8 @@
   order: 0;
   flex-grow: 8;
   margin: 0.5%;
+
+  height: calc(100vh - 200px);
 }
 
 .lobby-interact {

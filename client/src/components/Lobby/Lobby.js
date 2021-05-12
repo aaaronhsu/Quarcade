@@ -8,7 +8,7 @@ import './Lobby.css';
 class Lobby extends React.Component {
   render() {
     return (
-      <div>
+      <div class="lobby">
 
         <div class="lobby-container">
           <div class="lobby-choose">
