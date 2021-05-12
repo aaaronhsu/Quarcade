@@ -22,8 +22,8 @@ class Home extends React.Component {
         <div>
           <JoinRoom />
           <CreateRoom />
-
         </div>
+        
       </div>
     )}
 }
