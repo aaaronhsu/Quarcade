@@ -7,3 +7,13 @@
 
   height: 100%;
 }
+
+.choosegame-alphasoup {
+  color: beige;
+  cursor: pointer;
+}
+
+.choosegame-codenames {
+  color: rgb(50, 0, 231);
+  cursor: pointer;
+}
