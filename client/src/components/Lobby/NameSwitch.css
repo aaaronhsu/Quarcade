@@ -2,6 +2,8 @@
 .nameswitch-display {
   font-size: 26px;
   margin: 3%;
+
+  cursor: pointer;
 }
 
 .nameswitch-input {

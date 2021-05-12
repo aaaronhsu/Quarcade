@@ -102,11 +102,9 @@ class NameSwitch extends React.Component {
               <input class="nameswitch-input" placeholder="Enter a New Name" name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
             </form>
           ) : 
-          <p class="nameswitch-display" onClick={this.handleSwitchName} key={this.props.key}>
-              <div>
-                {this.state.displayName}
-              </div>
-          </p>
+          <span class="nameswitch-display" onClick={this.handleSwitchName} key={this.props.key}>
+              {this.state.displayName}
+          </span>
         }
       </div>
     );
