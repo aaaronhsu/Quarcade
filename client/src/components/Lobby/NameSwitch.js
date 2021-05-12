@@ -65,7 +65,8 @@ class NameSwitch extends React.Component {
     // adds to the database, for later games
     this.addName();
 
-    if (this.state.currentName.length > 15) return;
+    // you can't switch your name to something longer than 20 characters
+    if (this.state.currentName.length > 20) return;
 
     // causes the backend to change client.username
     clientSocket.emit("changeUsername", this.state.currentName);
