@@ -15,18 +15,9 @@ class Home extends React.Component {
     return (
       <div>
 
-        <table class="home-body">
-          <tr>
-            <td class="home-content">
-              <h1 class="home-header">Quarcade</h1>
-            </td>
-
-            <td class="home-content">
-              <JoinRoom />
-              <CreateRoom />
-            </td>
-          </tr>
-        </table>
+        <h1 class="home-header">Quarcade</h1>
+        <JoinRoom />
+        <CreateRoom />
       </div>
     )}
 }
