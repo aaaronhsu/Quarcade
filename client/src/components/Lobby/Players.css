@@ -1,5 +1,9 @@
 .players {
   text-align: center;
+
+  background-color: #0e0e0e;
+  padding: 1%;
+  border-radius: 0.7em;
 }
 
 .players-title {
@@ -12,5 +16,6 @@
 
 .players-code {
   font-size: 36px;
+  font-weight: 500;
   color: #57C6D7;
 }

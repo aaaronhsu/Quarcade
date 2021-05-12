@@ -18,11 +18,14 @@ class Lobby extends React.Component {
 
           <div class="lobby-interact">
             <Players />
+
+            <hr class="divider"></hr>
+            
             <Chat />
           </div>
         </div>
 
-        
+
       </div>
     )}
 }

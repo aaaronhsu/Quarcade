@@ -4,10 +4,17 @@
 
 .lobby-choose {
   order: 0;
-  flex-grow: 2;
+  flex-grow: 8;
 }
 
 .lobby-interact {
   order: 1;
   margin-right: 5%;
+
+  flex-grow: 2;
+}
+
+.divider {
+  margin-top: 10%;
+  margin-bottom: 10%;
 }

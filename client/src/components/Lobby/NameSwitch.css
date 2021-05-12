@@ -1,0 +1,17 @@
+
+.nameswitch-display {
+  font-size: 30px;
+}
+
+.nameswitch-input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 1rem;
+	margin: 0 auto;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  display: block;
+  transition: all 0.3s;
+}

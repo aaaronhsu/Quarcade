@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Axios from 'axios';
 import clientSocket from "../../ClientSocket.js";
 
+import './NameSwitch.css';
+
 class NameSwitch extends React.Component {
   constructor(props) {
     super(props);
@@ -95,15 +97,14 @@ class NameSwitch extends React.Component {
         {
           this.state.switchMode ? (
             <form onSubmit={this.handleSubmitNameChange}>
-              <label>Edit: </label>
-              <input name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
+              <input class="nameswitch-input" placeholder="Enter a New Name" name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
             </form>
           ) : 
-          <h1 onClick={this.handleSwitchName} key={this.props.key}>
+          <p class="nameswitch-display" onClick={this.handleSwitchName} key={this.props.key}>
               <div>
                 {this.state.displayName}
               </div>
-          </h1>
+          </p>
         }
       </div>
     );
