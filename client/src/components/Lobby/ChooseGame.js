@@ -290,15 +290,15 @@ class ChooseGame extends React.Component {
 
         <div class="choosegame-game">
           <span class="choosegame-alphasoup" onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup} / {this.state.numPlayers})</span>
-          {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
         </div>
 
         <div class="choosegame-game">
           <span class="choosegame-codenames" onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</span>
-          {/*this.state.readyCodeNames ? (start codename component here) : null */}
         </div>
         
         
+        {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
+        {/*this.state.readyCodeNames ? (start codename component here) : null */}
         
         
         {this.state.startAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
