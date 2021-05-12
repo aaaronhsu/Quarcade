@@ -5,11 +5,12 @@
 .lobby-choose {
   order: 0;
   flex-grow: 8;
+  margin: 0.5%;
 }
 
 .lobby-interact {
   order: 2;
-  margin-right: 5%;
+  margin: 0.5%;
 
   flex-grow: 2;
 }
