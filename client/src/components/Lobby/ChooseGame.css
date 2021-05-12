@@ -9,11 +9,23 @@
 }
 
 .choosegame-alphasoup {
-  color: beige;
   cursor: pointer;
+  font-size: 26px;
+  transition: 0.2s;
 }
 
 .choosegame-codenames {
-  color: rgb(50, 0, 231);
   cursor: pointer;
+  font-size: 26px;
+  transition: 0.2s;
+}
+
+.choosegame-alphasoup:hover {
+  color: rgb(243, 243, 180);
+  transition: 0.2s;
+}
+
+.choosegame-codenames:hover {
+  color: rgb(50, 0, 231);
+  transition: 0.2s;
 }

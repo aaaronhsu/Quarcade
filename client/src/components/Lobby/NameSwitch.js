@@ -97,12 +97,21 @@ class NameSwitch extends React.Component {
     return (
       <div>
         {
-          this.state.switchMode ? (
-            <form onSubmit={this.handleSubmitNameChange}>
-              <input class="nameswitch-input" placeholder="Enter a New Name" name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
-            </form>
-          ) : 
-          <span class="nameswitch-display" onClick={this.handleSwitchName} key={this.props.key}>
+          this.props.isSelf ?
+          <div>
+            {
+              this.state.switchMode ? (
+                <form onSubmit={this.handleSubmitNameChange}>
+                  <input class="nameswitch-input" placeholder="Enter a New Name" name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
+                </form>
+              ) : 
+              <span class="nameswitch-selfdisplay" onClick={this.handleSwitchName} key={this.props.key}>
+                  {this.state.displayName}
+              </span>
+            }
+          </div>
+          :
+          <span class="nameswitch-display" key={this.props.key}>
               {this.state.displayName}
           </span>
         }
