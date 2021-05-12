@@ -15,18 +15,15 @@ class Home extends React.Component {
     return (
       <div>
 
-        <table class="home-body">
-          <tr>
-            <td class="home-content">
-              <h1 class="home-header">Quarcade</h1>
-            </td>
+        <h1 class="home-header">Quarcade</h1>
 
-            <td class="home-content">
-              <JoinRoom />
-              <CreateRoom />
-            </td>
-          </tr>
-        </table>
+        <hr class="home-divider"></hr>
+
+        <div>
+          <JoinRoom />
+          <CreateRoom />
+        </div>
+        
       </div>
     )}
 }
