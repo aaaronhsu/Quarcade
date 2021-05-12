@@ -17,7 +17,7 @@ class Home extends React.Component {
 
         <h1 class="home-header">Quarcade</h1>
 
-        <hr class="home-divider"></hr>
+        <hr class="divider"></hr>
 
         <div>
           <JoinRoom />

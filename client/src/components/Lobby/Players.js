@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NameSwitch from './NameSwitch.js'
 
 import clientSocket from "../../ClientSocket.js";
+import './Players.css';
 
 class Players extends React.Component {
   constructor(props) {
@@ -39,17 +40,22 @@ class Players extends React.Component {
   
   render() {
     return (
-      <div>
-        <h1>List of Players in {this.state.room}: (click your name to change it)</h1>
+      <div class="players">
+
+        <h1 class="players-title">Players</h1>
 
         {
           this.state.players.map(player => (
             <NameSwitch
               key={player}
               player={player}
+
+              isSelf={player[1] === clientSocket.id}
             />
           ))
         }
+
+        <p class="players-roomcode">Room Code: <span class="players-code">{this.state.room}</span></p>
 
       </div>
     );

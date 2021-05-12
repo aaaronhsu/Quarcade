@@ -29,6 +29,15 @@ class CreateRoom extends React.Component {
 
   // post request to create new room
   async createRoom(roomCode) {
+    
+    const CHARS = new Set("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    for (var i = 0; i < roomCode.length; i++) {
+      if (!CHARS.has(roomCode.charAt(i))) {
+        alert("please use an alphanumeric room code");
+        return;
+      }
+    }
+
     try {
       await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: {socket: clientSocket.id, name: this.state.username } }); 
 

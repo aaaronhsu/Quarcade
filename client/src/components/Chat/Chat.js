@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
 
+import './Chat.css';
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      visible: false,
       messages: [],
 
       message: "",      
@@ -20,6 +21,8 @@ class Chat extends React.Component {
       let messages = [...this.state.messages];
 
       messages.push({ username: user, message: message });
+
+      if (messages.length > 10) messages.shift();
 
       this.setState({ messages: messages });
     });
@@ -42,6 +45,8 @@ class Chat extends React.Component {
   handleSubmitMessage = event => {
     event.preventDefault();
 
+    if (this.state.message === "") return;
+
     clientSocket.emit("sendMessage", this.state.message);
 
     // resets message state
@@ -51,47 +56,31 @@ class Chat extends React.Component {
   checkRoom = () => {
     clientSocket.emit("reqSocketRoom");
   };
-
-  openChat = () => {
-    this.setState({visible: true});
-  }
-
-  closeChat = () => {
-    this.setState({visible: false});
-  }
  
   render() {
     return (
-      <div>
-        {
-          this.state.visible ?
-          <div>
-            <button onClick={this.closeChat}>Hide Chat</button>
+      <div class="chat">
 
-            <h1>Chat!</h1>
-            <form onSubmit={this.handleSubmitMessage}>
-              <label>
-               Send Message:
-               <input name="message" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
-              </label>
-            </form>
+        <h1 class="chat-title">Chat</h1>
 
-            <h3>See Messages Below:</h3>
-            <div>
-              {
-                this.state.messages.map(message => (
-                  <small>
-                    {message.username}: {message.message}
-                    <br></br>
-                  </small>
-                ))
-              }
-            </div>
+        <div>
+          {
+            this.state.messages.map(message => (
+              <p class="chat-message">
+                <span class="chat-sender">{message.username}</span>: <span class="chat-text">{message.message}</span>
+                <br></br>
+              </p>
+            ))
+          }
+        </div>
 
-          </div>
-          :
-          <button onClick={this.openChat}>Show Chat</button>
-        }
+        <form class="chat-form" onSubmit={this.handleSubmitMessage}>
+          <label>
+           <input class="chat-message-input" name="message" placeholder="Send a Message!" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
+          </label>
+        </form>
+
+
       </div>
     );
   }

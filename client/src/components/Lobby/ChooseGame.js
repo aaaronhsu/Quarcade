@@ -4,6 +4,7 @@ import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-route
 import StartGameAlphaSoup from './StartGameAlphaSoup.js';
 
 import clientSocket from "../../ClientSocket.js";
+import './ChooseGame.css';
 
 
 class ChooseGame extends React.Component {
@@ -275,12 +276,31 @@ class ChooseGame extends React.Component {
   // need to connect game selection with backend database
   render() {
     return (
-      <div>
-        <h1>Games! (click one to vote)</h1>
-        <h2 onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup} / {this.state.numPlayers})</h2>
+      <div class="choosegame">
+        <h1>Select a game! 
+
+          {
+            this.state.gameVoted === "" ?
+              " (click one to vote)"
+            :
+              " (currently voting for " + this.state.gameVoted + ")"
+          }
+
+        </h1>
+
+        <div class="choosegame-game">
+          <span class="choosegame-alphasoup" onClick={this.handleVoteAlphaSoup}>AlphaSoup ({this.state.votesAlphaSoup} / {this.state.numPlayers})</span>
+        </div>
+
+        <div class="choosegame-game">
+          <span class="choosegame-codenames" onClick={this.handleVoteCodeNames}>CodeNames ({this.state.votesCodeNames} / {this.state.numPlayers})</span>
+        </div>
+        
+        
         {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
-        <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</h2>
         {/*this.state.readyCodeNames ? (start codename component here) : null */}
+        
+        
         {this.state.startAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
         {/* EVENTUALLY SAME AS ABOVE FOR CODENAMES */}
 

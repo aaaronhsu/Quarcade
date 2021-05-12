@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Axios from 'axios';
 import clientSocket from "../../ClientSocket.js";
 
+import './NameSwitch.css';
+
 class NameSwitch extends React.Component {
   constructor(props) {
     super(props);
@@ -63,6 +65,9 @@ class NameSwitch extends React.Component {
     // adds to the database, for later games
     this.addName();
 
+    // you can't switch your name to something longer than 20 characters
+    if (this.state.currentName.length > 20) return;
+
     // causes the backend to change client.username
     clientSocket.emit("changeUsername", this.state.currentName);
     // now that the username is changed, emit the request to repull users
@@ -93,17 +98,23 @@ class NameSwitch extends React.Component {
     return (
       <div>
         {
-          this.state.switchMode ? (
-            <form onSubmit={this.handleSubmitNameChange}>
-              <label>Edit: </label>
-              <input name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
-            </form>
-          ) : 
-          <h1 onClick={this.handleSwitchName} key={this.props.key}>
-              <div>
-                {this.state.displayName}
-              </div>
-          </h1>
+          this.props.isSelf ?
+          <div>
+            {
+              this.state.switchMode ? (
+                <form onSubmit={this.handleSubmitNameChange}>
+                  <input class="nameswitch-input" placeholder="Enter a New Name" name="newName" type="text" value={this.state.currentName} onChange={this.handleChangeName}/>
+                </form>
+              ) : 
+              <span class="nameswitch-selfdisplay" onClick={this.handleSwitchName} key={this.props.key}>
+                  {this.state.displayName}
+              </span>
+            }
+          </div>
+          :
+          <span class="nameswitch-display" key={this.props.key}>
+              {this.state.displayName}
+          </span>
         }
       </div>
     );
