@@ -7,7 +7,6 @@ class Chat extends React.Component {
     super(props);
 
     this.state = {
-      visible: false,
       messages: [],
 
       message: "",      
@@ -51,47 +50,30 @@ class Chat extends React.Component {
   checkRoom = () => {
     clientSocket.emit("reqSocketRoom");
   };
-
-  openChat = () => {
-    this.setState({visible: true});
-  }
-
-  closeChat = () => {
-    this.setState({visible: false});
-  }
  
   render() {
     return (
       <div>
-        {
-          this.state.visible ?
-          <div>
-            <button onClick={this.closeChat}>Hide Chat</button>
+        <h1>Chat!</h1>
+        <form onSubmit={this.handleSubmitMessage}>
+          <label>
+           Send Message:
+           <input name="message" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
+          </label>
+        </form>
 
-            <h1>Chat!</h1>
-            <form onSubmit={this.handleSubmitMessage}>
-              <label>
-               Send Message:
-               <input name="message" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
-              </label>
-            </form>
+        <h3>See Messages Below:</h3>
+        <div>
+          {
+            this.state.messages.map(message => (
+              <small>
+                {message.username}: {message.message}
+                <br></br>
+              </small>
+            ))
+          }
+        </div>
 
-            <h3>See Messages Below:</h3>
-            <div>
-              {
-                this.state.messages.map(message => (
-                  <small>
-                    {message.username}: {message.message}
-                    <br></br>
-                  </small>
-                ))
-              }
-            </div>
-
-          </div>
-          :
-          <button onClick={this.openChat}>Show Chat</button>
-        }
       </div>
     );
   }
