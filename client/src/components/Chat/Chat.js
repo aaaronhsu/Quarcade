@@ -22,7 +22,7 @@ class Chat extends React.Component {
 
       messages.push({ username: user, message: message });
 
-      if (messages.length > 15) messages.shift();
+      if (messages.length > 10) messages.shift();
 
       this.setState({ messages: messages });
     });
@@ -66,10 +66,10 @@ class Chat extends React.Component {
         <div>
           {
             this.state.messages.map(message => (
-              <small>
-                {message.username}: {message.message}
+              <p class="chat-message">
+                <span class="chat-sender">{message.username}</span>: <span class="chat-text">{message.message}</span>
                 <br></br>
-              </small>
+              </p>
             ))
           }
         </div>
