@@ -8,6 +8,7 @@
 
 .chat-title {
   font-size: 36px;
+  margin-bottom: 10px;
 }
 
 .chat-message-input {
@@ -41,5 +42,5 @@
 }
 
 .chat-text {
-
+  color: #eeeeee;
 }
