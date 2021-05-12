@@ -14,13 +14,13 @@ class Lobby extends React.Component {
           <div class="lobby-choose">
             <ChooseGame />
           </div>
-            
+      
 
           <div class="lobby-interact">
             <Players />
 
             <hr class="divider"></hr>
-            
+
             <Chat />
           </div>
         </div>

@@ -43,4 +43,5 @@
 
 .chat-text {
   color: #eeeeee;
+  overflow-wrap: break-word;
 }
