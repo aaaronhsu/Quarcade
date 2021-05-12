@@ -289,11 +289,11 @@ class ChooseGame extends React.Component {
         </h1>
 
         <div class="choosegame-game">
-          <span class="choosegame-alphasoup" onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup} / {this.state.numPlayers})</span>
+          <span class="choosegame-alphasoup" onClick={this.handleVoteAlphaSoup}>AlphaSoup ({this.state.votesAlphaSoup} / {this.state.numPlayers})</span>
         </div>
 
         <div class="choosegame-game">
-          <span class="choosegame-codenames" onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</span>
+          <span class="choosegame-codenames" onClick={this.handleVoteCodeNames}>CodeNames ({this.state.votesCodeNames} / {this.state.numPlayers})</span>
         </div>
         
         
