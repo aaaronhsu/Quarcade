@@ -1,5 +1,6 @@
 
 .nameswitch-selfdisplay {
+  color: #93e1ec;
   font-size: 26px;
   margin: 3%;
 
@@ -8,7 +9,7 @@
 }
 
 .nameswitch-selfdisplay:hover {
-  color: #FFCB05;
+  color: #f8dc6d;
   font-size: 26px;
   margin: 3%;
 
@@ -19,7 +20,7 @@
 .nameswitch-display {
   font-size: 26px;
   margin: 3%;
-  
+
   transition: 0.2s;
 }
 
