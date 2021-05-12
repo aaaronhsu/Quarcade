@@ -277,7 +277,16 @@ class ChooseGame extends React.Component {
   render() {
     return (
       <div class="choosegame">
-        <h1>Games! (click one to vote)</h1>
+        <h1>Select a game! 
+
+          {
+            this.state.gameVoted === "" ?
+              " (click one to vote)"
+            :
+              " (currently voting for " + this.state.gameVoted + ")"
+          }
+
+        </h1>
         <h2 onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup} / {this.state.numPlayers})</h2>
         {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
         <h2 onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</h2>
