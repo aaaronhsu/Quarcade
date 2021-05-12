@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
 
+import './Chat.css';
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,8 @@ class Chat extends React.Component {
       let messages = [...this.state.messages];
 
       messages.push({ username: user, message: message });
+
+      if (messages.length > 15) messages.shift();
 
       this.setState({ messages: messages });
     });
@@ -41,6 +45,8 @@ class Chat extends React.Component {
   handleSubmitMessage = event => {
     event.preventDefault();
 
+    if (this.state.message === "") return;
+
     clientSocket.emit("sendMessage", this.state.message);
 
     // resets message state
@@ -53,16 +59,10 @@ class Chat extends React.Component {
  
   render() {
     return (
-      <div>
-        <h1>Chat!</h1>
-        <form onSubmit={this.handleSubmitMessage}>
-          <label>
-           Send Message:
-           <input name="message" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
-          </label>
-        </form>
+      <div class="chat">
 
-        <h3>See Messages Below:</h3>
+        <h1 class="chat-title">Chat</h1>
+
         <div>
           {
             this.state.messages.map(message => (
@@ -73,6 +73,13 @@ class Chat extends React.Component {
             ))
           }
         </div>
+
+        <form class="chat-form" onSubmit={this.handleSubmitMessage}>
+          <label>
+           <input class="chat-message-input" name="message" placeholder="Send a Message!" type="text" value={this.state.message} onChange={this.handleChangeMessage} />
+          </label>
+        </form>
+
 
       </div>
     );

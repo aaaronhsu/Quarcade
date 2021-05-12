@@ -1,0 +1,28 @@
+.chat {
+  text-align: center;
+
+  background-color: #0e0e0e;
+  padding: 1%;
+  border-radius: 0.7em;
+}
+
+.chat-title {
+  font-size: 36px;
+}
+
+.chat-message-input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 1rem;
+	margin: 0 auto;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  display: block;
+  transition: all 0.3s;
+}
+
+.chat-form {
+  margin-bottom: 24.12px;
+}
