@@ -287,10 +287,20 @@ class ChooseGame extends React.Component {
           }
 
         </h1>
-        <h2 class="choosegame-alphasoup" onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup} / {this.state.numPlayers})</h2>
-        {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
-        <h2 class="choosegame-codenames" onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</h2>
-        {/*this.state.readyCodeNames ? (start codename component here) : null */}
+
+        <div class="choosegame-game">
+          <span class="choosegame-alphasoup" onClick={this.handleVoteAlphaSoup}>AlphaSoup (votes: {this.state.votesAlphaSoup} / {this.state.numPlayers})</span>
+          {this.state.readyAlphaSoup ? <StartGameAlphaSoup/>: null}
+        </div>
+
+        <div class="choosegame-game">
+          <span class="choosegame-codenames" onClick={this.handleVoteCodeNames}>CodeNames (votes: {this.state.votesCodeNames} / {this.state.numPlayers})</span>
+          {/*this.state.readyCodeNames ? (start codename component here) : null */}
+        </div>
+        
+        
+        
+        
         {this.state.startAlphaSoup ? (<Redirect to="/alphasoup" />) : null}
         {/* EVENTUALLY SAME AS ABOVE FOR CODENAMES */}
 
