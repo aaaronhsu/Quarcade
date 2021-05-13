@@ -67,15 +67,6 @@ class Letters extends React.Component {
 
   // ------------------------------------ Render ------------------------------------
 
-  // renders text that shows how many letters there are
-  renderNumberOfLetters = () => {
-    return (
-      <h3>
-        Here is the letter count: {this.props.numLetters}
-      </h3>
-    )
-  }
-
   // FOR DEBUG, renders the button to change the number of letters rendered
   renderButtonAddNLetters = () => {
     return (
@@ -95,11 +86,15 @@ class Letters extends React.Component {
   render() {
     return (
       <div>
-        {this.renderNumberOfLetters()} <br></br>
-
-
         {this.renderButtonAddNLetters()} <br></br>
-        Current Letters:
+
+        {
+          this.props.lettersLeft <= 0 ?
+          <h2>Letter Pool (<span class="red">{this.props.lettersLeft}</span> letters remaining):</h2>
+          :
+          <h2>Letter Pool (<span class="yellow">{this.props.lettersLeft}</span> letters remaining):</h2>
+        }
+
         <div class="letters-display">
         {
           this.props.letters.map(letter => (

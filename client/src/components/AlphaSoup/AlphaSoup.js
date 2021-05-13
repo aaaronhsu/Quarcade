@@ -331,14 +331,13 @@ class AlphaSoup extends React.Component {
                     <Letters 
                       numLetters={this.state.letters.length}
                       letters={this.state.letters}
+                      lettersLeft={this.state.lettersLeft}
             
             
                       addLetter={(letter) => this.addLetter(letter)} 
                       updateLettersLeft={(change) => this.updateLettersLeft(change)} // purely for debug purposes
                     />
 
-
-                    LETTERS LEFT: {this.state.lettersLeft}
                     <LetterVote 
                       numPlayers={this.state.playerData.length}
                       lettersLeft={this.state.lettersLeft}
