@@ -1,5 +1,7 @@
 .alphasoup {
   display: flex;
+  margin: 0.5%;
+  margin-left: 1%;
 }
 
 .alphasoup-lhs {
@@ -17,6 +19,8 @@
   flex-direction: column;
   flex-grow: 3;
   order: 1;
+
+  height: calc(100vh - 200px);
 }
 
 
