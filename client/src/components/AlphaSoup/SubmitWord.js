@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
 import Axios from "axios";
 
+import './SubmitWord.css';
+
 class SubmitWord extends React.Component {
 
   constructor(props) {
@@ -228,9 +230,8 @@ class SubmitWord extends React.Component {
   renderWordSubmission = () => {
     return (
       <form onSubmit={this.submitWord}>
-          <label>
-            Enter a word to submit:
-            <input name="word" type="text" value={this.state.word} onChange={this.handleWordChange} />
+          <label class="submitword-label">
+            <input class="submitword-input" placeholder="Create a word here!" name="word" type="text" value={this.state.word} onChange={this.handleWordChange} />
           </label>
       </form>
     );

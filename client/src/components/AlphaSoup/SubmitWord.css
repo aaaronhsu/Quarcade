@@ -1,0 +1,15 @@
+.submitword-input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 1rem;
+	margin-top: 3%;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: rgb(255, 255, 255);
+  width: 75%;
+}
+
+.submitword-label {
+  display: flex;
+}

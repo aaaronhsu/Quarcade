@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import clientSocket from '../../ClientSocket.js';
 
+import "./PlayerData.css";
+
 class PlayerData extends React.Component {
   constructor(props) {
     super(props);
@@ -35,50 +37,87 @@ class PlayerData extends React.Component {
   render() {
     return (
       <div>
+        <div class="playerData">
+          {
+            this.props.playerData.map(player => (
+              <div class="playerData-player">
+                <h2>{player.username} ({player.points} pts)</h2>
 
-        <h2>These are the words each player has:</h2>
-
-        {
-          this.props.playerData.map(player => (
-            <div key={player.id}>
-              <h3>{player.username} ({player.points} pts):</h3>
-
-              <ul>
-              {
-                player.wordsOwned.map(word => (
-                  <div>
-                    {
-                      word.votedToValidate ?
-
+                <ul>
+                  {
+                    player.wordsOwned.map(word => (
                       <div>
                         {
                           word.valid ?
-                          null
+
+                          <div>
+                            {
+                              word.beingStolen ?
+                              <div>
+                                <li>
+                                  <span class="playerData-stealingword playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
+                                    {word.word} ({word.points}, being stolen)
+                                  </span>
+                                </li>
+                              </div>
+                              :
+                              <div>
+                                <li>
+                                  <span class="playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
+                                    {word.word} ({word.points})
+                                  </span>
+                                </li>
+                              </div>
+                            }
+                          </div>
                           :
-                          <p>
-                            {word.votesToValidate}/{this.props.playerData.length} players have voted to validate this word
-                          </p>
+                          <div class="playerData-invalidword">
+                            {
+                              word.votedToValidate ?
+                              <div>
+                                {
+                                  word.beingStolen ?
+                                  <div>
+                                    <li>
+                                      <span class="playerData-stealingword playerData-invalidword playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
+                                        {word.word} ({word.points}, being stolen) (you have voted to validate this word, {word.votesToValidate}/{this.props.playerData.length} validated)
+                                      </span>
+                                    </li>
+                                  </div>
+                                  :
+                                  <div>
+                                    <li>
+                                      <span class="playerData-invalidword playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
+                                        {word.word} ({word.points}) (you have voted to validate this word, {word.votesToValidate}/{this.props.playerData.length} validated)
+                                      </span>
+                                    </li>
+                                  </div>
+                                }
+                              </div>
+                              :
+                              <div>
+                                {
+                                  <div>
+                                    <li>
+                                      <span class="playerData-invalidword" onClick={(username, wd) => this.voteValidWord(player.username, word.word)}>
+                                        {word.word} ({word.points}) ({this.props.playerData.length - word.votesToValidate}/{this.props.playerData.length} validated)
+                                      </span>
+                                    </li>
+                                  </div>
+                                }
+                              </div>
+                            }
+                          </div>
                         }
                       </div>
-                      :
-                      <button onClick={(username, wd) => this.voteValidWord(player.username, word.word)}>
-                        Press this to vote to validate the word
-                      </button>
-                    }
+                    ))
+                  }
+                </ul>
+              </div>
+            ))
+          }
+        </div>
 
-                    {
-                      word.beingStolen ?
-                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points}, {word.valid ? "valid" : "invalid"}) (being stolen)</li>
-                      :
-                      <li key={word.id} onClick={() => this.props.changeStealStatus(player.username, word.word)}>{word.word} ({word.points}, {word.valid ? "valid" : "invalid"})</li>
-                    }
-                  </div>
-                ))
-              }
-              </ul>
-            </div>
-          ))
-        }
         
       </div>
     );
