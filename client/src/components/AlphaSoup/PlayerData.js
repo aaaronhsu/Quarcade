@@ -80,7 +80,7 @@ class PlayerData extends React.Component {
                                   <div>
                                     <li>
                                       <span class="playerData-stealingword playerData-invalidword playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
-                                        {word.word} ({word.points}, being stolen) (you have voted to validate this word, {word.votesToValidate} votes needed to validate word)
+                                        {word.word} ({word.points}, being stolen) (you have voted to validate this word, {word.votesToValidate - this.props.playerData.length}/{this.props.playerData.length} validated)
                                       </span>
                                     </li>
                                   </div>
@@ -88,7 +88,7 @@ class PlayerData extends React.Component {
                                   <div>
                                     <li>
                                       <span class="playerData-invalidword playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
-                                        {word.word} ({word.points}) (you have voted to validate this word, {word.votesToValidate} votes needed to validate word)
+                                        {word.word} ({word.points}) (you have voted to validate this word, {word.votesToValidate - this.props.playerData.length}/{this.props.playerData.length} validated)
                                       </span>
                                     </li>
                                   </div>
@@ -100,7 +100,7 @@ class PlayerData extends React.Component {
                                   <div>
                                     <li>
                                       <span class="playerData-invalidword" onClick={(username, wd) => this.voteValidWord(player.username, word.word)}>
-                                        {word.word} ({word.points}) ({word.votesToValidate} votes needed to validate word)
+                                        {word.word} ({word.points}) ({word.votesToValidate - this.props.playerData.length}/{this.props.playerData.length} validated)
                                       </span>
                                     </li>
                                   </div>
