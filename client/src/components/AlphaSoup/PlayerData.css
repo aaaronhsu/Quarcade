@@ -1,3 +1,34 @@
 .playerData {
   display: flex;
 }
+
+.playerData-player {
+  margin: 2%;
+}
+
+.playerData-word {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.playerData-word:hover {
+  color: #57C6D7;
+  transition: 0.1s;
+}
+
+.playerData-stealingword {
+  color: #57C6D7;
+  transition: 0.1s;
+}
+
+.playerData-invalidword {
+  color: red;
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.1s;
+}
+
+.playerData-invalidword:hover {
+  color: green;
+  transition: 0.1s;
+}
