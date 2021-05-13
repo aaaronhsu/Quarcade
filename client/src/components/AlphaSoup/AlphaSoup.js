@@ -142,7 +142,9 @@ class AlphaSoup extends React.Component {
             let player = {
               username: retrievedPlayerData[i].name,
               points: 0,
-              wordsOwned: []
+              wordsOwned: [],
+
+              hasInvalidWord: false
             };
 
             for (var j = 0; j < retrievedPlayerData[i].wordsOwned.length; j++) {
@@ -163,6 +165,8 @@ class AlphaSoup extends React.Component {
               else {
                 wordData.votesToValidate = retrievedPlayerData.length; // all players must validate
                 wordData.votedToValidate = false; // this player has not voted to validate yet
+
+                player.hasInvalidWord = true;
               }
 
 
