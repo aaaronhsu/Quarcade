@@ -364,7 +364,7 @@ class AlphaSoup extends React.Component {
                       changeVoteValidWordStatus={(player, word) => this.changeVoteValidWordStatus(player, word)}
                     />
 
-
+                    <hr class="divider"></hr>
                     <Chat />
                   </div>
       
