@@ -229,8 +229,7 @@ class SubmitWord extends React.Component {
     return (
       <form onSubmit={this.submitWord}>
           <label>
-            Enter a word to submit:
-            <input name="word" type="text" value={this.state.word} onChange={this.handleWordChange} />
+            <input class="chat-message-input" placeholder="Enter a word here!" name="word" type="text" value={this.state.word} onChange={this.handleWordChange} />
           </label>
       </form>
     );
