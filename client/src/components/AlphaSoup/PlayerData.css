@@ -1,5 +1,6 @@
 .playerData {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .playerData-player {
