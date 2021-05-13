@@ -1,0 +1,69 @@
+.lettervote {
+  margin: 3%;
+  display: flex;
+}
+
+.lettervote-info {
+  font-size: 20px;
+  margin-top: 1%;
+}
+
+.lettervote-votesleft {
+  font-size: 26px;
+  padding-right: 2px;
+}
+
+.lettervote-buttondiv {
+  margin-right: 2%;
+}
+
+.lettervote-button {
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 0.5em;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lettervote-letteradd {
+  background-color: #69db5f; /* Green */
+}
+
+.lettervote-letteradd:hover {
+  background-color: #43ac39;
+  transition: 0.2s;
+}
+
+.lettervote-letterremove {
+  background-color: #ee3737; /* Green */
+}
+
+.lettervote-letterremove:hover {
+  background-color: #cc2323;
+  transition: 0.2s;
+}
+
+.lettervote-endadd {
+  background-color: #494949; /* Green */
+}
+
+.lettervote-endadd:hover {
+  background-color: #333333;
+  transition: 0.2s;
+}
+
+.lettervote-endremove {
+  background-color: #494949; /* Green */
+}
+
+.lettervote-endremove:hover {
+  background-color: #333333;
+  transition: 0.2s;
+}
