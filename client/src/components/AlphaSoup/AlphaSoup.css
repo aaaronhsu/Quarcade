@@ -1,0 +1,17 @@
+.alphasoup {
+  display: flex;
+}
+
+.alphasoup-lhs {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  order: 0;
+}
+
+.alphasoup-rhs {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 3;
+  order: 1;
+}

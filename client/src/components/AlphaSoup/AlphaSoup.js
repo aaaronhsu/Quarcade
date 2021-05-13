@@ -9,6 +9,8 @@ import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
 import EndScreen from './EndScreen.js';
 
+import "./AlphaSoup.css";
+
 class AlphaSoup extends React.Component {
 
   constructor(props) {
@@ -323,42 +325,49 @@ class AlphaSoup extends React.Component {
           )
           :
           ( 
-            <div>
+            <div class="alphasoup">
+                  <div class="alphasoup-lhs">
 
-              LETTERS LEFT: {this.state.lettersLeft}
-              
-              <PlayerData
-                playerData={this.state.playerData}
+                    <Letters 
+                      numLetters={this.state.letters.length}
+                      letters={this.state.letters}
+            
+            
+                      addLetter={(letter) => this.addLetter(letter)} 
+                      updateLettersLeft={(change) => this.updateLettersLeft(change)} // purely for debug purposes
+                    />
+
+
+                    LETTERS LEFT: {this.state.lettersLeft}
+                    <LetterVote 
+                      numPlayers={this.state.playerData.length}
+                      lettersLeft={this.state.lettersLeft}
+            
+                      updateLettersLeft={(change) => this.updateLettersLeft(change)}
+                    />
+
+                    <SubmitWord 
+                      letters={this.state.letters}
+                      playerData={this.state.playerData}
+                      
+                      removeLetters={(word) => this.removeLetters(word)}
+                    />
+
+                  </div>
+
+                  <div class="alphasoup-rhs">
+                    <PlayerData
+                      playerData={this.state.playerData}
+                      
+                      changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
+                      voteValidWord={(player, word) => this.voteValidWord(player, word)}
+                      changeVoteValidWordStatus={(player, word) => this.changeVoteValidWordStatus(player, word)}
+                    />
+
+
+                    <Chat />
+                  </div>
       
-                changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
-                voteValidWord={(player, word) => this.voteValidWord(player, word)}
-                changeVoteValidWordStatus={(player, word) => this.changeVoteValidWordStatus(player, word)}
-              />
-      
-              <SubmitWord 
-                letters={this.state.letters}
-                playerData={this.state.playerData}
-      
-                removeLetters={(word) => this.removeLetters(word)}
-              />
-      
-              <LetterVote 
-                numPlayers={this.state.playerData.length}
-                lettersLeft={this.state.lettersLeft}
-      
-                updateLettersLeft={(change) => this.updateLettersLeft(change)}
-              />
-      
-              <Letters 
-                numLetters={this.state.letters.length}
-                letters={this.state.letters}
-      
-      
-                addLetter={(letter) => this.addLetter(letter)} 
-                updateLettersLeft={(change) => this.updateLettersLeft(change)} // purely for debug purposes
-              />
-      
-              <Chat />
 
             </div>
           )
