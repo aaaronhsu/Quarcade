@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import clientSocket from '../../ClientSocket.js';
 
+import './Letters.css';
+
 class Letters extends React.Component {
 
   constructor(props) {
@@ -98,13 +100,13 @@ class Letters extends React.Component {
 
         {this.renderButtonAddNLetters()} <br></br>
         Current Letters:
-        <ul>
+        <div class="letters-display">
         {
           this.props.letters.map(letter => (
-            <li key={letter.id}>{letter}</li>
+            <span class="letters-tile" key={letter.id}>{letter}</span>
           ))
         } 
-        </ul>
+        </div>
         
       </div>
     );

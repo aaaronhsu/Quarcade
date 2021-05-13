@@ -7,6 +7,8 @@
   flex-direction: column;
   flex-grow: 2;
   order: 0;
+
+  flex: 0 0 40%;
 }
 
 .alphasoup-rhs {

@@ -1,6 +1,12 @@
 .playerData {
   display: flex;
   flex-wrap: wrap;
+
+  background-color: #0e0e0e;
+  padding: 1%;
+  border-radius: 0.7em;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 .playerData-player {
