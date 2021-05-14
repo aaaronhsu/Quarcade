@@ -206,6 +206,7 @@ class EndScreen extends React.Component {
         <hr class="divider"></hr>
 
 
+        <h1 class="endscreen-header">Now What?</h1>
         <div class="endscreen-options">
           {this.renderLobbyButton()}
 
