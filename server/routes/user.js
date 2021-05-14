@@ -117,6 +117,17 @@ router.put("/removeWord/:username", function (req, res, next) {
     .catch(next);
 })
 
+// deletes all the words that r invalid
+router.put("/removeInvalid/:username", function (req, res, next) {
+  var username = req.params.username;
+  User.findOneAndUpdate({name: username}, 
+    {$pull: {wordsOwned: {valid: false}}})
+    .then(function (user) {
+      res.send(user);
+    })
+    .catch(next);
+})
+
 // ------------------------------------ DELETE Requests ------------------------------------
 
 //delete requests BY SOCKET
