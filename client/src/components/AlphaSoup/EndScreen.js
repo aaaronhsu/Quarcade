@@ -183,7 +183,7 @@ class EndScreen extends React.Component {
           this.state.votedToPlayAgain ?
 
           <button class="endscreen-againbuttonremove endscreen-button" onClick={() => this.handleVotePlayAgain()}>
-            Remove vote to play again
+            Remove vote to play again ({this.state.playersVotedToPlayAgain}/{this.props.playerData.length} votes) 
           </button>
           :
           <button class="endscreen-againbuttonadd endscreen-button" onClick={() => this.handleVotePlayAgain()}>
@@ -211,9 +211,6 @@ class EndScreen extends React.Component {
 
           {this.renderPlayAgainButton()}
         </div>
-
-        <h3>{this.state.playersVotedToPlayAgain}/{this.props.playerData.length} players have voted to play again</h3>
-
 
         {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
 
