@@ -166,9 +166,11 @@ class EndScreen extends React.Component {
 
   renderLobbyButton = () => {
     return (
-      <button onClick={() => this.handleReturnToLobbyScreen()}>
-        Return to Lobby
-      </button>
+      <div class="endscreen-lobby">
+        <button class="endscreen-lobbybutton endscreen-button" onClick={() => this.handleReturnToLobbyScreen()}>
+          Return to Lobby
+        </button>
+      </div>
     );
   }
 
@@ -176,20 +178,19 @@ class EndScreen extends React.Component {
     return (
       this.state.playAgainButton ?
 
-      <div>
+      <div class="endscreen-playagain">
         {
           this.state.votedToPlayAgain ?
 
-          <button onClick={() => this.handleVotePlayAgain()}>
+          <button class="endscreen-againbuttonremove endscreen-button" onClick={() => this.handleVotePlayAgain()}>
             Remove vote to play again
           </button>
           :
-          <button onClick={() => this.handleVotePlayAgain()}>
+          <button class="endscreen-againbuttonadd endscreen-button" onClick={() => this.handleVotePlayAgain()}>
             Vote to play again!
           </button>
         }
 
-        <h3>{this.state.playersVotedToPlayAgain}/{this.props.playerData.length} players have voted to play again</h3>
       </div>
       :
       null
@@ -202,9 +203,17 @@ class EndScreen extends React.Component {
         <h1 class="endscreen-header">Final Standings</h1>
         {this.renderPlayerStandings()}
 
-        {this.renderLobbyButton()}
+        <hr class="divider"></hr>
 
-        {this.renderPlayAgainButton()}
+
+        <div class="endscreen-options">
+          {this.renderLobbyButton()}
+
+          {this.renderPlayAgainButton()}
+        </div>
+
+        <h3>{this.state.playersVotedToPlayAgain}/{this.props.playerData.length} players have voted to play again</h3>
+
 
         {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
 

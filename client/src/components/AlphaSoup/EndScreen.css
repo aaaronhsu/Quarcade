@@ -12,6 +12,14 @@
   border-radius: 0.7em;
   margin-left: 3%;
   margin-right: 3%;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .endscreen-player {
@@ -21,4 +29,80 @@
 
 .endscreen-word {
   font-size: 20px;
+}
+
+
+.endscreen-options {
+  display: flex;
+
+  background-color: #0e0e0e;
+  padding: 1%;
+  border-radius: 0.7em;
+  margin-left: 3%;
+  margin-right: 3%;
+  width: 40%;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.endscreen-lobby {
+  text-align: center;
+  order: 0;
+  flex-grow: 1;
+}
+
+.endscreen-playagain {
+  text-align: center;
+  order: 0;
+  flex-grow: 1;
+}
+
+.endscreen-button {
+  border: none;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 0.5em;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.endscreen-button:hover {
+  transition: 0.2s;
+}
+
+.endscreen-lobbybutton {
+  background-color: #ff3434;
+}
+
+.endscreen-lobbybutton:hover {
+  background-color: #d82020;
+}
+
+.endscreen-againbuttonadd {
+  background-color: #69db5f; /* Green */
+}
+
+.endscreen-againbuttonadd:hover {
+  background-color: #43ac39;
+  transition: 0.2s;
+}
+
+.endscreen-againbuttonremove {
+  background-color: #ff3434; /* Green */
+}
+
+.endscreen-againbuttonremove:hover {
+  background-color: #d82020;
+  transition: 0.2s;
 }
