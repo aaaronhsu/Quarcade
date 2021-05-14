@@ -1,0 +1,24 @@
+
+.endscreen-header {
+  text-align: center;
+}
+
+.endscreen-players {
+  display: flex;
+  flex-wrap: wrap;
+
+  background-color: #0e0e0e;
+  padding: 1%;
+  border-radius: 0.7em;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+.endscreen-player {
+  margin: 2%;
+  margin-top: 0;
+}
+
+.endscreen-word {
+  font-size: 20px;
+}

@@ -3,6 +3,8 @@ import clientSocket from '../../ClientSocket.js';
 import Axios from 'axios';
 import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
+import './EndScreen.css';
+
 
 class EndScreen extends React.Component {
   constructor(props) {
@@ -140,21 +142,25 @@ class EndScreen extends React.Component {
 
   renderPlayerStandings = () => {
     return (
-      this.props.playerData.map(player => (
-        <div key={player.id}>
-          <h3>#{player.rank}: {player.username} ({player.points} pts):</h3>
-
-          <ul>
-          {
-            player.wordsOwned.map(word => (
-              <div>
-                <li key={word.id}>{word.word} ({word.points})</li>
-              </div>
-            ))
-          }
-          </ul>
-        </div>
-      ))
+      <div class="endscreen-players">
+        {
+          this.props.playerData.map(player => (
+            <div class="endscreen-player" key={player.id}>
+              <h2>#{player.rank}: {player.username} ({player.points} pts)</h2>
+    
+              <ul>
+              {
+                player.wordsOwned.map(word => (
+                  <div>
+                    <li class="endscreen-word" key={word.id}>{word.word} ({word.points})</li>
+                  </div>
+                ))
+              }
+              </ul>
+            </div>
+          ))
+        }
+      </div>
     );
   }
 
@@ -193,6 +199,7 @@ class EndScreen extends React.Component {
   render() {
     return (
       <div>
+        <h1 class="endscreen-header">Final Standings</h1>
         {this.renderPlayerStandings()}
 
         {this.renderLobbyButton()}
