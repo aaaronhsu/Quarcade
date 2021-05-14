@@ -113,7 +113,7 @@ class AlphaSoup extends React.Component {
         res => {
           // set the state to the new letters left count
           this.setState({
-            lettersLeft: res.data[0].lettersLeft
+            lettersLeft: Math.floor(res.data[0].lettersLeft)
           });
     
         }
