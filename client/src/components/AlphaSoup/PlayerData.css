@@ -36,6 +36,10 @@
 }
 
 .playerData-invalidword:hover {
-  color: green;
+  color: #5acc5a;
   transition: 0.1s;
+}
+
+.playerData-validatingword {
+  color: #5acc5a
 }

@@ -187,7 +187,7 @@ class EndScreen extends React.Component {
           </button>
           :
           <button class="endscreen-againbuttonadd endscreen-button" onClick={() => this.handleVotePlayAgain()}>
-            Vote to play again!
+            Vote to play again! ({this.state.playersVotedToPlayAgain}/{this.props.playerData.length} votes)
           </button>
         }
 
