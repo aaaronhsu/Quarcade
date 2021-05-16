@@ -78,6 +78,8 @@ class SubmitWord extends React.Component {
     // lettersLeftAfterWordSubmission will be [-1] if there the word is not valid
     if (!(dataReturned[0].length === 1 & dataReturned[0][0] === -1)) {
 
+      // remove all invalid words that the user has
+      this.removeInvalidWords();
 
       // request the letters left to be updated in state (removes letters from the state of all players)
       clientSocket.emit("reqUpdateLetters", dataReturned[0]);
@@ -93,9 +95,6 @@ class SubmitWord extends React.Component {
         clientSocket.emit("reqSubmitWord", wordData);
       }
       else {
-        // remove all invalid words that the user has
-        this.removeInvalidWords();
-
         let wordData = {
           word: this.state.word,
           valid: false
