@@ -100,7 +100,8 @@ class Letters extends React.Component {
           this.props.letters.map(letter => (
             <span class="letters-tile" key={letter.id}>{letter}</span>
           ))
-        } 
+        }
+        <span class="letters-nexttile">?</span>
         </div>
         
       </div>
