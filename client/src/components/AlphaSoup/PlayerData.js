@@ -75,24 +75,11 @@ class PlayerData extends React.Component {
                             {
                               word.votedToValidate ?
                               <div>
-                                {
-                                  word.beingStolen ?
-                                  <div>
-                                    <li>
-                                      <span class="playerData-stealingword playerData-invalidword playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
-                                        {word.word} ({word.points}, being stolen) (you have voted to validate this word, {word.votesToValidate}/{this.props.playerData.length} validated)
-                                      </span>
-                                    </li>
-                                  </div>
-                                  :
-                                  <div>
-                                    <li>
-                                      <span class="playerData-invalidword playerData-word" onClick={() => this.props.changeStealStatus(player.username, word.word)}>
-                                        {word.word} ({word.points}) (you have voted to validate this word, {word.votesToValidate}/{this.props.playerData.length} validated)
-                                      </span>
-                                    </li>
-                                  </div>
-                                }
+                                <li>
+                                  <span class="playerData-validatingword">
+                                    {word.word} ({word.points}) ({word.votesToValidate}/{this.props.playerData.length} validated)
+                                  </span>
+                                </li>
                               </div>
                               :
                               <div>
