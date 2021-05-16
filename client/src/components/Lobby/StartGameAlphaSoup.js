@@ -25,7 +25,9 @@ class StartGameAlphaSoup extends React.Component {
     })
 
     // emit message for all to start alphaSoup
-    clientSocket.emit("reqStartAlphaSoup");    
+    clientSocket.emit("reqStartAlphaSoup");
+    
+    clientSocket.emit("reqStartLetters");
   }
 
   // ------------------------------------ Render ------------------------------------
