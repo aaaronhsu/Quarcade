@@ -9,8 +9,49 @@
   margin-right: 3%;
 }
 
+.playerData-keybox {
+  margin: 0;
+  padding: 0;
+  margin-left: 2%;
+  margin-top: 1%;
+}
+
+.playerData-keyhead {
+  margin: 0;
+  padding: 0;
+}
+
+.playerData-key {
+  margin: 0;
+  padding: 0;
+}
+
+.playerData-valid {
+  color: white;
+}
+
+.playerData-steal {
+  color: #57C6D7;
+}
+
+.playerData-invalid {
+  color: red;
+}
+
+.playerData-validate {
+  color: #5acc5a
+}
+
+.playerData-players {
+  display: flex;
+  flex-wrap: wrap;
+
+  flex-grow: 10;
+}
+
 .playerData-player {
   margin: 2%;
+  margin-top: 0;
 }
 
 .playerData-word {
