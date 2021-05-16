@@ -328,6 +328,15 @@ module.exports = {
         // client.emit("recNewLetter", newLetter);
       });
 
+      client.on("reqNewLettersFromWord", (word) => {
+        const dictionary = require("./dictionary.js");
+        const roomList = Array.from(client.rooms);
+
+        for (var i = 0; i < word.length; i++) {
+          io.to(roomList[1]).emit("recNewLetter", word.substring(i, i + 1));
+        }
+      });
+
       // tells all users in room to get current words
       client.on("reqUpdateWords", () => {
         const roomList = Array.from(client.rooms);
