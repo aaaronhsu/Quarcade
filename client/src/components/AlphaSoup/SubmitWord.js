@@ -46,7 +46,12 @@ class SubmitWord extends React.Component {
 
   async removeInvalidWords() {
     try {
-      await Axios.put(`http://localhost:5000/user/removeInvalid/${clientSocket.id}`);
+      await Axios.put(`http://localhost:5000/user/removeInvalid/${clientSocket.id}`)
+      .then(res => {
+        if (res.data.length > 0) {
+          clientSocket.emit("reqNewLettersFromWord", res.data);
+        }
+      });
     }
     catch (error) {
       console.log("there was a problem removing all invalid words from user")
@@ -78,9 +83,6 @@ class SubmitWord extends React.Component {
     // lettersLeftAfterWordSubmission will be [-1] if there the word is not valid
     if (!(dataReturned[0].length === 1 & dataReturned[0][0] === -1)) {
 
-      // remove all invalid words that the user has
-      this.removeInvalidWords();
-
       // request the letters left to be updated in state (removes letters from the state of all players)
       clientSocket.emit("reqUpdateLetters", dataReturned[0]);
 
@@ -95,6 +97,8 @@ class SubmitWord extends React.Component {
         clientSocket.emit("reqSubmitWord", wordData);
       }
       else {
+        this.removeInvalidWords();
+
         let wordData = {
           word: this.state.word,
           valid: false
