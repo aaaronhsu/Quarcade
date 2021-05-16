@@ -120,10 +120,22 @@ router.put("/removeWord/:username", function (req, res, next) {
 // deletes all the words that r invalid
 router.put("/removeInvalid/:socket", function (req, res, next) {
   var socket = req.params.socket;
+  
   User.findOneAndUpdate({socket: socket}, 
     {$pull: {wordsOwned: {valid: false}}})
     .then(function (user) {
-      res.send(user);
+      // console.log(user);
+      const words = user.wordsOwned;
+      var count = words.length - 1;
+      var invalidWord = "";
+      while (count >= 0) {
+        if (!words[count].valid) {
+          invalidWord = words[count].word;
+        }
+        count = count - 1;
+      }
+      // console.log(invalidWord);
+      res.send(invalidWord);
     })
     .catch(next);
 })
