@@ -287,6 +287,7 @@ module.exports = {
 
       // ------------------------------------ AlphaSoup ------------------------------------
 
+      // generates starting letters based on the number of players in the room
       client.on("reqStartLetters", () => {
         const roomList = Array.from(client.rooms);
 
