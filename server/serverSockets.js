@@ -287,6 +287,34 @@ module.exports = {
 
       // ------------------------------------ AlphaSoup ------------------------------------
 
+      // generates starting letters based on the number of players in the room
+      client.on("reqStartLetters", () => {
+        const roomList = Array.from(client.rooms);
+
+        var players = Array.from(io.sockets.adapter.rooms.get(roomList[1]));
+
+        const dictionary = require("./dictionary.js");
+        
+        var numLettersGenerated = 3;
+
+        switch (players.length) {
+          case 4:
+            numLettersGenerated = 4;
+            break;
+          case 5:
+            numLettersGenerated = 5;
+            break;
+          case 6:
+            numLettersGenerated = 6;
+            break;
+        }
+
+        for (var i = 0; i < numLettersGenerated; i++) {
+          let newLetter = dictionary.letterList[Math.floor(Math.random() * dictionary.letterList.length)];
+          io.to(roomList[1]).emit("recNewLetter", newLetter);
+        }
+      });
+
       // calculates point value of a word
       client.on("reqSubmitWord", (data) => {
         
