@@ -118,9 +118,9 @@ router.put("/removeWord/:username", function (req, res, next) {
 })
 
 // deletes all the words that r invalid
-router.put("/removeInvalid/:username", function (req, res, next) {
-  var username = req.params.username;
-  User.findOneAndUpdate({name: username}, 
+router.put("/removeInvalid/:socket", function (req, res, next) {
+  var socket = req.params.socket;
+  User.findOneAndUpdate({socket: socket}, 
     {$pull: {wordsOwned: {valid: false}}})
     .then(function (user) {
       res.send(user);
