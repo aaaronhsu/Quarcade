@@ -23,7 +23,9 @@ class ChooseGame extends React.Component {
       startAlphaSoup: false, // whether alphasoup should start or not
       // startCodeNames: false // for when we eventually implement codenames
 
-      numPlayers: 0
+      numPlayers: 0,
+
+      voteOnCooldown: false,
     }
   }
 
@@ -61,6 +63,7 @@ class ChooseGame extends React.Component {
       const newVoteNum = this.state.votesAlphaSoup + 1;
       this.setState({
         votesAlphaSoup: newVoteNum,
+        voteOnCooldown: false
       });
 
       // check if you are ready to start
@@ -72,6 +75,7 @@ class ChooseGame extends React.Component {
       const newVoteNum = this.state.votesCodeNames + 1;
       this.setState({
         votesCodeNames: newVoteNum,
+        voteOnCooldown: false
       });
 
       // check if you are ready to start
@@ -83,6 +87,7 @@ class ChooseGame extends React.Component {
       const newVoteNum = this.state.votesAlphaSoup - 1;
       this.setState({
         votesAlphaSoup: newVoteNum,
+        voteOnCooldown: false
       });
       this.comparePlayersAndVotes();
       
@@ -92,6 +97,7 @@ class ChooseGame extends React.Component {
       const newVoteNum = this.state.votesCodeNames - 1;
       this.setState({
         votesCodeNames: newVoteNum,
+        voteOnCooldown: false
       });
       this.comparePlayersAndVotes();
     });
@@ -136,6 +142,12 @@ class ChooseGame extends React.Component {
   handleVoteAlphaSoup = (event) => {
     event.preventDefault();
 
+    if (this.state.voteOnCooldown) return;
+
+    this.setState({
+      voteOnCooldown: true
+    });
+
     // if you didn't already vote for alpha, increase votes
     if (this.state.gameVoted === "AlphaSoup") {
       // remove a vote
@@ -161,6 +173,13 @@ class ChooseGame extends React.Component {
 
   handleVoteCodeNames = (event) => {
     event.preventDefault();
+    
+    if (this.state.voteOnCooldown) return;
+
+    this.setState({
+      voteOnCooldown: true
+    });
+
     // if you didn't already vote for codenames increase votes
     if (this.state.gameVoted === "CodeNames") {
       clientSocket.emit("reqRemoveVoteCodeNames");
