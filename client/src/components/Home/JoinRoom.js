@@ -51,6 +51,9 @@ class JoinRoom extends React.Component {
               clientSocket.emit("reqUsersInRoom");
               clientSocket.emit("reqSocketRoom");
 
+              // sends join room message
+              clientSocket.emit("sendMessage", `has joined the room`);
+
               // redirects user to lobby
               this.setState({
                 redirectToLobby : true

@@ -22,6 +22,8 @@ module.exports = {
       // ------------------------------------ Initial Requests ------------------------------------
       // adds user to the "unassigned" room
       client.join("unassigned");
+      client.currentRoom = "unassigned";
+
       myRoom = "unassigned";
 
       // initializes client to have a username field
@@ -29,6 +31,20 @@ module.exports = {
 
       
       client.on("disconnect", () => {
+
+        // send leave message
+        const roomList = Array.from(client.rooms);
+
+        let info = {
+          message: "has left the room",
+          user: client.username
+        };
+
+        // emits the payload to all sockets with the same room
+        io.to(client.currentRoom).emit("recMessage", info);
+        console.log(roomList);
+        console.log(info);
+
         // update the amount of words left
         AlphaSoup.findOne({roomCode: myRoom})
           .then(function (alphaSoup) {
@@ -249,6 +265,9 @@ module.exports = {
         });
     
         client.join(newRoom);
+
+        client.currentRoom = newRoom;
+
         myRoom = newRoom;
       });
 
