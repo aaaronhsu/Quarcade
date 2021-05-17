@@ -8,6 +8,7 @@ import LetterVote from './LetterVote.js';
 import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
 import EndScreen from './EndScreen.js';
+import Rules from './Rules.js';
 
 import "./AlphaSoup.css";
 
@@ -355,6 +356,8 @@ class AlphaSoup extends React.Component {
                       
                       removeLetters={(word) => this.removeLetters(word)}
                     />
+
+                    <Rules />
 
                   </div>
 

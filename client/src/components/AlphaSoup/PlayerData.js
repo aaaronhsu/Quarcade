@@ -50,9 +50,10 @@ class PlayerData extends React.Component {
   render() {
     return (
       <div>
+        {this.renderKey()}
+        
         <div class="playerData">
 
-          {this.renderKey()}
 
           <div class="playerData-players">
             {

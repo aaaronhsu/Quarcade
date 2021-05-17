@@ -1,0 +1,27 @@
+.rules {
+  margin-top: 2%;
+}
+
+.rules-rule {
+  font-size: 20px;
+}
+
+.rules-valid {
+  color: white;
+}
+
+.rules-steal {
+  color: #57C6D7;
+}
+
+.rules-invalid {
+  color: red;
+}
+
+.rules-validate {
+  color: #5acc5a
+}
+
+.rules-bold {
+  font-weight: bold;
+}
