@@ -12,6 +12,8 @@ class LetterVote extends React.Component {
     this.state = {
       votesForNextLetter: 0,
       votedForNextLetter: false,
+
+      voteOnCooldown: false,
     }
   }
 
@@ -69,6 +71,10 @@ class LetterVote extends React.Component {
         res => {
           // already have roomCode
           const votes = res.data[0].votes;
+
+          this.setState({
+            voteOnCooldown: false
+          });
 
           // all players will have voted
           if (votes + vote == this.props.numPlayers) {
@@ -139,6 +145,13 @@ class LetterVote extends React.Component {
 
   // handles voting for next letter
   handleVoteSubmission = () => {
+
+    if (this.state.voteOnCooldown) return;
+    
+    this.setState({
+      voteOnCooldown: true
+    });
+
     if (this.state.votedForNextLetter) {
       // removes vote
       this.changeVote(-1);
