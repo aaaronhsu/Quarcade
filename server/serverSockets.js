@@ -33,8 +33,6 @@ module.exports = {
       client.on("disconnect", () => {
 
         // send leave message
-        const roomList = Array.from(client.rooms);
-
         let info = {
           message: "has left the room",
           user: client.username
