@@ -68,6 +68,14 @@ class NameSwitch extends React.Component {
     // you can't switch your name to something longer than 20 characters
     if (this.state.currentName.length > 20) return;
 
+    // can't have the same name as someone else
+    for (var i = 0; i < this.props.players.length; i++) {
+      if (this.props.players[i][0] === this.state.currentName) return;
+    }
+
+    console.log(this.props.players);
+    console.log(this.state.currentName);
+
     // causes the backend to change client.username
     clientSocket.emit("changeUsername", this.state.currentName);
     // now that the username is changed, emit the request to repull users

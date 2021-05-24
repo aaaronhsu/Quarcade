@@ -49,6 +49,7 @@ class Players extends React.Component {
             <NameSwitch
               key={player}
               player={player}
+              players={this.state.players}
 
               isSelf={player[1] === clientSocket.id}
             />
