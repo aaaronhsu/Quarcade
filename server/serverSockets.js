@@ -40,8 +40,6 @@ module.exports = {
 
         // emits the payload to all sockets with the same room
         io.to(client.currentRoom).emit("recMessage", info);
-        console.log(roomList);
-        console.log(info);
 
         // update the amount of words left
         AlphaSoup.findOne({roomCode: myRoom})
