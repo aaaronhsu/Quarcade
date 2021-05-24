@@ -1,0 +1,36 @@
+.choosegame {
+  text-align: center;
+
+  background-color: #0e0e0e;
+  padding: 1%;
+  border-radius: 0.7em;
+
+  height: 100%;
+}
+
+.choosegame-game {
+  margin: 1%;
+}
+
+.choosegame-alphasoup {
+  cursor: pointer;
+  font-size: 26px;
+  transition: 0.2s;
+  margin: 2%;
+}
+
+.choosegame-codenames {
+  cursor: pointer;
+  font-size: 26px;
+  transition: 0.2s;
+}
+
+.choosegame-alphasoup:hover {
+  color: #e9e991;
+  transition: 0.2s;
+}
+
+.choosegame-codenames:hover {
+  color: rgb(220, 173, 226);
+  transition: 0.2s;
+}

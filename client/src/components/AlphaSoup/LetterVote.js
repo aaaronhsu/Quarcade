@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import clientSocket from '../../ClientSocket.js';
 import Axios from "axios";
 
+import './LetterVote.css';
+
 class LetterVote extends React.Component {
 
   constructor(props) {
@@ -10,6 +12,8 @@ class LetterVote extends React.Component {
     this.state = {
       votesForNextLetter: 0,
       votedForNextLetter: false,
+
+      voteOnCooldown: false,
     }
   }
 
@@ -67,6 +71,10 @@ class LetterVote extends React.Component {
         res => {
           // already have roomCode
           const votes = res.data[0].votes;
+
+          this.setState({
+            voteOnCooldown: false
+          });
 
           // all players will have voted
           if (votes + vote == this.props.numPlayers) {
@@ -137,6 +145,13 @@ class LetterVote extends React.Component {
 
   // handles voting for next letter
   handleVoteSubmission = () => {
+
+    if (this.state.voteOnCooldown) return;
+    
+    this.setState({
+      voteOnCooldown: true
+    });
+
     if (this.state.votedForNextLetter) {
       // removes vote
       this.changeVote(-1);
@@ -172,21 +187,21 @@ class LetterVote extends React.Component {
   // renders button for voting for next letter
   renderButtonVoteNextLetter = () => {
     return (
-      <div>
+      <div class="lettervote-buttondiv">
         {
           this.state.votedForNextLetter ?
 
           (
             this.props.lettersLeft !== 0 ? 
             (
-              <button onClick={() => this.handleVoteSubmission()}>
-                Press this to remove your vote for the next letter
+              <button class="lettervote-letterremove lettervote-button" onClick={() => this.handleVoteSubmission()}>
+                Remove vote for next letter
               </button>
             )
             :
             (
-              <button onClick={() => this.handleVoteSubmission()}>
-                Press this to remove your vote to end the game
+              <button class="lettervote-endremove lettervote-button" onClick={() => this.handleVoteSubmission()}>
+                Remove vote to end game
               </button>
             )
 
@@ -195,14 +210,14 @@ class LetterVote extends React.Component {
           (
             this.props.lettersLeft !== 0 ? 
             (
-              <button onClick={() => this.handleVoteSubmission()}>
-                Press this to add your vote for the next letter
+              <button class="lettervote-letteradd lettervote-button" onClick={() => this.handleVoteSubmission()}>
+                Add vote for next letter
               </button>
             )
             :
             (
-              <button onClick={() => this.handleVoteSubmission()}>
-                Press this to add your vote to end the game
+              <button class="lettervote-endadd lettervote-button" onClick={() => this.handleVoteSubmission()}>
+                Add vote to end game
               </button>
             )
 
@@ -216,10 +231,15 @@ class LetterVote extends React.Component {
 
   render() {
     return (
-      <div>
+      <div class="lettervote">
 
-        <h3>{this.state.votesForNextLetter} out of {this.props.numPlayers} have voted</h3>
         {this.renderButtonVoteNextLetter()}
+        {
+          this.props.lettersLeft === 0 ?
+          <h3 class="lettervote-info"><span class="yellow lettervote-votesleft">{this.state.votesForNextLetter}/{this.props.numPlayers}</span> players are ready to end the game!</h3>
+          :
+          <h3 class="lettervote-info"><span class="yellow lettervote-votesleft">{this.state.votesForNextLetter}/{this.props.numPlayers}</span> players are ready for the next letter!</h3>
+        }
 
       </div>
     );

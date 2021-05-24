@@ -3,6 +3,8 @@ import clientSocket from '../../ClientSocket.js';
 import Axios from 'axios';
 import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
+import './EndScreen.css';
+
 
 class EndScreen extends React.Component {
   constructor(props) {
@@ -140,29 +142,35 @@ class EndScreen extends React.Component {
 
   renderPlayerStandings = () => {
     return (
-      this.props.playerData.map(player => (
-        <div key={player.id}>
-          <h3>#{player.rank}: {player.username} ({player.points} pts):</h3>
-
-          <ul>
-          {
-            player.wordsOwned.map(word => (
-              <div>
-                <li key={word.id}>{word.word} ({word.points})</li>
-              </div>
-            ))
-          }
-          </ul>
-        </div>
-      ))
+      <div class="endscreen-players">
+        {
+          this.props.playerData.map(player => (
+            <div class="endscreen-player" key={player.id}>
+              <h2>#{player.rank}: {player.username} ({player.points} pts)</h2>
+    
+              <ul>
+              {
+                player.wordsOwned.map(word => (
+                  <div>
+                    <li class="endscreen-word" key={word.id}>{word.word} ({word.points})</li>
+                  </div>
+                ))
+              }
+              </ul>
+            </div>
+          ))
+        }
+      </div>
     );
   }
 
   renderLobbyButton = () => {
     return (
-      <button onClick={() => this.handleReturnToLobbyScreen()}>
-        Return to Lobby
-      </button>
+      <div class="endscreen-lobby">
+        <button class="endscreen-lobbybutton endscreen-button" onClick={() => this.handleReturnToLobbyScreen()}>
+          Return to Lobby
+        </button>
+      </div>
     );
   }
 
@@ -170,20 +178,19 @@ class EndScreen extends React.Component {
     return (
       this.state.playAgainButton ?
 
-      <div>
+      <div class="endscreen-playagain">
         {
           this.state.votedToPlayAgain ?
 
-          <button onClick={() => this.handleVotePlayAgain()}>
-            Remove vote to play again
+          <button class="endscreen-againbuttonremove endscreen-button" onClick={() => this.handleVotePlayAgain()}>
+            Remove vote to play again ({this.state.playersVotedToPlayAgain}/{this.props.playerData.length} votes) 
           </button>
           :
-          <button onClick={() => this.handleVotePlayAgain()}>
-            Vote to play again!
+          <button class="endscreen-againbuttonadd endscreen-button" onClick={() => this.handleVotePlayAgain()}>
+            Vote to play again! ({this.state.playersVotedToPlayAgain}/{this.props.playerData.length} votes)
           </button>
         }
 
-        <h3>{this.state.playersVotedToPlayAgain}/{this.props.playerData.length} players have voted to play again</h3>
       </div>
       :
       null
@@ -193,11 +200,18 @@ class EndScreen extends React.Component {
   render() {
     return (
       <div>
+        <h1 class="endscreen-header">Final Standings</h1>
         {this.renderPlayerStandings()}
 
-        {this.renderLobbyButton()}
+        <hr class="divider"></hr>
 
-        {this.renderPlayAgainButton()}
+
+        <h1 class="endscreen-header">Now What?</h1>
+        <div class="endscreen-options">
+          {this.renderLobbyButton()}
+
+          {this.renderPlayAgainButton()}
+        </div>
 
         {this.state.returnToLobby ? (<Redirect to="/lobby" />) : null}
 

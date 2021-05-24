@@ -1,0 +1,21 @@
+.players {
+  text-align: center;
+
+  background-color: #0e0e0e;
+  padding: 1%;
+  border-radius: 0.7em;
+}
+
+.players-title {
+  font-size: 36px;
+}
+
+.players-roomcode {
+  font-size: 24px;
+}
+
+.players-code {
+  font-size: 36px;
+  font-weight: 500;
+  color: #FFCB05;
+}

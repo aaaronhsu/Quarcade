@@ -1,0 +1,31 @@
+body {
+  background: rgb(0, 0, 0);
+}
+
+@font-face {
+  font-family: Abel;
+  src: url(../fonts/Abel-Regular.ttf);
+}
+
+* {
+  font-family: Abel, sans-serif;
+  color: white;
+}
+
+.divider {
+  width: 75%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.yellow {
+  color: #FFCB05;
+}
+
+.blue {
+  color: #57C6D7;
+}
+
+.red {
+  color: #ff3434
+}

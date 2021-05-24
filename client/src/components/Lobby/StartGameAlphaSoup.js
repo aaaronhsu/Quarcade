@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import RoomSwitch from './RoomSwitch.js';
 
-import clientSocket from "../../ClientSocket.js"; 
+import clientSocket from "../../ClientSocket.js";
+
+import './StartGameAlphaSoup.css';;
 
 class StartGameAlphaSoup extends React.Component {
   constructor(props) {
@@ -23,7 +25,10 @@ class StartGameAlphaSoup extends React.Component {
     })
 
     // emit message for all to start alphaSoup
-    clientSocket.emit("reqStartAlphaSoup");    
+    clientSocket.emit("reqStartAlphaSoup");
+    
+    // generates the start letters for players in a room
+    clientSocket.emit("reqStartLetters");
   }
 
   // ------------------------------------ Render ------------------------------------
@@ -31,7 +36,8 @@ class StartGameAlphaSoup extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleStartAlphaSoup}>Start Game</button>
+        <button class="startgame" onClick={this.handleStartAlphaSoup}>Start AlphaSoup</button>
+
         {this.state.roomSwitch ? (<RoomSwitch />) : null}
       </div>
     );

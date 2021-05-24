@@ -1,0 +1,23 @@
+.header-text {
+  color: white;
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 2%;
+}
+
+.submit-room {
+  text-align: center;
+}
+
+.room-form-input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 1.2rem;
+	margin: 0 auto;
+  padding: 0.7rem 1rem;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  display: block;
+  transition: all 0.3s;
+}

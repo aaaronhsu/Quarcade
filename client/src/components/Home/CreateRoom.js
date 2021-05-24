@@ -3,6 +3,8 @@ import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
 import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
+import './CreateRoom.css';
+
 class CreateRoom extends React.Component {
 
   constructor(props) {
@@ -27,6 +29,15 @@ class CreateRoom extends React.Component {
 
   // post request to create new room
   async createRoom(roomCode) {
+    
+    const CHARS = new Set("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    for (var i = 0; i < roomCode.length; i++) {
+      if (!CHARS.has(roomCode.charAt(i))) {
+        alert("please use an alphanumeric room code");
+        return;
+      }
+    }
+
     try {
       await Axios.post("http://localhost:5000/homeLobby", { roomCode: roomCode, users: {socket: clientSocket.id, name: this.state.username } }); 
 
@@ -114,12 +125,11 @@ class CreateRoom extends React.Component {
   render() {
     return (
       <div>
-        <h2 onClick={this.handleShowCreateRoom}>or, create a room</h2>
+        <h2 class="create-room">or, <span className="clickable" onClick={this.handleShowCreateRoom}>create a room</span></h2>
         {this.state.createRoom ? (
           <form onSubmit={this.handleSubmitCreateRoom}>
-            <label>
-              Enter a roomcode to create a room:
-              <input name="code" type="text" value={this.state.roomCode} onChange={this.handleChangeCreateRoom} />
+            <label class="create-room">
+              <input class="room-form-input" placeholder="Enter a Room Code" name="code" type="text" value={this.state.roomCode} onChange={this.handleChangeCreateRoom} />
             </label>
           </form>
         ) : null}

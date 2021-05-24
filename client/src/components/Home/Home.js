@@ -3,6 +3,8 @@ import JoinRoom from './JoinRoom.js';
 import CreateRoom from './CreateRoom.js';
 import clientSocket from '../../ClientSocket.js';
 
+import './Home.css';
+
 class Home extends React.Component {
 
   constructor(props) {
@@ -12,8 +14,16 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <JoinRoom />
-        <CreateRoom />
+
+        <h1 class="home-header">Quarcade</h1>
+
+        <hr class="divider"></hr>
+
+        <div>
+          <JoinRoom />
+          <CreateRoom />
+        </div>
+        
       </div>
     )}
 }

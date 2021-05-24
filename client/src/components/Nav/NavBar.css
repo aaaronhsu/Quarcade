@@ -1,0 +1,27 @@
+.nav-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.nav-li {
+  float: left;
+}
+
+.nav-li {
+  display: block;
+  color: #dddddd;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 24px;
+  transition: 0.2s;
+}
+
+.nav-li:hover {
+  color: #FFCB05;
+  transition: 0.2s;
+}
+
+

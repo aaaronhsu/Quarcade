@@ -3,6 +3,8 @@ import Axios from "axios";
 import clientSocket from "../../ClientSocket.js";
 import { HashRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
+import './JoinRoom.css';
+
 class JoinRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -48,6 +50,9 @@ class JoinRoom extends React.Component {
               // handles update of the players in the room
               clientSocket.emit("reqUsersInRoom");
               clientSocket.emit("reqSocketRoom");
+
+              // sends join room message
+              clientSocket.emit("sendMessage", `has joined the room`);
 
               // redirects user to lobby
               this.setState({
@@ -98,11 +103,11 @@ class JoinRoom extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmitJoinRoom}>
-          <label>
-            Enter a room code to join a room:
-            <input name="roomCode" type="text" value={this.state.roomCode} onChange={this.handleChangeJoinRoom} />
-          </label>
+        <h2 class="header-text">
+          Have a Room Code?
+        </h2>
+        <form class="submit-room" onSubmit={this.handleSubmitJoinRoom}>
+          <input class="room-form-input" placeholder="Join a Room..." name="roomCode" type="text" value={this.state.roomCode} onChange={this.handleChangeJoinRoom} />
         </form>
         {this.state.redirectToLobby ? (<Redirect to="/lobby" />) : null}
       </div>

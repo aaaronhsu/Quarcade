@@ -1,0 +1,38 @@
+
+.nameswitch-selfdisplay {
+  color: #93e1ec;
+  font-size: 26px;
+  margin: 3%;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nameswitch-selfdisplay:hover {
+  color: #f8dc6d;
+  font-size: 26px;
+  margin: 3%;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nameswitch-display {
+  font-size: 26px;
+  margin: 3%;
+
+  transition: 0.2s;
+}
+
+.nameswitch-input {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 1rem;
+	margin: 0 auto;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  display: block;
+  transition: all 0.3s;
+}

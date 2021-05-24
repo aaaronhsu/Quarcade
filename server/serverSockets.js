@@ -22,6 +22,8 @@ module.exports = {
       // ------------------------------------ Initial Requests ------------------------------------
       // adds user to the "unassigned" room
       client.join("unassigned");
+      client.currentRoom = "unassigned";
+
       myRoom = "unassigned";
 
       // initializes client to have a username field
@@ -29,6 +31,18 @@ module.exports = {
 
       
       client.on("disconnect", () => {
+
+        // send leave message
+        let info = {
+          message: "has left the room",
+          user: client.username
+        };
+
+        // emits the payload to all sockets with the same room
+        io.to(client.currentRoom).emit("recMessage", info);
+        console.log(roomList);
+        console.log(info);
+
         // update the amount of words left
         AlphaSoup.findOne({roomCode: myRoom})
           .then(function (alphaSoup) {
@@ -249,6 +263,9 @@ module.exports = {
         });
     
         client.join(newRoom);
+
+        client.currentRoom = newRoom;
+
         myRoom = newRoom;
       });
 
@@ -286,6 +303,34 @@ module.exports = {
 
 
       // ------------------------------------ AlphaSoup ------------------------------------
+
+      // generates starting letters based on the number of players in the room
+      client.on("reqStartLetters", () => {
+        const roomList = Array.from(client.rooms);
+
+        var players = Array.from(io.sockets.adapter.rooms.get(roomList[1]));
+
+        const dictionary = require("./dictionary.js");
+        
+        var numLettersGenerated = 3;
+
+        switch (players.length) {
+          case 4:
+            numLettersGenerated = 4;
+            break;
+          case 5:
+            numLettersGenerated = 5;
+            break;
+          case 6:
+            numLettersGenerated = 6;
+            break;
+        }
+
+        for (var i = 0; i < numLettersGenerated; i++) {
+          let newLetter = dictionary.letterList[Math.floor(Math.random() * dictionary.letterList.length)];
+          io.to(roomList[1]).emit("recNewLetter", newLetter);
+        }
+      });
 
       // calculates point value of a word
       client.on("reqSubmitWord", (data) => {
@@ -326,6 +371,15 @@ module.exports = {
 
         io.to(roomList[1]).emit("recNewLetter", newLetter);
         // client.emit("recNewLetter", newLetter);
+      });
+
+      client.on("reqNewLettersFromWord", (word) => {
+        const dictionary = require("./dictionary.js");
+        const roomList = Array.from(client.rooms);
+
+        for (var i = 0; i < word.length; i++) {
+          io.to(roomList[1]).emit("recNewLetter", word.substring(i, i + 1));
+        }
       });
 
       // tells all users in room to get current words

@@ -1,0 +1,20 @@
+.startgame {
+  background-color: #69db5f; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 0.5em;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.startgame:hover {
+  background-color: #43ac39;
+  transition: 0.2s;
+}

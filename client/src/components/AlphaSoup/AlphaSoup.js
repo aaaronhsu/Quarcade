@@ -8,6 +8,9 @@ import LetterVote from './LetterVote.js';
 import Chat from '../Chat/Chat.js';
 import PlayerData from './PlayerData.js';
 import EndScreen from './EndScreen.js';
+import Rules from './Rules.js';
+
+import "./AlphaSoup.css";
 
 class AlphaSoup extends React.Component {
 
@@ -111,7 +114,7 @@ class AlphaSoup extends React.Component {
         res => {
           // set the state to the new letters left count
           this.setState({
-            lettersLeft: res.data[0].lettersLeft
+            lettersLeft: Math.floor(res.data[0].lettersLeft)
           });
     
         }
@@ -140,7 +143,9 @@ class AlphaSoup extends React.Component {
             let player = {
               username: retrievedPlayerData[i].name,
               points: 0,
-              wordsOwned: []
+              wordsOwned: [],
+
+              hasInvalidWord: false
             };
 
             for (var j = 0; j < retrievedPlayerData[i].wordsOwned.length; j++) {
@@ -161,6 +166,8 @@ class AlphaSoup extends React.Component {
               else {
                 wordData.votesToValidate = retrievedPlayerData.length; // all players must validate
                 wordData.votedToValidate = false; // this player has not voted to validate yet
+
+                player.hasInvalidWord = true;
               }
 
 
@@ -323,42 +330,50 @@ class AlphaSoup extends React.Component {
           )
           :
           ( 
-            <div>
+            <div class="alphasoup">
+                  <div class="alphasoup-lhs">
 
-              LETTERS LEFT: {this.state.lettersLeft}
-              
-              <PlayerData
-                playerData={this.state.playerData}
+                    <Letters 
+                      numLetters={this.state.letters.length}
+                      letters={this.state.letters}
+                      lettersLeft={this.state.lettersLeft}
+            
+            
+                      addLetter={(letter) => this.addLetter(letter)} 
+                      updateLettersLeft={(change) => this.updateLettersLeft(change)} // purely for debug purposes
+                    />
+
+                    <LetterVote 
+                      numPlayers={this.state.playerData.length}
+                      lettersLeft={this.state.lettersLeft}
+            
+                      updateLettersLeft={(change) => this.updateLettersLeft(change)}
+                    />
+
+                    <SubmitWord 
+                      letters={this.state.letters}
+                      playerData={this.state.playerData}
+                      
+                      removeLetters={(word) => this.removeLetters(word)}
+                    />
+
+                    <Rules />
+
+                  </div>
+
+                  <div class="alphasoup-rhs">
+                    <PlayerData
+                      playerData={this.state.playerData}
+                      
+                      changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
+                      voteValidWord={(player, word) => this.voteValidWord(player, word)}
+                      changeVoteValidWordStatus={(player, word) => this.changeVoteValidWordStatus(player, word)}
+                    />
+
+                    <hr class="divider"></hr>
+                    <Chat />
+                  </div>
       
-                changeStealStatus={(player, word) => this.changeStealStatus(player, word)}
-                voteValidWord={(player, word) => this.voteValidWord(player, word)}
-                changeVoteValidWordStatus={(player, word) => this.changeVoteValidWordStatus(player, word)}
-              />
-      
-              <SubmitWord 
-                letters={this.state.letters}
-                playerData={this.state.playerData}
-      
-                removeLetters={(word) => this.removeLetters(word)}
-              />
-      
-              <LetterVote 
-                numPlayers={this.state.playerData.length}
-                lettersLeft={this.state.lettersLeft}
-      
-                updateLettersLeft={(change) => this.updateLettersLeft(change)}
-              />
-      
-              <Letters 
-                numLetters={this.state.letters.length}
-                letters={this.state.letters}
-      
-      
-                addLetter={(letter) => this.addLetter(letter)} 
-                updateLettersLeft={(change) => this.updateLettersLeft(change)} // purely for debug purposes
-              />
-      
-              <Chat />
 
             </div>
           )
