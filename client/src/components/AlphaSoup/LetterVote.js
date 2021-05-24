@@ -147,6 +147,7 @@ class LetterVote extends React.Component {
   handleVoteSubmission = () => {
 
     if (this.state.voteOnCooldown) return;
+
     
     this.setState({
       voteOnCooldown: true
