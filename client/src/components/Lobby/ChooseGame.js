@@ -122,6 +122,10 @@ class ChooseGame extends React.Component {
       this.clearVoteCounts();
     })
 
+    clientSocket.on("recUpdateNumPlayers", () => {
+      this.updateNumPlayers();
+    })
+
   }
 
   componentWillUnmount() {
@@ -169,6 +173,8 @@ class ChooseGame extends React.Component {
       this.updateAlphaSoupVotes(1);
 
     }
+
+    clientSocket.emit("reqUpdateNumPlayers");
   }
 
   handleVoteCodeNames = (event) => {
@@ -197,6 +203,8 @@ class ChooseGame extends React.Component {
       this.setState({gameVoted: "CodeNames"});
       this.updateCodeNamesVotes(1);
     }
+
+    clientSocket.emit("reqUpdateNumPlayers");
   }
 
   async compareVoteCounts(votes, game) {
@@ -217,6 +225,29 @@ class ChooseGame extends React.Component {
       )
     } catch (error) {
       console.log("could not get users by room");
+    }
+  }
+
+
+  async updateNumPlayers() {
+    // console.log(this.state.roomCode);
+    // console.log("pulled on comp did mount")
+    try {
+      await Axios.get(`http://localhost:5000/homeLobby/${this.state.roomCode}`).then(
+        res => {
+          const numPlayers = res.data[0].users.length;
+
+          // console.log(roomGot.users.length);
+
+          // new votes counts
+          this.setState({
+            numPlayers: numPlayers
+          })
+        }
+      )
+      // get info
+    } catch (error) {
+      console.log("could not get the number of players");
     }
   }
 

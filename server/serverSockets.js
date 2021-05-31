@@ -250,6 +250,12 @@ module.exports = {
         const roomList = Array.from(client.rooms);
         io.to(roomList[1]).emit("recSwitchBackToAlphaGamePage");
       })
+
+      // tells all users to pull the number of players in the room
+      client.on("reqUpdateNumPlayers", () => {
+        const roomList = Array.from(client.rooms);
+        io.to(roomList[1]).emit("recUpdateNumPlayers");
+      })
       
 
       // ------------------------------------ Update Requests ------------------------------------
