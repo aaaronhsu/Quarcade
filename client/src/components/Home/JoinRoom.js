@@ -58,6 +58,7 @@ class JoinRoom extends React.Component {
               this.setState({
                 redirectToLobby : true
               });
+
             } else {
               alert("there are already 6 players in this room");
             }

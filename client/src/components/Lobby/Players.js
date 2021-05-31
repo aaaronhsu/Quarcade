@@ -21,10 +21,12 @@ class Players extends React.Component {
   componentDidMount() {
     clientSocket.on("recUsersInRoom", (players) => {
       this.setState({players: players});
+      clientSocket.emit("reqUpdateNumPlayers");
     });
 
     clientSocket.on("recSocketRoom", (room) => {
       this.setState({room: room});
+      clientSocket.emit("reqUpdateNumPlayers");
     });
   }
 
