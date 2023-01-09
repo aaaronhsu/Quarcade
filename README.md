@@ -1,7 +1,7 @@
 # Quarcade
 Google Mentorship Project
+<img width="178" alt="Screen Shot 2023-01-09 at 12 41 19 PM" src="https://user-images.githubusercontent.com/62438089/211372403-352223a0-082a-4229-8ec0-5ad523c9de46.png">
 
-<img width="725" alt="Screen Shot 2023-01-09 at 12 40 47 PM" src="https://user-images.githubusercontent.com/62438089/211372248-e74f150d-76b8-439c-bf43-47d1684fec19.png">
 
 ## Quarcade is a gaming website where you and your friends can create and join a room to play AlphaSoup, a version of bananagrams created for fun group play online!
 
@@ -18,4 +18,4 @@ Google Mentorship Project
 10. You should see Quarcade running on port 3000!
 
 
-<img width="1256" alt="Screen Shot 2023-01-09 at 12 38 49 PM" src="https://user-images.githubusercontent.com/62438089/211371984-87a074e4-4b82-45e3-acd9-eae2b605f17f.png">
+<img width="253" alt="Screen Shot 2023-01-09 at 12 41 26 PM" src="https://user-images.githubusercontent.com/62438089/211372426-c5bda8b6-7d74-4ff9-ab30-fbd646a19599.png">
