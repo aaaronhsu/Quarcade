@@ -1,8 +1,7 @@
 # Quarcade
 Google Mentorship Project
 
-<img width="415" alt="Screen Shot 2023-01-09 at 12 40 03 PM" src="https://user-images.githubusercontent.com/62438089/211372090-5acf3b7f-2018-4d80-bf0c-fd8d961522a8.png">
-
+<img width="725" alt="Screen Shot 2023-01-09 at 12 40 47 PM" src="https://user-images.githubusercontent.com/62438089/211372248-e74f150d-76b8-439c-bf43-47d1684fec19.png">
 
 ## Quarcade is a gaming website where you and your friends can create and join a room to play AlphaSoup, a version of bananagrams created for fun group play online!
 
