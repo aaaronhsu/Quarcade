@@ -11,7 +11,7 @@ class NavBar extends React.Component {
       <div>
         <ul class="nav-ul">
           <li class="nav-li">
-            <Link class="nav-li" to="/">
+            <Link class="nav-li bold" to="/">
               Quarcade
             </Link>
           </li>

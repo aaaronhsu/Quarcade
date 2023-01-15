@@ -1,6 +1,21 @@
 # Quarcade
 Google Mentorship Project 
 
+## Description
+Quarcade is a game platform where people can generate and join private rooms to play AlphaSoup, a competitive word-building game created for fun group play online. This project was created in collaboration with the Google Mentorship Program at Stuyvesant High School. 
+
+## Usage
+0. Ensure that you have Node.js and npm installed
+1. Clone the repository
+2. Navigate to `Quarcade/client/` and install packages with `npm install`
+3. To start the client, run `npm start`
+4. Navigate to `Quarcade/server/` and install packages with `npm install`
+5. To start the server, run `node index.js`
+6. Quarcade should now be running on port 3000!
+
+
+## Motivation
+
 
 <img width="178" alt="Screen Shot 2023-01-09 at 12 41 19 PM" src="https://user-images.githubusercontent.com/62438089/211372403-352223a0-082a-4229-8ec0-5ad523c9de46.png">
 

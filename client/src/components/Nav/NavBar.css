@@ -24,4 +24,6 @@
   transition: 0.2s;
 }
 
-
+.bold {
+  font-weight: bold;
+}
