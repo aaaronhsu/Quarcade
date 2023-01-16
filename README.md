@@ -1,10 +1,11 @@
 # Quarcade
-Google Mentorship Project 
+
+<img alt="Home Screen" src="https://github.com/aaaronhsu/Quarcade/blob/main/home_screen.png">
 
 ## Description
 Quarcade is a game platform where people can generate and join private rooms to play AlphaSoup, a competitive word-building game created for fun group play online. This project was created in collaboration with the Google Mentorship Program at Stuyvesant High School. 
 
-## Usage
+## Usage for Local Deployment
 0. Ensure that you have Node.js and npm installed
 1. Clone the repository
 2. Navigate to `Quarcade/client/` and install packages with `npm install`
@@ -14,25 +15,30 @@ Quarcade is a game platform where people can generate and join private rooms to 
 6. Quarcade should now be running on port 3000!
 
 
-## Motivation
+## Rules and Gameplay
+To play AlphaSoup, players must create words from a shared pool of letters. Forming words will add the word to a player's bank, which will earn the player points. It will also remove the used letters from the shared pool. The player with the most points at the end of the game wins!
+
+Players can steal words (and their point values) from other players by creating a new word that uses all the letters in the stolen word and at least one additional letter from the pool (e.g `CAN` can be stolen to make the word `CHANGE` if the letters `H`, `G`, and `E` exist in the pool). Players may steal multiple words at a time (e.g. `SET` and `LET` can be stolen to produce the word `LETTERS` if the letter `r` exists in the pool).
+
+If an unrecognized word is submitted, it will be placed into a player's bank, but it will not earn points. Other players can vote to validate the word for points. Each player can have at most one invalid word in their list at a time.
+
+Letters are added to the pool when the majority of players agree to add a letter to the pool. The game ends when the pool is empty and all players have agreed to end the game.
 
 
-<img width="178" alt="Screen Shot 2023-01-09 at 12 41 19 PM" src="https://user-images.githubusercontent.com/62438089/211372403-352223a0-082a-4229-8ec0-5ad523c9de46.png">
+<img alt="Game Screen" src="https://github.com/aaaronhsu/Quarcade/blob/main/game_screen.png">
 
+## Technologies Used
+- React
+- Node.js
+- Express
+- Socket.io
+- MongoDB
+- Mongoose
+- Figma
 
-## Quarcade is a gaming website where you and your friends can create and join a room to play AlphaSoup, a version of bananagrams created for fun group play online!
+## Contributors
+- Aaron Hsu
+- Eliza Knapp
 
-### To launch our project locally
-1. Clone the repo
-2. Create and activate your virtual environment
-3. `cd client`
-4. `pip install -r requirements.txt`
-5. `npm start`
-6. In another terminal window, cd into Quarcade
-7. `cd server`
-8. `pip install -r requirements.txt`
-9. `node index.js`
-10. You should see Quarcade running on port 3000!
-
-
-<img width="253" alt="Screen Shot 2023-01-09 at 12 41 26 PM" src="https://user-images.githubusercontent.com/62438089/211372426-c5bda8b6-7d74-4ff9-ab30-fbd646a19599.png">
+## Credits
+Thank you to [Alex Feng](https://www.linkedin.com/in/alexfengfeng/) and Rachel Chen for their mentorship and guidance throughout the project!
