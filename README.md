@@ -8,9 +8,9 @@ Quarcade is a game platform where people can generate and join private rooms to 
 ## Usage for Local Deployment
 0. Ensure that you have Node.js and npm installed
 1. Clone the repository
-2. Navigate to `Quarcade/client/` and install packages with `npm install`
+2. Navigate to `Quarcade/client/` and install packages with `npm install` or `pip install -r requirements.txt`
 3. To start the client, run `npm start`
-4. Navigate to `Quarcade/server/` and install packages with `npm install`
+4. Navigate to `Quarcade/server/` and install packages with `npm install` or `pip install -r requirements.txt`
 5. To start the server, run `node index.js`
 6. Quarcade should now be running on port 3000!
 
